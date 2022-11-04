@@ -9,8 +9,8 @@
     "format": "prettier --w {}",
     "fix": "npm run lint && npm run format",
     "lint-staged": "lint-staged",
-    "commit": "git-cz",
-    "prepare": "husky install && commitizen init cz-customizable --save-dev --save-exact"
+    "cm": "cz",
+    "prepare": "husky install"
   },
   "dependencies": {
     "cookie-parser": "^1.4.6",
@@ -27,9 +27,7 @@
   "devDependencies": {
     "@commitlint/cli": "^17.2.0",
     "@commitlint/config-conventional": "^17.2.0",
-    "@commitlint/cz-commitlint": "^17.2.0",
     "commitizen": "^4.2.5",
-    "commitlint-config-gitmoji": "^2.2.6",
     "cz-customizable": "^7.0.0",
     "debug": "^4.3.4",
     "eslint": "^8.26.0",
@@ -57,7 +55,10 @@
   "homepage": "https://github.com/ooitanojohn/IW31auction#readme",
   "config": {
     "commitizen": {
-      "path": "@commitlint/cz-commitlint"
+      "path": "node_modules/cz-customizable"
+    },
+    "cz-customizable": {
+      "config": ".cz-config.json"
     }
   }
 }
