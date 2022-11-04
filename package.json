@@ -8,7 +8,7 @@
     "lint": "eslint --fix {}",
     "format": "prettier --w {}",
     "fix": "npm run lint && npm run format",
-    "lint-staged": "lint-staged ",
+    "lint-staged": "lint-staged",
     "commit": "git-cz",
     "prepare": "husky install && commitizen init cz-customizable --save-dev --save-exact"
   },
