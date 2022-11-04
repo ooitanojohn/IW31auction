@@ -2,14 +2,15 @@
   "name": "iw31auction",
   "version": "1.0.0",
   "description": "auctionProject",
-  "main": "app.js",
+  "main": "public/app.js",
   "scripts": {
-    "install": "husky install",
     "dev": "nodemon ./bin/www",
-    "lint": "prettier --check .eslintrc.json",
-    "format": "prettier --write .eslintrc.json",
-    "lint-staged": "lint-staged",
-    "prepare": "husky install"
+    "lint": "eslint --fix {}",
+    "format": "prettier --w {}",
+    "fix": "npm run lint && npm run format",
+    "lint-staged": "lint-staged ",
+    "commit": "git-cz",
+    "prepare": "husky install && commitizen init cz-customizable --save-dev --save-exact"
   },
   "dependencies": {
     "cookie-parser": "^1.4.6",
@@ -26,6 +27,10 @@
   "devDependencies": {
     "@commitlint/cli": "^17.2.0",
     "@commitlint/config-conventional": "^17.2.0",
+    "@commitlint/cz-commitlint": "^17.2.0",
+    "commitizen": "^4.2.5",
+    "commitlint-config-gitmoji": "^2.2.6",
+    "cz-customizable": "^7.0.0",
     "debug": "^4.3.4",
     "eslint": "^8.26.0",
     "eslint-config-airbnb": "^19.0.4",
@@ -49,5 +54,10 @@
   "bugs": {
     "url": "https://github.com/ooitanojohn/IW31auction/issues"
   },
-  "homepage": "https://github.com/ooitanojohn/IW31auction#readme"
+  "homepage": "https://github.com/ooitanojohn/IW31auction#readme",
+  "config": {
+    "commitizen": {
+      "path": "@commitlint/cz-commitlint"
+    }
+  }
 }
