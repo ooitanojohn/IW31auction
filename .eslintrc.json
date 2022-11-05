@@ -1,10 +1,10 @@
 {
   "root": true,
   // ルールの追加やルールのオプションの拡張
-  "extends": ["eslint:recommended", "airbnb", "plugin:jest/recommended", "prettier"],
+  "extends": ["eslint:recommended", "airbnb-base", "prettier"],
   // サードパーティのルールを指定
   // 追加パッケージが必要
-  "plugins": ["jest"],
+  "plugins": [],
   "env": {
     "browser": true,
     "node": true,
