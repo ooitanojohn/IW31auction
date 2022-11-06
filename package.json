@@ -12,6 +12,8 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@pdfme/generator": "^1.0.17",
+    "@pdfme/ui": "^1.0.17",
     "axios": "^1.1.3",
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.1",
@@ -28,6 +30,7 @@
     "morgan": "^1.10.0",
     "mysql2": "^2.3.3",
     "password": "^0.1.1",
+    "sharp": "^0.31.2",
     "socket.io": "^4.5.3"
   },
   "devDependencies": {
