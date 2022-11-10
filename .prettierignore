@@ -3,3 +3,4 @@ node_modules/
 package-lock.json
 package.json
 prettier.config.js
+*.ejs // 暫定処置 prettierにejsフォーマットのparserがない為個別で設定
