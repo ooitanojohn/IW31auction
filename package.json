@@ -2,7 +2,7 @@
   "name": "iw31auction",
   "version": "1.0.0",
   "description": "auctionProject",
-  "main": "public/app.js",
+  "main": "bin/www",
   "scripts": {
     "dev": "nodemon ./bin/www",
     "lint": "eslint --fix {public/*.js}",
@@ -16,7 +16,6 @@
     "@pdfme/ui": "^1.0.17",
     "axios": "^1.1.3",
     "bcrypt": "^5.1.0",
-    "body-parser": "^1.20.1",
     "cookie-parser": "^1.4.6",
     "csv": "^6.2.1",
     "dotenv": "^16.0.3",
@@ -29,6 +28,7 @@
     "http-errors": "^2.0.0",
     "morgan": "^1.10.0",
     "mysql2": "^2.3.3",
+    "node-fetch": "^3.3.0",
     "password": "^0.1.1",
     "sharp": "^0.31.2",
     "socket.io": "^4.5.3"
@@ -49,8 +49,8 @@
     "prettier": "^2.7.1"
   },
   "lint-staged": {
-    "*.{js,ejs}": "eslint --fix",
-    "*.{js,ejs,css,md,json,sh}": "prettier --write"
+    "*.js": "eslint --fix",
+    "*.{js,css,md,json,sh}": "prettier --write"
   },
   "repository": {
     "type": "git",
