@@ -5,7 +5,8 @@
   "main": "bin/www",
   "scripts": {
     "dev": "nodemon ./bin/www",
-    "lint": "eslint --fix \"**/*.js\"",
+    "lint": "eslint \"**/*.js\"",
+    "fix": "eslint --fix \"**/*.js\"",
     "fmt": "prettier --w \"**/*.js\" && prettier --parser html --w app/views/*.ejs",
     "lint-staged": "lint-staged",
     "prepare": "husky install"
