@@ -7,7 +7,6 @@
     "dev": "nodemon ./bin/www",
     "lint": "eslint --fix \"**/*.js\"",
     "fmt": "prettier --w \"**/*.js\" && prettier --parser html --w app/views/*.ejs",
-    "fix": "npm run lint && npm run format",
     "lint-staged": "lint-staged",
     "prepare": "husky install"
   },
@@ -48,11 +47,6 @@
     "lint-staged": "^13.0.3",
     "prettier": "^2.7.1"
   },
-  "lint-staged": {
-    "**/*.js": "eslint --fix",
-    "**/*.js": "prettier --w",
-    "app/views/*.ejs": "prettier --parser html --w"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ooitanojohn/IW31auction.git"
@@ -63,6 +57,13 @@
     "url": "https://github.com/ooitanojohn/IW31auction/issues"
   },
   "homepage": "https://github.com/ooitanojohn/IW31auction#readme",
+  "lint-staged": {
+    "**/*.js": [
+      "eslint --fix",
+      "prettier --w"
+    ],
+    "app/views/*.ejs": "prettier --parser html --w"
+  },
   "config": {
     "commitizen": {
       "path": "node_modules/cz-customizable"
