@@ -2,7 +2,7 @@
   "name": "iw31auction",
   "version": "1.0.0",
   "description": "auctionProject",
-  "main": "public/app.js",
+  "main": "bin/www",
   "scripts": {
     "dev": "nodemon ./bin/www",
     "lint": "eslint --fix {public/*.js}",
@@ -28,6 +28,7 @@
     "http-errors": "^2.0.0",
     "morgan": "^1.10.0",
     "mysql2": "^2.3.3",
+    "node-fetch": "^3.3.0",
     "password": "^0.1.1",
     "sharp": "^0.31.2",
     "socket.io": "^4.5.3"
