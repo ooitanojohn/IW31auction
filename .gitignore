@@ -4,3 +4,4 @@ package-lock.json
 *.swp
 .husky/
 bin/
+img/

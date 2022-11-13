@@ -4,7 +4,7 @@ const router = express.Router();
 
 /* GET home page. */
 router.get('/', (req, res) => {
-  res.render('index', { title: req.body });
+  res.render('top', { tel: '074-456-3939' });
 });
 
 module.exports = router;

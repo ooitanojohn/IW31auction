@@ -1,34 +1,42 @@
-// どのページでも使用するモジュール require
+/**
+ * どのページでも使用するモジュールを記述
+ * */
 const express = require('express');
 // const createError = require('http-errors');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
+/**
+ * appインスタンス作成
+ */
 const app = express();
 
+/**
+ * express 便利モジュール設定
+ */
 // view engine setup
 app.set('views', path.join(__dirname, '../app/views'));
 app.set('view engine', 'ejs');
-
-// log
-app.use(logger('dev'));
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-// cookie
-app.use(cookieParser());
-
 // 静的ファイルのパス
 app.use(express.static(path.join(__dirname, '../public')));
+// log
+app.use(logger('dev'));
+// httpRequest body取得設定
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+// cookie 便利
+app.use(cookieParser());
 
 // router 追加するならここに追記
-const indexRouter = require('./router');
+const indexRouter = require('../app/controller/top/router');
+const loginRouter = require('../app/controller/login/router');
+const registRouter = require('../app/controller/regist/router');
 const mypageRouter = require('../app/controller/mypage/router');
 const auctionRouter = require('../app/controller/auction/router');
-const registRouter = require('../app/controller/regist/router');
 
 app.use('/', indexRouter);
+app.use('/login', loginRouter);
 app.use('/regist', registRouter);
 app.use('/mypage', mypageRouter);
 app.use('/auction', auctionRouter);
