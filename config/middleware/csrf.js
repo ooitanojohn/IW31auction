@@ -3,7 +3,9 @@ const express = require('express');
 const router = express.Router();
 const crypto = require('crypto');
 
-// csrf middleware
+/* ejsフォームに埋め込む */
+// <% - csrfField %>
+
 router.use((req, res, next) => {
   const { method } = req;
   // GEtの場合randomなtokenをhtmlに埋め込む
@@ -20,24 +22,6 @@ router.use((req, res, next) => {
     }
   }
   return next();
-});
-
-/* GET homePage. */
-router.get('/', (req, res) => {
-  res.render('regist', { registCheckMsg: '' });
-});
-
-router.post('/', (req, res) => {
-  // User api
-  // ログイン成功
-  if (req.body.id === 'admin' && req.body.password === 'admin') {
-    return res.redirect(301, 'mypage');
-  }
-  // 失敗
-  return res.render('regist', {
-    csrfField: `<input type="hidden" name="csrfToken" value="${req.body.csrfToken}">`,
-    registCheckMsg: 'ログインID、又はパスワードが違います。',
-  });
 });
 
 module.exports = router;

@@ -24,7 +24,7 @@ router.use((req, res, next) => {
 
 /* GET homePage. */
 router.get('/', (req, res) => {
-  res.render('regist', { registCheckMsg: '' });
+  res.render('login', { loginCheckMsg: '' });
 });
 
 router.post('/', (req, res) => {
@@ -34,9 +34,9 @@ router.post('/', (req, res) => {
     return res.redirect(301, 'mypage');
   }
   // 失敗
-  return res.render('regist', {
+  return res.render('login', {
     csrfField: `<input type="hidden" name="csrfToken" value="${req.body.csrfToken}">`,
-    registCheckMsg: 'ログインID、又はパスワードが違います。',
+    loginCheckMsg: 'ログインID、又はパスワードが違います。',
   });
 });
 

@@ -1,11 +1,33 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel="stylesheet" href="/stylesheets/style.css" />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
-</html>
+<%- include('partials/header.ejs'); %>
+<link rel="stylesheet" href="/css/mypage.css" />
+<main>
+  <h1>マイページ</h1>
+  <%- include('partials/breadcrumb.ejs'); %>
+  <article>
+    <h2>マイ・オークション管理</h2>
+    <div id="mypageList">
+      <section>
+        <h3>入札一覧</h3>
+        <ul>
+          <li>入札したもの</li>
+        </ul>
+      </section>
+      <section>
+        <h3>落札一覧</h3>
+        <ul>
+          <li>落札したもの</li>
+        </ul>
+      </section>
+    </div>
+    <section>
+      <h3>アカウント削除・変更</h3>
+      <ul id="acountSettingList">
+        <li><button>アカウント変更</button></li>
+        <li><button>退会登録</button></li>
+      </ul>
+    </section>
+  </article>
+  <!-- 機能一覧表示 -->
+</main>
+<script type="text/javascript" src="public/mypage.js"></script>
+<%- include('partials/footer.ejs'); %>

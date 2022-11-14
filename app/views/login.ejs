@@ -1,9 +1,9 @@
 <%- include('partials/header.ejs'); %>
 <main>
-  <link rel="stylesheet" href="/css/regist.css" />
+  <link rel="stylesheet" href="/css/login.css" />
   <h1>Sign in to your account</h1>
-  <p><% registCheckMsg %></p>
-  <form action="/regist" method="POST">
+  <p><% loginCheckMsg %></p>
+  <form action="/login" method="POST">
     <div>
       <%- csrfField %>
       <label for="id">ID</label>
@@ -15,7 +15,7 @@
       <button type="submit">Sign in</button>
     </div>
     <section>
-      <h3>Or Sign In with</h3>
+      <h2>Or Sign In with</h2>
       <ul>
         <li><button>Google</button></li>
         <li><button>Twitter</button></li>
@@ -23,5 +23,5 @@
     </section>
   </form>
 </main>
-<script type="text/javascript" src="public/regist.js"></script>
+<script type="text/javascript" src="public/login.js"></script>
 <%- include('partials/footer.ejs'); %>
