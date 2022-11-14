@@ -5,13 +5,14 @@ const express = require('express');
 // const createError = require('http-errors');
 const path = require('path');
 const cookieParser = require('cookie-parser');
-const logger = require('morgan');
-
+const session = require('express-session');
 /**
  * appインスタンス作成
  */
 const app = express();
-
+// debug
+// const logger = require('morgan');
+// app.use(logger('dev'));
 /**
  * express 便利モジュール設定
  */
@@ -20,13 +21,20 @@ app.set('views', path.join(__dirname, '../app/views'));
 app.set('view engine', 'ejs');
 // 静的ファイルのパス
 app.use(express.static(path.join(__dirname, '../public')));
-// log
-app.use(logger('dev'));
 // httpRequest body取得設定
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-// cookie 便利
+// cookie session便利
 app.use(cookieParser());
+
+// csrf対策
+app.use(
+  session({
+    secret: 'secret-key',
+    resave: true,
+    saveUninitialized: true,
+  }),
+);
 
 // router 追加するならここに追記
 const indexRouter = require('../app/controller/top/router');
@@ -53,10 +61,8 @@ app.use('/auction', auctionRouter);
 //   // set locals, only providing error in development
 //   res.locals.message = err.message;
 //   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
 //   // render the error page
 //   res.status(err.status || 500);
 //   res.render('error');
 // });
-
 module.exports = app;

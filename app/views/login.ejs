@@ -8,7 +8,16 @@
     <li>Twitter</li>
   </ul>
   <p>Or Continue with</p>
-  <form action="#" method="POST"></form>
+  <p><%- loginCheckMsg %></p>
+  <form action="/login" method="POST">
+    <%- csrfField %> <label for="id">ID</label>
+    <input name="id" autocomplete="email" />
+    <label for="password">Password</label>
+    <input name="password" autocomplete="current-password" />
+    <label for="remember-me">remember-me</label>
+    <input id="remember-me" name="remember-me" type="checkbox" />
+    <button type="submit">Sign in</button>
+  </form>
 </main>
 <script type="text/javascript" src="public/top.js"></script>
 <%- include('partials/footer.ejs'); %>
