@@ -8,6 +8,7 @@
   re=restore
   mg=merge
   cf=config
+  ft=fetch
 [core]
 	repositoryformatversion = 0
 	filemode = true

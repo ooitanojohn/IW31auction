@@ -5,9 +5,9 @@
   "main": "bin/www",
   "scripts": {
     "dev": "nodemon ./bin/www",
-    "lint": "eslint --fix {public/*.js}",
-    "format": "prettier --w {public/*.js}",
-    "fix": "npm run lint && npm run format",
+    "lint": "eslint \"**/*.js\"",
+    "fix": "eslint --fix \"**/*.js\"",
+    "fmt": "prettier --w \"**/*.js\" && prettier --parser html --w app/views/*.ejs",
     "lint-staged": "lint-staged",
     "prepare": "husky install"
   },
@@ -16,6 +16,7 @@
     "@pdfme/ui": "^1.0.17",
     "axios": "^1.1.3",
     "bcrypt": "^5.1.0",
+    "conf": "^10.2.0",
     "cookie-parser": "^1.4.6",
     "csv": "^6.2.1",
     "dotenv": "^16.0.3",
@@ -28,7 +29,6 @@
     "http-errors": "^2.0.0",
     "morgan": "^1.10.0",
     "mysql2": "^2.3.3",
-    "node-fetch": "^3.3.0",
     "password": "^0.1.1",
     "sharp": "^0.31.2",
     "socket.io": "^4.5.3"
@@ -37,7 +37,6 @@
     "@commitlint/cli": "^17.2.0",
     "@commitlint/config-conventional": "^17.2.0",
     "commitizen": "^4.2.5",
-    "conf": "^10.2.0",
     "cz-customizable": "^7.0.0",
     "debug": "^4.3.4",
     "eslint": "^8.26.0",
@@ -47,10 +46,6 @@
     "husky": "^8.0.0",
     "lint-staged": "^13.0.3",
     "prettier": "^2.7.1"
-  },
-  "lint-staged": {
-    "*.js": "eslint --fix",
-    "*.{js,css,md,json,sh}": "prettier --write"
   },
   "repository": {
     "type": "git",
@@ -62,6 +57,13 @@
     "url": "https://github.com/ooitanojohn/IW31auction/issues"
   },
   "homepage": "https://github.com/ooitanojohn/IW31auction#readme",
+  "lint-staged": {
+    "**/*.js": [
+      "eslint",
+      "prettier --w"
+    ],
+    "app/views/*.ejs": "prettier --parser html --w"
+  },
   "config": {
     "commitizen": {
       "path": "node_modules/cz-customizable"

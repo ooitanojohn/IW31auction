@@ -1,0 +1,7 @@
+main article #mypageList{
+  display: flex;
+}
+main article section #acountSettingList{
+  display:flex;
+  gap:1rem;
+}

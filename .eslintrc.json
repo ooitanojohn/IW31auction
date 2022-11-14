@@ -1,7 +1,11 @@
 {
   "root": true,
   // ルールの追加やルールのオプションの拡張
-  "extends": ["eslint:recommended", "airbnb-base", "prettier"],
+  "extends": [
+    "eslint:recommended",
+    "airbnb-base",
+    "prettier"
+  ],
   // サードパーティのルールを指定
   // 追加パッケージが必要
   "plugins": [],
@@ -14,5 +18,13 @@
     "sourceType": "module"
   },
   "globals": {},
-  "rules": {}
+  "rules": {
+    "semi": [
+      2,
+      "always"
+    ]
+  },
+  "ignorePatterns": [
+    "temp/"
+  ]
 }

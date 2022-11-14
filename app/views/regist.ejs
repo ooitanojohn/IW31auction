@@ -1,0 +1,27 @@
+<%- include('partials/header.ejs'); %>
+<main>
+  <link rel="stylesheet" href="/css/regist.css" />
+  <h1>Sign in to your account</h1>
+  <p><% registCheckMsg %></p>
+  <form action="/regist" method="POST">
+    <div>
+      <%- csrfField %>
+      <label for="id">ID</label>
+      <input name="id" autocomplete="email" />
+      <label for="password">Password</label>
+      <input name="password" autocomplete="current-password" />
+      <label for="remember-me">remember-me</label>
+      <input id="remember-me" name="remember-me" type="checkbox" />
+      <button type="submit">Sign in</button>
+    </div>
+    <section>
+      <h3>Or Sign In with</h3>
+      <ul>
+        <li><button>Google</button></li>
+        <li><button>Twitter</button></li>
+      </ul>
+    </section>
+  </form>
+</main>
+<script type="text/javascript" src="public/regist.js"></script>
+<%- include('partials/footer.ejs'); %>
