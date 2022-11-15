@@ -1,12 +1,9 @@
-const express = require('express');
-
-const router = express.Router();
 const crypto = require('crypto');
 
 /* ejsフォームに埋め込む */
 // <% - csrfField %>
 
-router.use((req, res, next) => {
+const csrf = (req, res, next) => {
   const { method } = req;
   // GEtの場合randomなtokenをhtmlに埋め込む
   if (method === 'GET') {
@@ -22,6 +19,6 @@ router.use((req, res, next) => {
     }
   }
   return next();
-});
+};
 
-module.exports = router;
+module.exports = csrf;
