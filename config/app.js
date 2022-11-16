@@ -10,11 +10,6 @@ const loginRouter = require('../app/controller/login/router');
 const registRouter = require('../app/controller/regist/router');
 const mypageRouter = require('../app/controller/mypage/router');
 const auctionRouter = require('../app/controller/auction/router');
-const topApiRouter = require('../app/api/top/router');
-const loginApiRouter = require('../app/api/login/router');
-const registApiRouter = require('../app/api/regist/router');
-const mypageApiRouter = require('../app/api/mypage/router');
-const auctionApiRouter = require('../app/api/auction/router');
 /** appインスタンス */
 const app = express();
 /** パス設定 */
@@ -40,12 +35,6 @@ app.use('/login', loginRouter);
 app.use('/regist', registRouter);
 app.use('/mypage', mypageRouter);
 app.use('/auction', auctionRouter);
-/** nodeでサーバサイドを作成する場合 */
-app.use('/api', topApiRouter);
-app.use('/loginApi', loginApiRouter);
-app.use('/registApi', registApiRouter);
-app.use('/mypageApi', mypageApiRouter);
-app.use('/auctionApi', auctionApiRouter);
 
 /** logger */
 // app.use(logger('dev'));
