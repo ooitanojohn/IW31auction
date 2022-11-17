@@ -10,6 +10,7 @@ const loginRouter = require('../app/controller/login/router');
 const registRouter = require('../app/controller/regist/router');
 const mypageRouter = require('../app/controller/mypage/router');
 const auctionRouter = require('../app/controller/auction/router');
+
 /** appインスタンス */
 const app = express();
 /** パス設定 */
