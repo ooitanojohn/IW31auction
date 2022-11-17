@@ -5,9 +5,9 @@
  */
 require('dotenv').config();
 const http = require('http');
+const debug = require('debug')('temp:server');
 const { normalizePort, onError } = require("./config"); // server起動時の設定
 const app = require('../config/app');
-const debug = require('debug')('temp:server');
 
 /**
  * Get port from environment and store in Express.
@@ -26,7 +26,6 @@ const server = http.createServer(app);
  */
 
 function onListening() {
-  // eslint-disable-next-line no-undef
   const addr = server.address();
   const bind = typeof addr === 'string'
     ? `pipe ${addr}`
