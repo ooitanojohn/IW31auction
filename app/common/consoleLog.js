@@ -7,7 +7,8 @@ const consoleLog = (...theArgs) => {
     case 2:
       console.log(theArgs[0], theArgs[1]); // eslint-disable-line no-console
       break;
-    default: // eslint-disable-line no-console
+    default:
+      // eslint-disable-next-line no-console
       console.log(theArgs);
       break;
   }
@@ -21,7 +22,8 @@ const consoleError = (...theArgs) => {
     case 2:
       console.error(theArgs[0], theArgs[1]); // eslint-disable-line no-console
       break;
-    default: // eslint-disable-line no-console
+    default:
+      // eslint-disable-next-line no-console
       console.error(theArgs);
       break;
   }
