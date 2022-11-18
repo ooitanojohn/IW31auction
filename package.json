@@ -4,7 +4,7 @@
   "description": "auctionProject",
   "main": "bin/www",
   "scripts": {
-    "dev": "npm run dev",
+    "dev": "nodemon ./bin/www",
     "debug": "set DEBUG=express:temp:server* & nodemon ./bin/www",
     "lint": "eslint \"**/*.js\"",
     "fix": "eslint --fix \"**/*.js\"",

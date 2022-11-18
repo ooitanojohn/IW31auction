@@ -5,22 +5,23 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 // const logger = require('morgan');
-const topRouter = require('../app/controller/top/router');
-const loginRouter = require('../app/controller/login/router');
-const registRouter = require('../app/controller/regist/router');
-const mypageRouter = require('../app/controller/mypage/router');
-const auctionRouter = require('../app/controller/auction/router');
+const { auctionRouter, registRouter, mypageRouter, loginRouter, topRouter } = require('./router');
 
 /** appインスタンス */
 const app = express();
+/** 環境変数 */
+require('dotenv').config({
+  path: `config/env/.env.${app.get('env')}`,
+});
 /** パス設定 */
 app.set('views', path.join(__dirname, '../app/views'));
 app.set('view engine', 'ejs');
-app.use(express.static(path.join(__dirname, '../public')));
 /** middleware */
+app.use(express.static(path.join(__dirname, '../public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+
 /** session設定 まだ良くわかってない */
 app.use(
   session({
@@ -36,7 +37,6 @@ app.use('/login', loginRouter);
 app.use('/regist', registRouter);
 app.use('/mypage', mypageRouter);
 app.use('/auction', auctionRouter);
-
 /** logger */
 // app.use(logger('dev'));
 
