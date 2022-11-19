@@ -29,6 +29,7 @@
     "http-errors": "^2.0.0",
     "morgan": "^1.10.0",
     "mysql2": "^2.3.3",
+    "nodemailer": "^6.8.0",
     "password": "^0.1.1",
     "sharp": "^0.31.2",
     "socket.io": "^4.5.3"
