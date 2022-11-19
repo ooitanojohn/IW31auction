@@ -4,7 +4,7 @@
   "description": "auctionProject",
   "main": "bin/www",
   "scripts": {
-    "dev": "npm run dev",
+    "dev": "nodemon ./bin/www",
     "debug": "set DEBUG=express:temp:server* & nodemon ./bin/www",
     "lint": "eslint \"**/*.js\"",
     "fix": "eslint --fix \"**/*.js\"",
@@ -31,7 +31,8 @@
     "http-errors": "^2.0.0",
     "morgan": "^1.10.0",
     "mysql2": "^2.3.3",
-    "password": "^0.1.1",
+    "passport": "^0.6.0",
+    "passport-local": "^1.0.0",
     "sharp": "^0.31.2",
     "socket.io": "^4.5.3"
   },
