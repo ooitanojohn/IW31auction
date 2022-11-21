@@ -40,6 +40,5 @@ function pdfmake(fileName, data){//htmlpass:html化するファイル名、fileN
    }
    start();
 }
-pdfmake("./test2.pdf", "bbb");
 
 //車両管理と出品管理PDF化引数htmlファイルをPDFか
