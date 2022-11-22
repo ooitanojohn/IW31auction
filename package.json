@@ -4,7 +4,7 @@
   "description": "auctionProject",
   "main": "bin/www",
   "scripts": {
-    "dev": "set DEBUG=http & nodemon config/server.js",
+    "dev": "set DEBUG=http* & nodemon config/server.js",
     "debugMySQL": "set DEBUG=MySQL* & nodemon config/server.js",
     "debugMAIL": "set DEBUG=MAIL* & nodemon config/server.js",
     "lint": "eslint \"**/*.js\"",

@@ -1,14 +1,15 @@
 #!/usr/bin/env node
 
+// eslint-disable-next-line import/order
 const app = require('./app');
 const debug = require('debug')('http');
-const http_socket = require('http').Server(app);
-const io_socket = require('socket.io')(http_socket);
+const httpSocket = require('http').Server(app);
+const ioSocket = require('socket.io')(httpSocket);
 
 debug('booting App');
 
 /** ソケット */
-io_socket.on('connection', (socket) => {
+ioSocket.on('connection', (socket) => {
   /**
    * 接続と非接続
    */
@@ -27,10 +28,10 @@ io_socket.on('connection', (socket) => {
   });
   /** 入札が来たらMySQLへの登録処理と入札記録を返す */
   socket.on('toServerBiddingSend', (biddingData) => {
-    io_socket.to(biddingData.productId).emit('toRenderBiddingSend', biddingData);
+    ioSocket.to(biddingData.productId).emit('toRenderBiddingSend', biddingData);
   });
 });
 
-http_socket.listen(9000, () => {
+httpSocket.listen(9000, () => {
   debug('listening...');
 });
