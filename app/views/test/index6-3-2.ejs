@@ -1,0 +1,8 @@
+<%- include('partials/header.ejs'); %>
+<h1>
+  index.ejs/h1> <a href="/login">ログインへ</a>
+  <hr />
+  <% for (let i = 0; i < values.length; i++) { %> <%= i %> : <%= values[i].id %>
+  <%= values[i].username %> values[i].email %> <%= values[i].password %><br />
+  <%- include('partials/footer.ejs'); %>
+</h1>

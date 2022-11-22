@@ -1,7 +1,10 @@
 const nodemailer = require('nodemailer');
-//
-// SMTP の設定
-//
+const debugMAIL = require('debug')('MAIL');
+require('dotenv').config();
+/**
+ *  SMTP の設定
+ */
+
 const options = {
   host: process.env.SMTP_HOST, // メールサーバー
   port: process.env.SMTP_PORT, // ポート番号 25 など(gmailは587)
@@ -20,8 +23,8 @@ const options = {
 // メールメッセージ
 
 const mails = {
-  from: 'ookinaki12@gmail.com', // 送信元メールアドレス
-  to: 'ookinaki12@gmail.com', // 送信先メールアドレス
+  from: process.env.SMTP_USER, // 送信元メールアドレス
+  to: process.env.SMTP_USER, // 送信先メールアドレス
   subject: 'Email Test Mail',
   text: `Email was sent!`,
   html: `<p>Email was sent!</p>`,
@@ -35,11 +38,11 @@ async function sendMail(option, mail) {
   try {
     const transport = nodemailer.createTransport(option);
     const result = await transport.sendMail(mail);
-    console.log('+++ Sent +++');
-    console.log(result);
+    debugMAIL('+++ Sent +++');
+    debugMAIL(result);
   } catch (err) {
-    console.log('--- Error ---');
-    console.log(err);
+    debugMAIL('--- Error ---');
+    debugMAIL(err);
   }
 }
 

@@ -1,0 +1,22 @@
+<%- include('partials/header.ejs'); %> <h1>WebSocket auctionroom<%= auctionId %></h1>
+<form id="auctionForm">
+  <input id="auction-input1" type="text" />
+  <input id="auction-input2" type="text" />
+  <input type="submit" class="button" value="Send" />
+</form>
+<ul>
+  <li>過去ログ</li> <% for (let i= 0; i < values.length; i++) { %> <ul id="auction-log">
+    <li>ログNo:<%= i %></li>
+    <li>input1:<%= values[i].input1 %></li>
+    <li>input2:<%= values[i].input2%></li>
+  </ul> <% } %> <li>現在ログ</li>
+  <ul id="output"></ul>
+</ul>
+<script>
+  // auctionId変数に保存
+  let auctionId = "<%= auctionId %>";
+  // console.log(auctionId);
+  // 過去のauctionを表示
+</script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="../js/javascript6-2-3.js"></script> <%- include('partials/footer.ejs'); %>
