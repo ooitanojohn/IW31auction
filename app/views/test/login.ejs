@@ -1,0 +1,12 @@
+<%- include('partials/header.ejs'); %>
+<form action="/login" method="post">
+  <div>
+    <label>メール:</label>
+    <input type="text" name="email" value="asada@hal.ac.jp" />
+  </div>
+  <div>
+    <label>パスワード:</label>
+    <input type="submit" value="ログイン" />
+  </div>
+</form>
+<%- include('partials/footer.ejs'); %>
