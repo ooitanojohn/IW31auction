@@ -26,6 +26,6 @@
   },
   "ignorePatterns": [
     "temp/",
-    "public/js"
+    "public/js",
   ]
 }
