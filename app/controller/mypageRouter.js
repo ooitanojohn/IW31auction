@@ -1,4 +1,3 @@
-/* eslint-disable global-require */
 const express = require('express');
 
 const router = express.Router();
@@ -6,23 +5,23 @@ const router = express.Router();
 // const { biddingShow } = require("./biddingController");
 // router.get("/:productId", (req, res) => biddingShow(req, res));
 /**
- * 入札 route controller
+ * auction router + controller
  */
 /** 必要module読み込み */
-const { executeQuery, beginTran } = require('../../module/mysqlPool');
+/** resに渡す情報とSQLモジュールの読み込み */
+const { executeQuery } = require('../module/mysqlPool');
+const { httpRapper } = require('../common/httpRapper');
+/** 配列操作 モジュール */
+const { array2ndFindKeyMapVal, array2ndFindValMapArr } = require('../common/arrayMap');
 
-/** ページ遷移時に入札情報を取ってくる */
-router.get('/:productId', async (req, res, next) => {
-  /** resに渡す情報とSQLモジュールの読み込み */
-  const { reqInfoReturn } = require('../../conf/req');
-  const resInfo = reqInfoReturn(req);
-  /** 配列操作 モジュール */
-  const { array2ndFindKeyMapVal, array2ndFindValMapArr } = require('../../common/arrayMap');
+/** 入札ページ。ページ遷移時に入札情報を取ってくる */
+router.get('/bidding/:productId', async (req, res, next) => {
+  const resInfo = httpRapper(req);
 
   try {
     /** ここに処理を記述 */
     resInfo.sql = await executeQuery(
-      'SELECT * FROM `biddings_tbl` WHERE `product_id` = ? ORDER BY `bidding_time` ASC LIMIT 5',
+      'SELECT * FROM `biddings` WHERE `product_id` = ? ORDER BY `bidding_time` ASC LIMIT 5',
       [req.params.productId],
     );
 

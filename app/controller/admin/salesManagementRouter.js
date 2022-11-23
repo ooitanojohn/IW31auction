@@ -4,29 +4,29 @@ const router = express.Router();
 /**
  * 売上管理 router + controller
  */
+const debug = require('debug')('http:sales');
+const { executeQuery, beginTran } = require('../../module/mysqlPool');
+const { httpRapper } = require('../../common/httpRapper');
 
 /** 売上管理 時間終了した出品一覧表示 */
 router.get('/', async (req, res, next) => {
   /** resに渡す情報とSQLモジュールの読み込み */
-  const { reqInfoReturn } = require('../../conf/auctionResInfo');
-  const resInfo = reqInfoReturn(req);
-  const { executeQuery } = require('../../module/mysqlTransaction');
-
+  const resInfo = httpRapper(req);
   try {
     if (req.query === 'search') {
       /** 絞り込み */
       resInfo.sql = await executeQuery(
-        'SELECT * FROM `biddings_tbl` WHERE `product_id` = ? ORDER BY `bidding_time` ASC LIMIT 5',
+        'SELECT * FROM `biddings` WHERE `product_id` = ? ORDER BY `bidding_time` ASC LIMIT 5',
         ['1'],
       );
     }
     /** ここに処理を記述 */
     resInfo.sql = await executeQuery(
-      'SELECT * FROM `biddings_tbl` WHERE `product_id` = ? ORDER BY `bidding_time` ASC LIMIT 5',
+      'SELECT * FROM `biddings` WHERE `product_id` = ? ORDER BY `bidding_time` ASC LIMIT 5',
       ['1'],
     );
-
-    res.render('bidding.ejs', { ejsRender: resInfo });
+    debug(resInfo.sql);
+    res.render('admin/top', { ejsRender: resInfo });
   } catch (err) {
     next(err);
   }
@@ -35,9 +35,6 @@ router.get('/', async (req, res, next) => {
 /** 入金を確認したら入金登録 */
 router.post('/:productId', async (req, res, next) => {
   /** resに渡す情報とSQLモジュールの読み込み */
-  const { reqInfoReturn } = require('../../conf/auctionResInfo');
-  const resInfo = reqInfoReturn(req);
-  const { beginTran } = require('/app/module/mysqlTransaction');
   const tran = await beginTran();
   try {
     await tran.query(
@@ -58,9 +55,6 @@ router.post('/:productId', async (req, res, next) => {
 /** product_tbl 購入権取得カラム 一覧表示 */
 router.get('/insert', async (req, res, next) => {
   /** resに渡す情報とSQLモジュールの読み込み */
-  const { reqInfoReturn } = require('../../conf/auctionResInfo');
-  const resInfo = reqInfoReturn(req);
-  const { beginTran } = require('/app/module/mysqlTransaction');
   const tran = await beginTran();
   try {
     await tran.query(`INSERT`, []);
@@ -76,9 +70,6 @@ router.get('/insert', async (req, res, next) => {
 /** product_tbl product_state = 3 入金を確認したら入金tbl登録  */
 router.post('/insert', async (req, res, next) => {
   /** resに渡す情報とSQLモジュールの読み込み */
-  const { reqInfoReturn } = require('../../conf/auctionResInfo');
-  const resInfo = reqInfoReturn(req);
-  const { beginTran } = require('/app/module/mysqlTransaction');
   const tran = await beginTran();
   try {
     await tran.query(`INSERT`, []);

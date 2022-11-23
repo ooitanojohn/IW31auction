@@ -1,5 +1,5 @@
 const nodemailer = require('nodemailer');
-const debugMAIL = require('debug')('MAIL');
+const debug = require('debug')('http:mail');
 require('dotenv').config();
 /**
  *  SMTP の設定
@@ -38,11 +38,11 @@ async function sendMail(option, mail) {
   try {
     const transport = nodemailer.createTransport(option);
     const result = await transport.sendMail(mail);
-    debugMAIL('+++ Sent +++');
-    debugMAIL(result);
+    debug('+++ Sent +++');
+    debug(result);
   } catch (err) {
-    debugMAIL('--- Error ---');
-    debugMAIL(err);
+    debug('--- Error ---');
+    debug(err);
   }
 }
 

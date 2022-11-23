@@ -16,12 +16,14 @@ const MySQLTransaction = class {
     }
     // コネクションがなければ、poolからコネクションを取得
     this.connection = await getConnection();
+
     // トランザクション開始
     this.connection.beginTransaction();
   }
 
   // クエリの実行 options = {}はfields
   async query(query, values, options = {}) {
+    // eslint-disable-next-line no-param-reassign
     options = {
       fields: options.fields || false,
     };

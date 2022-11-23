@@ -1,0 +1,29 @@
+<%- include('../partials/header.ejs'); %>
+<main>
+  <h1>管理者ページ</h1>
+  <%- include('../partials/breadcrumb.ejs'); %> 
+  <article>
+    <h2>管理者機能一覧</h2>
+    <div id="mypageList">
+      <section>
+        <h3><a href="/admin/carStocks" >車両管理</a></h3>
+      </section>
+      <section>
+        <h3><a href="/admin/users" >会員管理</a></h3>
+      </section>
+      <section>
+        <h3><a href="/admin/sales" >売上管理</a></h3>
+      </section>
+      <section>
+        <h3><a href="/admin/products" >出品管理</a></h3>
+      </section>
+    </div>
+  </article>
+  <!-- 機能一覧表示 -->
+</main>
+<script>
+  const info = JSON.parse('<%- JSON.stringify(ejsRender) %>');
+  console.log(info);
+</script>
+<script type="text/javascript" src="/js/admin/top.js"></script>
+<%- include('../partials/footer.ejs'); %>

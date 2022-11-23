@@ -6,7 +6,7 @@
 const { promisify } = require('util');
 const mysql = require('mysql2');
 /** 接続設定 */
-const { mysqlConf } = require('../conf/mysql');
+const { mysqlConf } = require('../../config/conf/mysql');
 
 const connection = mysql.createConnection(mysqlConf);
 const conPromise = {

@@ -4,31 +4,32 @@ const router = express.Router();
 /**
  * 出品管理 router + controller
  */
+/** 必要module読み込み */
+/** resに渡す情報とSQLモジュールの読み込み */
+const debug = require('debug')('http:products');
+const { executeQuery, beginTran } = require('../../module/mysqlPool');
+const { httpRapper } = require('../../common/httpRapper');
+const { paginate } = require('../../common/paginate');
 
 /** 出品管理 product_tbl一覧表示 */
 /** 詳細 slider modalで表示 */
-router.get('/', async (req, res, next) => {
+router.get('/:page', async (req, res, next) => {
   /** resに渡す情報とSQLモジュールの読み込み */
-  const { reqInfoReturn } = require('../../conf/auctionResInfo');
-  const resInfo = reqInfoReturn(req);
-  const { executeQuery } = require('../../module/mysqlTransaction');
-
+  const resInfo = httpRapper(req);
+  /** paging */
+  const limit = 5;
+  const offset = paginate(5, req.params.page);
+  debug(offset);
   /** 画像データは10個。json化してinsertする */
   try {
     if (req.query === 'search') {
       /** 絞り込み */
-      resInfo.sql = await executeQuery(
-        'SELECT * FROM `biddings_tbl` WHERE `product_id` = ? ORDER BY `bidding_time` ASC LIMIT 5',
-        ['1'],
-      );
+      resInfo.sql = await executeQuery('SELECT * FROM `users` LIMIT ? OFFSET ?;', [limit, offset]);
     }
     /** ここに処理を記述 */
-    resInfo.sql = await executeQuery(
-      'SELECT * FROM `biddings_tbl` WHERE `product_id` = ? ORDER BY `bidding_time` ASC LIMIT 5',
-      ['1'],
-    );
-
-    res.render('bidding.ejs', { ejsRender: resInfo });
+    resInfo.sql = await executeQuery('SELECT * FROM `users` LIMIT ? OFFSET ?;', [limit, offset]);
+    debug(resInfo.sql);
+    res.render('admin/top.ejs', { ejsRender: resInfo });
   } catch (err) {
     next(err);
   }
@@ -37,9 +38,6 @@ router.get('/', async (req, res, next) => {
 /** 出品登録画面での更新、論理削除処理 (form) */
 router.post('/:productId', async (req, res, next) => {
   /** resに渡す情報とSQLモジュールの読み込み */
-  const { reqInfoReturn } = require('../../conf/auctionResInfo');
-  const resInfo = reqInfoReturn(req);
-  const { beginTran } = require('/app/module/mysqlTransaction');
   const tran = await beginTran();
   try {
     await tran.query(
@@ -61,10 +59,6 @@ router.post('/:productId', async (req, res, next) => {
  * 画像登録フォーム×10 を書くリストの下につけておく
  */
 router.get('/insert', async (req, res, next) => {
-  /** resに渡す情報とSQLモジュールの読み込み */
-  const { reqInfoReturn } = require('../../conf/auctionResInfo');
-  const resInfo = reqInfoReturn(req);
-  const { beginTran } = require('/app/module/mysqlTransaction');
   const tran = await beginTran();
   try {
     await tran.query(`INSERT`, []);
@@ -83,10 +77,6 @@ router.get('/insert', async (req, res, next) => {
  *
  */
 router.post('/insert', async (req, res, next) => {
-  /** resに渡す情報とSQLモジュールの読み込み */
-  const { reqInfoReturn } = require('../../conf/auctionResInfo');
-  const resInfo = reqInfoReturn(req);
-  const { beginTran } = require('/app/module/mysqlTransaction');
   const tran = await beginTran();
   try {
     await tran.query(`INSERT`, []);

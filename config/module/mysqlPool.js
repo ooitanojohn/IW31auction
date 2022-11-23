@@ -1,6 +1,7 @@
 /**
  * コネクションプーリングでMySQL接続
  */
+const debugMySQL = require('debug')('MySQL:connect');
 const { promisify } = require('util');
 const mysql = require('mysql2');
 /** 接続設定 */
@@ -8,6 +9,7 @@ const { mysqlPoolConf } = require('../conf/mysql');
 
 /** Poolインスタンス */
 const pool = mysql.createPool(mysqlPoolConf);
+debugMySQL(pool);
 // pool.getConnectionプロミス化
 const getConnection = promisify(pool.getConnection).bind(pool);
 // pool.queryをプロミス化、prepared
