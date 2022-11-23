@@ -3,7 +3,7 @@
  * @param {*} req httpリクエストの値を格納
  * @returns {object} httpレスポンスで返す値を格納
  */
-const reqInfoReturn = (req) => {
+const httpRapper = (req) => {
   const resInfo = {
     body: req.body, // 送信データ client？ serverじゃない?再入力時は居るな
     params: req.params, // 今回はproductId。 myPage,userIDとか商品詳細ページの商品IDとかbiddingページのproductIDとか
@@ -15,5 +15,5 @@ const reqInfoReturn = (req) => {
 };
 
 module.exports = {
-  reqInfoReturn,
+  httpRapper,
 };

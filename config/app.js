@@ -21,10 +21,14 @@ app.use(cookieParser());
  * router
  */
 const adminRouter = require('../app/controller/admin/router');
-const biddingRouter = require('../app/controller/bidding/router');
-const carStocksManagementRouter = require('../app/controller/admin/carStocksManagement/router');
-const productsManagementRouter = require('../app/controller/admin/productsManagement/router');
-const userManagementRouter = require('../app/controller/admin/userManagement/router');
+const carStocksManagementRouter = require('../app/controller/admin/carStocksManagementRouter');
+const productsManagementRouter = require('../app/controller/admin/productsManagementRouter');
+const userManagementRouter = require('../app/controller/admin/userManagementRouter');
+const salesManagementRouter = require('../app/controller/admin/salesManagementRouter');
+
+const userRouter = require('../app/controller/router');
+const mypageRouter = require("../app/controller/mypageRouter");
+const auctionRouter = require('../app/controller/auctionRouter');
 
 /**
  * 管理者側
@@ -37,37 +41,29 @@ app.use('/admin', adminRouter);
 /**
  * 車両管理
  */
-app.use('/admin/carStocks', carStocksManagementRouter);
+adminRouter.use('/carStocks', carStocksManagementRouter);
 /** 出品管理 */
-app.use('/admin/products', productsManagementRouter);
+adminRouter.use('/products', productsManagementRouter);
 /** 会員管理 */
-app.use('/admin/users', userManagementRouter);
+adminRouter.use('/users', userManagementRouter);
 /** 売上管理 */
-app.use('/admin', biddingRouter);
+adminRouter.use('/sales', salesManagementRouter);
 
 /**
  * ユーザー側
  */
-/** ランディングページ */
-
-/** ログイン、登録ページ */
-
+app.use("/", userRouter);
+/** ランディングページ = / */
+/** ログイン、登録ページ  /login /regist */
 /**
  * オークションスケジュール確認
  * (商品一覧確認、商品詳細ページ)
  */
-// app.get("/admin/car", carRouter);
-// app.use("/top", productRouter);
-
 // 入札ページ
-app.use('/bidding', biddingRouter);
-
+userRouter.use('/auction', auctionRouter);
 // マイページ (落札一覧、入札履歴、退会処理)
-// app.use("/myPage",myPageRouter);
-
+userRouter.use('/mypage', mypageRouter);
 // 上記以外のURLを404ページに飛ばして404にTOPへのリンクをつける
-app.get('/', (req, res) => {
-  res.send('send');
-});
+
 
 module.exports = app;

@@ -1,4 +1,5 @@
 /* eslint-disable global-require */
+const debug = require("debug")("http:carStock");
 const express = require('express');
 
 const router = express.Router();
@@ -6,22 +7,23 @@ const router = express.Router();
  * 車両管理 router + controller
  *
  */
-/** 必要module読み込み */
-const { executeQuery, beginTran } = require('../../../module/mysqlPool');
+/** resに渡す情報とSQLモジュールの読み込み */
+const { executeQuery, beginTran } = require('../../module/mysqlPool');
+const { httpRapper } = require("../../common/httpRapper");
+
 
 /** 車両一覧表示 */
-router.get('/:page', async (req, res, next) => {
+router.get('/', async (req, res, next) => {
   /** resに渡す情報とSQLモジュールの読み込み */
-  const { reqInfoReturn } = require('../../../common/httpRapper');
-  const resInfo = reqInfoReturn(req);
+  const resInfo = httpRapper(req);
   try {
     /** ここに処理を記述 */
     resInfo.sql = await executeQuery(
-      'SELECT * FROM `biddings_tbl` WHERE `product_id` = ? ORDER BY `bidding_time` ASC LIMIT 5',
+      'SELECT * FROM `biddings` WHERE `product_id` = ? ORDER BY `bidding_time` ASC LIMIT 5',
       ['1'],
     );
-
-    res.render('bidding.ejs', { ejsRender: resInfo });
+    debug(resInfo.sql);
+    res.render('admin/top', { ejsRender: resInfo });
   } catch (err) {
     next(err);
   }
@@ -30,8 +32,6 @@ router.get('/:page', async (req, res, next) => {
 /** 新規登録 (csv) */
 router.post('/', async (req, res, next) => {
   /** resに渡す情報とSQLモジュールの読み込み */
-  const { reqInfoReturn } = require('../../../common/httpRapper');
-  const resInfo = reqInfoReturn(req);
   const tran = await beginTran();
   try {
     await tran.query(`INSERT`, []);
@@ -47,8 +47,6 @@ router.post('/', async (req, res, next) => {
 /** 更新処理 (form) */
 router.post('/:car', async (req, res, next) => {
   /** resに渡す情報とSQLモジュールの読み込み */
-  const { reqInfoReturn } = require('../../conf/auctionResInfo');
-  const resInfo = reqInfoReturn(req);
   const tran = await beginTran();
   try {
     await tran.query(
