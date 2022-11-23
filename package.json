@@ -25,6 +25,7 @@
     "ejs": "^3.1.8",
     "express": "^4.18.1",
     "express-fileupload": "^1.4.0",
+    "express-form-data": "^2.0.19",
     "express-session": "^1.17.3",
     "mysql2": "^2.3.3",
     "nodemailer": "^6.8.0",
@@ -55,7 +56,7 @@
   },
   "homepage": "https://github.com/ooitanojohn/IW31auction#readme",
   "lint-staged": {
-      "**/*.js": [
+    "**/*.js": [
       "eslint",
       "prettier --w"
     ],
