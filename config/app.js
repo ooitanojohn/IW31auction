@@ -60,9 +60,9 @@ app.use('/', userRouter);
  * (商品一覧確認、商品詳細ページ)
  */
 // 入札ページ
-userRouter.use('/auction', auctionRouter);
+app.use('/auction', auctionRouter);
 // マイページ (落札一覧、入札履歴、退会処理)
-userRouter.use('/mypage', mypageRouter);
+app.use('/mypage', mypageRouter);
 // 上記以外のURLを404ページに飛ばして404にTOPへのリンクをつける
 
 module.exports = app;
