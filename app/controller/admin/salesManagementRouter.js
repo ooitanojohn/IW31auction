@@ -4,9 +4,9 @@ const router = express.Router();
 /**
  * 売上管理 router + controller
  */
-const debug = require("debug")("http:sales");
+const debug = require('debug')('http:sales');
 const { executeQuery, beginTran } = require('../../module/mysqlPool');
-const { httpRapper } = require("../../common/httpRapper");
+const { httpRapper } = require('../../common/httpRapper');
 
 /** 売上管理 時間終了した出品一覧表示 */
 router.get('/', async (req, res, next) => {
