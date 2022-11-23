@@ -7,7 +7,7 @@ const router = express.Router();
 /** 必要module読み込み */
 /** resに渡す情報とSQLモジュールの読み込み */
 // const { executeQuery, beginTran } = require('../../module/mysqlPool');
-const { httpRapper } = require("../../common/httpRapper");
+const { httpRapper } = require('../../common/httpRapper');
 
 /** adminLogin */
 router.get('/', (req, res) => {

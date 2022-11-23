@@ -1,5 +1,5 @@
 /* eslint-disable global-require */
-const debug = require("debug")("http:carStock");
+const debug = require('debug')('http:carStock');
 const express = require('express');
 
 const router = express.Router();
@@ -9,8 +9,7 @@ const router = express.Router();
  */
 /** resに渡す情報とSQLモジュールの読み込み */
 const { executeQuery, beginTran } = require('../../module/mysqlPool');
-const { httpRapper } = require("../../common/httpRapper");
-
+const { httpRapper } = require('../../common/httpRapper');
 
 /** 車両一覧表示 */
 router.get('/', async (req, res, next) => {

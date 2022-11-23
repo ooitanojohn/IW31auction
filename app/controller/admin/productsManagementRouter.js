@@ -6,9 +6,9 @@ const router = express.Router();
  */
 /** 必要module読み込み */
 /** resに渡す情報とSQLモジュールの読み込み */
-const debug = require("debug")("http:products");
+const debug = require('debug')('http:products');
 const { executeQuery, beginTran } = require('../../module/mysqlPool');
-const { httpRapper } = require("../../common/httpRapper");
+const { httpRapper } = require('../../common/httpRapper');
 
 /** 出品管理 product_tbl一覧表示 */
 /** 詳細 slider modalで表示 */

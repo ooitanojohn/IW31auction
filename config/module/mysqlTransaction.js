@@ -19,7 +19,7 @@ const MySQLTransaction = class {
     // トランザクション開始
     this.connection.beginTransaction();
   }
-  
+
   // クエリの実行 options = {}はfields
   async query(query, values, options = {}) {
     // eslint-disable-next-line no-param-reassign

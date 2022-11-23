@@ -55,6 +55,10 @@
   },
   "homepage": "https://github.com/ooitanojohn/IW31auction#readme",
   "lint-staged": {
+      "**/*.js": [
+      "eslint",
+      "prettier --w"
+    ],
     "app/views/*.ejs": "prettier --parser html --w"
   },
   "config": {

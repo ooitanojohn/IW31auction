@@ -27,7 +27,7 @@ const userManagementRouter = require('../app/controller/admin/userManagementRout
 const salesManagementRouter = require('../app/controller/admin/salesManagementRouter');
 
 const userRouter = require('../app/controller/router');
-const mypageRouter = require("../app/controller/mypageRouter");
+const mypageRouter = require('../app/controller/mypageRouter');
 const auctionRouter = require('../app/controller/auctionRouter');
 
 /**
@@ -52,7 +52,7 @@ adminRouter.use('/sales', salesManagementRouter);
 /**
  * ユーザー側
  */
-app.use("/", userRouter);
+app.use('/', userRouter);
 /** ランディングページ = / */
 /** ログイン、登録ページ  /login /regist */
 /**
@@ -64,6 +64,5 @@ userRouter.use('/auction', auctionRouter);
 // マイページ (落札一覧、入札履歴、退会処理)
 userRouter.use('/mypage', mypageRouter);
 // 上記以外のURLを404ページに飛ばして404にTOPへのリンクをつける
-
 
 module.exports = app;
