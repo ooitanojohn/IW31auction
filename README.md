@@ -12,9 +12,14 @@ npm run dev
 
 ### 変数はconsoleでなくdebug();で出す
 ```
-const = require("debug")("確認したい変数");
-debug("");
+const debug= require("debug")("http:作成した処理");
+debug("確認したい変数");
+
+例)
+const debug = require('debug')('http:mail');
+debug(メール送信の結果)
 ```
+consoleにhttp:mailの文字が先頭に出力されるため何が怪しいかわかりやすい
 
 ### 構文チェック (git cm とかで怒られてどれ怒られたかわからなかったらやって)
 npm run lint

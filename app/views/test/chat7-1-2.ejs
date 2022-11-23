@@ -1,0 +1,15 @@
+<%- include('partials/header.ejs'); %> <h1>WebSocket auction<= auctionId %>
+</h1><input type="button" value="#1%" onclick="OnButtonClick();" /><br />
+<form id="auctionForm">
+  <input id="auction-input1" type="text">
+  <input id="auction-input2" type="text">
+  <input type="submit" class="button" value="Send">
+</form>
+<ul id="output"> <% for (let i = 0; i < auctionmessage. length; ++i) { %> <li>
+    <%= auctionmessage[i].input1 %><%= auctionmessage[i].input2 %></li>
+</ul>
+<script>
+  var auctionId = '<%= auctionId %>'
+</script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/javascript.js"></script> <%- include('partials/footer.ejs'); %>

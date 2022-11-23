@@ -1,21 +1,23 @@
+// mysql connect
 require('dotenv').config();
-// const debug = require("debug")("temp:server");
-// DB接続設定
-const { consoleLog } = require('../../app/common/consoleLog');
 
 const mysqlConf = {
   host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: '',
   port: process.env.DB_PORT,
-  database: process.env.DB_NAME,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
 };
-const mysqlConnectError = (err) => {
-  if (err) {
-    consoleLog(`MySQL: err connect${err.stack}`);
-    return;
-  }
-  consoleLog('MYSQL connected');
+const mysqlPoolConf = {
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  port: process.env.DB_PORT,
+  database: process.env.DB_DATABASE,
+  waitForConnections: true,
+  connectionLimit: 20, // デフォルトは10
+  queueLimit: 0,
 };
+
 exports.mysqlConf = mysqlConf;
-exports.mysqlConnectError = mysqlConnectError;
+exports.mysqlPoolConf = mysqlPoolConf;
