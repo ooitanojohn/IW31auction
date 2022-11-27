@@ -15,20 +15,9 @@ const { httpRapper } = require('../../common/httpRapper');
 router.get('/', async (req, res, next) => {
   /** resに渡す情報とSQLモジュールの読み込み */
   const resInfo = httpRapper(req);
-
   try {
-    if (req.query === 'search') {
-      /** 絞り込み */
-      resInfo.sql = await executeQuery(
-        'SELECT * FROM `biddings` WHERE `product_id` = ? ORDER BY `bidding_time` ASC LIMIT 5',
-        ['1'],
-      );
-    }
     /** ここに処理を記述 */
-    resInfo.sql = await executeQuery(
-      'SELECT * FROM `biddings` WHERE `product_id` = ? ORDER BY `bidding_time` ASC LIMIT 5',
-      ['1'],
-    );
+    resInfo.sql = await executeQuery('SELECT * FROM `users` ORDER BY `user_id` ASC');
     debug(resInfo.sql);
     res.render('admin/userManagement.ejs', { ejsRender: resInfo });
   } catch (err) {
@@ -37,18 +26,33 @@ router.get('/', async (req, res, next) => {
 });
 
 /** 出品登録画面での垢バン 論理削除処理 (form) */
-router.post('/:userId', async (req, res, next) => {
+router.post('/', async (req, res, next) => {
   const tran = await beginTran();
+  const resInfo = httpRapper(req);
   try {
+    /** 変更をかけたいuserのuser_stateを抽出 */
+    resInfo.user_state = await executeQuery('SELECT * FROM `users` WHERE user_id = ?', [
+      req.body.upbutton,
+    ]);
+    // console.log(resInfo.user_state[0]['user_state']);
+    if (resInfo.user_state[0].user_state === 0) {
+      resInfo.user_state[0].user_state = 2;
+    } else {
+      resInfo.user_state[0].user_state = 0;
+    }
+
+    /** user */
     await tran.query(
-      `UPDATE user_tbl
-      SET card_number=?, card_key=?, user_state=?
-      WHERE user_id=?`,
-      [3540000000000001, 555, 1, 1],
+      `UPDATE users
+      SET user_state = ? 
+      WHERE user_id = ?`,
+      [resInfo.user_state[0].user_state, req.body.upbutton],
     );
     // throw new Error("エラーテスト");
     await tran.commit();
-    res.end('OK');
+
+    resInfo.sql = await executeQuery('SELECT * FROM `users` ORDER BY `user_id` ASC');
+    res.render('admin/userManagement.ejs', { ejsRender: resInfo });
   } catch (err) {
     await tran.rollback();
     next(err);
@@ -58,18 +62,28 @@ router.post('/:userId', async (req, res, next) => {
 /**
  * ユーザーごとの購入データ表示 グラフ化 chart.js
  */
-router.get('/userId/:userId', async (req, res, next) => {
-  /** resに渡す情報とSQLモジュールの読み込み */
-  const tran = await beginTran();
-  try {
-    await tran.query(`INSERT`, []);
-    // throw new Error("エラーテスト");
-    await tran.commit();
-    res.end('OK');
-  } catch (err) {
-    await tran.rollback();
-    next(err);
-  }
-});
+// router.get('/userId/:userId', async (req, res, next) => {
+//   /** resに渡す情報とSQLモジュールの読み込み */
+//   const resInfo = httpRapper(req);
+
+//   try {
+//     if (req.query === 'search') {
+//       /** 絞り込み */
+//       resInfo.sql = await executeQuery(
+//         'SELECT * FROM `biddings` WHERE `product_id` = ? ORDER BY `bidding_time` ASC LIMIT 5',
+//         ['1'],
+//       );
+//     }
+//     /** ここに処理を記述 */
+//     resInfo.sql = await executeQuery(
+//       'SELECT * FROM `biddings` WHERE `product_id` = ? ORDER BY `bidding_time` ASC LIMIT 5',
+//       ['1'],
+//     );
+//     debug(resInfo.sql);
+//     res.render('admin/userManagement.ejs', { ejsRender: resInfo });
+//   } catch (err) {
+//     next(err);
+//   }
+// });
 
 module.exports = router;
