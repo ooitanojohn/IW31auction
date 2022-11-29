@@ -91,4 +91,22 @@ router.post('/insert', async (req, res, next) => {
   }
 });
 
+/** 
+ * 時間終了した出品IDの最大入札金額者のid、金額を取ってくる。
+ * 入札確定者の情報一覧表示 
+ * */
+app.get("/bidder", async (req, res, next) => {
+app/module/mysqlTransactionを読み込む
+  const { executeQuery } = require("app/module/mysqlTransaction");
+  try {
+    const data =  executeQuery('SELECT bi.user_id, bi.product_id , MAX(bi.bidding_money) FROM biddings AS bi INNER JOIN products AS pr ON pr.product_id = bi.product_id WHERE pr.end_time < NOW() GROUP BY bi.product_id;');
+    console.log(data);
+  res.end("OK");
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;
+
+
