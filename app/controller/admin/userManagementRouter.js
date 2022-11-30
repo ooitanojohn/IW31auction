@@ -6,7 +6,7 @@ const router = express.Router();
  */
 /** 必要module読み込み */
 /** resに渡す情報とSQLモジュールの読み込み */
-const debug = require('debug')('http:user');
+const debugMySQL = require('debug')('MySQL:user');
 const { executeQuery, beginTran } = require('../../module/mysqlPool');
 const { httpRapper } = require('../../common/httpRapper');
 
@@ -16,9 +16,13 @@ router.get('/', async (req, res, next) => {
   /** resに渡す情報とSQLモジュールの読み込み */
   const resInfo = httpRapper(req);
   try {
+    debugMySQL(resInfo);
     /** ここに処理を記述 */
-    resInfo.sql = await executeQuery('SELECT * FROM `users` ORDER BY `user_id` ASC');
-    debug(resInfo.sql);
+    resInfo.sql = await executeQuery('SELECT * FROM `users` ORDER BY `user_id` ASC').catch(
+      (err) => {
+        throw new Error(err);
+      },
+    );
     res.render('admin/userManagement.ejs', { ejsRender: resInfo });
   } catch (err) {
     next(err);
@@ -42,13 +46,16 @@ router.post('/', async (req, res, next) => {
     }
 
     /** user */
-    await tran.query(
-      `UPDATE users
-      SET user_state = ? 
+    await tran
+      .query(
+        `UPDATE users
+      SET user_state = ?
       WHERE user_id = ?`,
-      [resInfo.user_state[0].user_state, req.body.upbutton],
-    );
-    // throw new Error("エラーテスト");
+        [resInfo.user_state[0].user_state, req.body.upbutton],
+      )
+      .catch((err) => {
+        throw new Error(err);
+      });
     await tran.commit();
 
     resInfo.sql = await executeQuery('SELECT * FROM `users` ORDER BY `user_id` ASC');

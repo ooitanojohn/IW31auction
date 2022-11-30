@@ -17,22 +17,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-/**
- * router
- */
-const adminRouter = require('../app/controller/admin/router');
-const carStocksManagementRouter = require('../app/controller/admin/carStocksManagementRouter');
-const productsManagementRouter = require('../app/controller/admin/productsManagementRouter');
-const userManagementRouter = require('../app/controller/admin/userManagementRouter');
-const salesManagementRouter = require('../app/controller/admin/salesManagementRouter');
-
-const userRouter = require('../app/controller/router');
-const mypageRouter = require('../app/controller/mypageRouter');
-const auctionRouter = require('../app/controller/auctionRouter');
-
+/** router */
 /**
  * 管理者側
  */
+const adminRouter = require('../app/controller/admin/router');
 /**
  * 管理画面
  * ログイン
@@ -41,18 +30,21 @@ app.use('/admin', adminRouter);
 /**
  * 車両管理
  */
-adminRouter.use('/carStocks', carStocksManagementRouter);
+adminRouter.use(
+  '/carStocks',
+  require('../app/controller/admin/carStocksManagementRouter'),
+); /** localhost:9000/admin/catStocks */
 /** 出品管理 */
-adminRouter.use('/products', productsManagementRouter);
+adminRouter.use('/products', require('../app/controller/admin/productsManagementRouter'));
 /** 会員管理 */
-adminRouter.use('/users', userManagementRouter);
+adminRouter.use('/users', require('../app/controller/admin/userManagementRouter'));
 /** 売上管理 */
-adminRouter.use('/sales', salesManagementRouter);
+adminRouter.use('/sales', require('../app/controller/admin/salesManagementRouter'));
 
 /**
  * ユーザー側
  */
-app.use('/', userRouter);
+app.use('/', require('../app/controller/router'));
 /** ランディングページ = / */
 /** ログイン、登録ページ  /login /regist */
 /**
@@ -60,9 +52,9 @@ app.use('/', userRouter);
  * (商品一覧確認、商品詳細ページ)
  */
 // 入札ページ
-app.use('/auction', auctionRouter);
+app.use('/auction', require('../app/controller/mypageRouter'));
 // マイページ (落札一覧、入札履歴、退会処理)
-app.use('/mypage', mypageRouter);
+app.use('/mypage', require('../app/controller/auctionRouter'));
 // 上記以外のURLを404ページに飛ばして404にTOPへのリンクをつける
 
 module.exports = app;

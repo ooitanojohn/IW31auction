@@ -18,7 +18,7 @@
       <% }) %>
       <% if(ejsRender.sql[i]['user_state'] != 1){ %>
         <td>
-          <button type="submit" name="upbutton" value="<%- ejsRender.sql[i]['user_id'] %>"><%- ejsRender.sql[i]['user_state'] === 2 ? '通常(0)に変更':'垢バン(2)に変更' %></button>	        	
+          <button type="submit" name="upbutton" value="<%- ejsRender.sql[i]['user_id'] %>"><%- ejsRender.sql[i]['user_state'] === 2 ? '通常(0)に変更':'垢バン(2)に変更' %></button>
         </td>
       <% } %>
     </tr>
