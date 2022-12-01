@@ -18,7 +18,7 @@ var myCreateElement = function (tag, text, className, AttributeObj) {
     className = '';
   }
   if (AttributeObj === void 0) {
-    AttributeObj = { id: '' };
+    AttributeObj = null;
   }
   var myElement = document.createElement(tag);
   if (text !== '') myElement.textContent = text;
@@ -30,11 +30,13 @@ var myCreateElement = function (tag, text, className, AttributeObj) {
       myElement.classList.add(name_1);
     }
   }
-  for (var _a = 0, _b = Object.entries(AttributeObj); _a < _b.length; _a++) {
-    var _c = _b[_a],
-      key = _c[0],
-      value = _c[1];
-    myElement.setAttribute(key, value);
+  if (AttributeObj !== null) {
+    for (var _a = 0, _b = Object.entries(AttributeObj); _a < _b.length; _a++) {
+      var _c = _b[_a],
+        key = _c[0],
+        value = _c[1];
+      myElement.setAttribute(key, value);
+    }
   }
   return myElement;
 };

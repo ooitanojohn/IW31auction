@@ -1,27 +1,35 @@
 <%- include('partials/header.ejs'); %>
-<main>
-  <link rel="stylesheet" href="/css/login.css" />
-  <h1>Sign in to your account</h1>
-  <p><% loginCheckMsg %></p>
-  <form action="/login" method="POST">
-    <div>
-      <%- csrfField %>
-      <label for="id">ID</label>
-      <input name="id" autocomplete="email" />
-      <label for="password">Password</label>
-      <input name="password" autocomplete="current-password" />
-      <label for="remember-me">remember-me</label>
-      <input id="remember-me" name="remember-me" type="checkbox" />
-      <button type="submit">Sign in</button>
-    </div>
+
+<section class="prompt">
+  <h1>Sign in</h1>
+  <a class="button google" href="/login/federated/google">Sign in with Google</a>
+  <a class="button google" href="/auth/twitter">Sign in with Twitter</a>
+  <% if (hasMessages) { %>
+  <section class="messages">
+    <% messages.forEach(function(message) { %>
+    <p><%= message %></p>
+    <% }); %>
+  </section>
+  <% } %>
+  <form action="/login/password" method="post">
     <section>
-      <h2>Or Sign In with</h2>
-      <ul>
-        <li><button>Google</button></li>
-        <li><button>Twitter</button></li>
-      </ul>
+      <label for="user_login_id">user_login_id</label>
+      <input id="user_login_id" name="user_login_id" type="text" autocomplete="username" required />
     </section>
+    <section>
+      <label for="current_password">Password</label>
+      <input
+        id="current_password"
+        name="password"
+        type="password"
+        autocomplete="current-password"
+        required
+      />
+    </section>
+    <button type="submit">Sign in</button>
   </form>
-</main>
-<script type="text/javascript" src="/js/login/login.js"></script>
+  <hr />
+  <p class="help">Don't have an account? <a href="/signup">Sign up</a></p>
+</section>
+
 <%- include('partials/footer.ejs'); %>
