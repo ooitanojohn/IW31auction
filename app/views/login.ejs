@@ -1,35 +1,51 @@
 <%- include('partials/header.ejs'); %>
-
-<section class="prompt">
-  <h1>Sign in</h1>
-  <a class="button google" href="/login/federated/google">Sign in with Google</a>
-  <a class="button google" href="/auth/twitter">Sign in with Twitter</a>
+<link rel="stylesheet" href="./css/login.css" />
+<div class="uk-container uk-container-expand login-component">
+  <h1 class="visually-hidden">ログイン</h1>
   <% if (hasMessages) { %>
-  <section class="messages">
+  <div class="messages">
     <% messages.forEach(function(message) { %>
     <p><%= message %></p>
     <% }); %>
-  </section>
+  </div>
   <% } %>
   <form action="/login/password" method="post">
-    <section>
-      <label for="user_login_id">user_login_id</label>
+    <div>
+      <label for="user_login_id">ログインID</label>
       <input id="user_login_id" name="user_login_id" type="text" autocomplete="username" required />
-    </section>
-    <section>
-      <label for="current_password">Password</label>
+    </div>
+    <div>
+      <label for="password">パスワード</label>
       <input
-        id="current_password"
+        id="password"
         name="password"
         type="password"
         autocomplete="current-password"
         required
       />
-    </section>
-    <button type="submit">Sign in</button>
+    </div>
+    <div class="loginButton">
+      <button
+        type="submit"
+        style="
+        width: 100%;
+    "
+      >
+        ログイン
+      </button>
+    </div>
+    <p class="help">
+      アカウントを持っていない方は <a href="/signup">アカウント作成<span uk-icon="user"></span></a>
+    </p>
+    <hr />
+    <div class="uk-flex-center@s">
+      <a class="google" href="/login/federated/google"
+        ><span class="uk-margin-small-right" uk-icon="icon: google"></span> Sign in with Google</a
+      >
+      <a class="twitter" href="/auth/twitter"
+        ><span class="uk-margin-small-right" uk-icon="icon: twitter"></span>Sign in with Twitter</a
+      >
+    </div>
   </form>
-  <hr />
-  <p class="help">Don't have an account? <a href="/signup">Sign up</a></p>
-</section>
-
+</div>
 <%- include('partials/footer.ejs'); %>

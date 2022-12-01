@@ -9,7 +9,7 @@
     "debugMAIL": "set DEBUG=MAIL* & nodemon ./bin/www",
     "lint": "eslint \"**/*.js\"",
     "fix": "eslint --fix \"**/*.js\"",
-    "fmt": "prettier --w \"**/*.js\" && prettier --parser html --w app/views/*.ejs",
+    "fmt": "prettier --w \"**/*.js\" && prettier --parser html --w app/views/*.ejs && prettier --w \"**/*.css\" ",
     "lint-staged": "lint-staged",
     "prepare": "husky install"
   },
