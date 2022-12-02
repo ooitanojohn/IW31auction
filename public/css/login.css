@@ -1,0 +1,28 @@
+.login-component {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content:center;
+  height:calc(80vh - 5rem);
+}
+.google {
+  color: cadetblue;
+  border: cadetblue 5px solid;
+  padding: 0.5rem 1rem;
+  font-weight: 400;
+}
+.google:hover {
+  color: slategrey;
+}
+.twitter {
+  color: #1e87f0;
+  border: #1e87f0 5px solid;
+  padding: 0.5rem 1rem;
+  font-weight: 400;
+}
+.twitter:hover {
+  color: slategrey;
+}
+.help {
+  text-align: center;
+}
