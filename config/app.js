@@ -43,18 +43,18 @@ adminRouter.use('/products', require('../app/controller/admin/productsManagement
 adminRouter.use('/users', require('../app/controller/admin/userManagementRouter'));
 /** 売上管理 */
 adminRouter.use('/sales', require('../app/controller/admin/salesManagementRouter'));
+
 /**
  * ユーザー側
  */
-app.use('/', require('../routes/index'));
+/** ログイン */
 app.use('/', require('../routes/auth'));
-// 入札ページ
-app.use('/auction', require('../app/controller/auctionRouter'));
+/** オークション一覧 + 入札ページ + 商品詳細 */
+app.use('/', require('../routes/index'));
 // マイページ (落札一覧、入札履歴、退会処理)
-app.use('/mypage', require('../app/controller/mypageRouter'));
+app.use('/mypage', require('../routes/mypage'));
 // 上記以外のURLを404ページに飛ばして404にTOPへのリンクをつける
 
-/** error */
 /** http-error 404ページ */
 app.use((req, res, next) => {
   /** 404を受け取るとエラーをthrowする */

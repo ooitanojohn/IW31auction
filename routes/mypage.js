@@ -1,18 +1,13 @@
 const express = require('express');
 
 const router = express.Router();
-/** controller */
-// const { biddingShow } = require("./biddingController");
-// router.get("/:productId", (req, res) => biddingShow(req, res));
-/**
- * auction router + controller
- */
+
 /** 必要module読み込み */
 /** resに渡す情報とSQLモジュールの読み込み */
-const { executeQuery } = require('../module/mysqlPool');
-const { httpRapper } = require('../common/httpRapper');
+const { executeQuery } = require('../app/module/mysqlPool');
+const { httpRapper } = require('../app/common/httpRapper');
 /** 配列操作 モジュール */
-const { array2ndFindKeyMapVal, array2ndFindValMapArr } = require('../common/arrayMap');
+const { array2ndFindKeyMapVal, array2ndFindValMapArr } = require('../app/common/arrayMap');
 
 /** 入札ページ。ページ遷移時に入札情報を取ってくる */
 router.get('/bidding/:productId', async (req, res, next) => {
