@@ -1,6 +1,14 @@
-<section class="prompt">
-  <h3>todos</h3>
-  <h1>Sign up</h1>
+<%- include('partials/header.ejs'); %>
+<link rel="stylesheet" href="./css/login.css" />
+<div class="uk-container uk-container-expand login-component">
+  <h1 class="visually-hidden">新規登録</h1>
+  <% if (hasMessages) { %>
+  <div class="messages">
+    <% messages.forEach(function(message) { %>
+    <p><%= message %></p>
+    <% }); %>
+  </div>
+  <% } %>
   <form action="/signup" method="post">
     <section>
       <label for="user-login-id">ログインID</label>
@@ -23,8 +31,9 @@
         required
       />
     </section>
-    <button type="submit">Sign up</button>
+    <button type="submit" style="width: 100%;"></button>
   </form>
   <hr />
   <p class="help">Already have an account? <a href="/login">Sign in</a></p>
-</section>
+</div>
+<%- include('partials/footer.ejs'); %>
