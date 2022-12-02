@@ -1,12 +1,13 @@
 {
   "cSpell.words": [
+    "camelcase",
     "commitlint",
     "czrc",
     "gitmoji",
     "Ldata",
     "mypage",
-    "regist",
     "oidc",
-    "promiss"
+    "promiss",
+    "regist"
   ]
 }
