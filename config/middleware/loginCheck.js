@@ -16,7 +16,7 @@ router.get(
   (req, res) => {
     const resInfo = httpRapper(req);
     res.locals.filter = null;
-    res.render('index', { user: req.user, ejsRender: resInfo });
+    res.render('auction', { user: req.user, ejsRender: resInfo });
   },
 );
 
@@ -30,7 +30,7 @@ router.get(
 //   (req, res) => {
 //     const resInfo = httpRapper(req);
 //     res.locals.filter = null;
-//     res.render('index', { user: req.user, ejsRender: resInfo });
+//     res.render('auction', { user: req.user, ejsRender: resInfo });
 //   },
 // );
 
