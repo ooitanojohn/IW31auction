@@ -1,12 +1,23 @@
-<section class="todoapp">
-  <nav class="nav">
-    <ul>
-      <li class="user"><%= user.user_login_id %></li>
-      <li>
+<%- include('partials/header.ejs'); %>
+<nav class="nav">
+  <ul>
+    <li class="user"><%= user.user_login_id %></li>
+    <li>
+      <div style="display: flex;">
+        <a href="/mypage">
+          <button class="logout">mypage</button>
+        </a>
         <form action="/logout" method="post">
           <button class="logout" type="submit">Sign out</button>
         </form>
-      </li>
-    </ul>
-  </nav>
-</section>
+      </div>
+    </li>
+  </ul>
+</nav>
+<h1>オークションスケジュール確認(商品一覧確認)</h1>
+<script>
+  const info = JSON.parse('<%- JSON.stringify(ejsRender) %>');
+  console.log(info);
+</script>
+<script src="/socket.io/socket.io.js"></script>
+<%- include('partials/footer.ejs'); %>
