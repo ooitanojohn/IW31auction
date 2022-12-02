@@ -28,10 +28,9 @@ h1 {
 }
 @media screen and (max-width: 480px) {
   /* 480px以下に適用されるCSS（スマホ用） */
-
   .homeMain {
     left: 0px;
-    position: ;
+    position: relative;
     bottom: 0px;
   }
   .topImg::before {
