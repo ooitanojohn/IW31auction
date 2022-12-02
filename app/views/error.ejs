@@ -1,4 +1,17 @@
-<h1><%= message %></h1>
-<h2><%= error.status %>ページです</h2>
-<pre><%= error.stack %></pre>
-<a href="/">TOPに戻る</a>
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="author" content="board">
+    <title>HALオークション</title>
+    <!-- UIkit CSS -->
+    <link rel="stylesheet" href="/css/error.css">
+  </head>
+  <div id="main">
+    <div class="fof">
+        <h1><%= message %></h1>
+        <h2><%= error.status %>ページです</h2>
+        <pre><%= error.stack %></pre>
+        <a href="/">TOPに戻る</a>
+    </div>
+</div>
