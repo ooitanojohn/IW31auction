@@ -7,7 +7,7 @@ const { httpRapper } = require('../app/common/httpRapper');
 /* オークション一覧表示 */
 router.get('/', (req, res) => {
   const resInfo = httpRapper(req);
-  res.render('index', { user: req.user, ejsRender: resInfo });
+  res.render('auction', { user: req.user, ejsRender: resInfo });
 });
 
 module.exports = router;
