@@ -17,9 +17,12 @@ const signup = async (req, res, next) => {
   });
 
   const tran = await beginTran();
+  /** 新規登録ID初期化 */
   try {
-    await tran.query(
-      `INSERT INTO users (
+    let id = 0;
+    await tran
+      .query(
+        `INSERT INTO users (
           user_login_id,
           hashed_password,
           user_name,
@@ -32,12 +35,18 @@ const signup = async (req, res, next) => {
           icon_img,
           user_state
           ) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      [req.body.user_login_id, hashedPassword, '', '', '', '', '', '', '', '', 0],
-    );
+        [req.body.user_login_id, hashedPassword, '', '', '', '', '', '', '', '', 0],
+      )
+      .then((results) => {
+        id = results.insertId;
+      })
+      .catch((err) => {
+        throw new Error(err);
+      });
     await tran.commit();
     /** 成功したらsessionにid付与してログイン */
     const user = {
-      id: this.lastID,
+      user_id: id,
       user_login_id: req.body.user_login_id,
     };
     // eslint-disable-next-line no-shadow

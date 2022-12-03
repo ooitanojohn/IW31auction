@@ -45,7 +45,7 @@ const googleAuth = async (issuer, profile, cb) => {
         });
       await tran.commit();
       const user = {
-        id,
+        user_id: id,
         user_login_id: profile.displayName,
       };
       return cb(null, user);

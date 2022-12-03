@@ -16,6 +16,7 @@ router.get(
   },
   (req, res) => {
     const resInfo = httpRapper(req);
+    // console.log(req.user);
     res.locals.filter = null;
     res.render('auction', { user: req.user, ejsRender: resInfo });
   },

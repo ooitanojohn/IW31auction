@@ -54,7 +54,7 @@ const twitterAuth = async (token, tokenSecret, profile, cb) => {
         });
       await tran.commit();
       const user = {
-        id,
+        user_id: id,
         user_login_id: profile.username,
       };
       debug(user);
