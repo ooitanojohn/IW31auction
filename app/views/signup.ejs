@@ -36,4 +36,8 @@
   <hr />
   <p class="help">Already have an account? <a href="/login">Sign in</a></p>
 </div>
+<script>
+  const info = JSON.parse('<%- JSON.stringify(ejsRender) %>');
+  console.log(info);
+</script>
 <%- include('partials/footer.ejs'); %>

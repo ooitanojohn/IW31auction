@@ -62,7 +62,9 @@ app.use('/bidding', require('../routes/bidding'));
 // app.use('/product', require('../routes/product'));
 
 /** マイページ (落札一覧、入札履歴、退会処理) */
-// app.use('/mypage', require('../routes/mypage'));
+app.use('/mypage', require('../routes/mypage'));
+
+const { httpRapper } = require('../app/common/httpRapper');
 
 /** http-error 404ページ */
 app.use((req, res, next) => {
@@ -71,10 +73,11 @@ app.use((req, res, next) => {
 
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
+  const resInfo = httpRapper(req);
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
   res.status(err.status || 500);
-  res.render('error');
+  res.render('error', { ejsRender: resInfo });
 });
 
 module.exports = app;

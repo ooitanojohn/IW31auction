@@ -8,8 +8,9 @@ const { httpRapper } = require('../../app/common/httpRapper');
 router.get(
   '/',
   (req, res, next) => {
+    const resInfo = httpRapper(req);
     if (!req.user) {
-      return res.render('home');
+      return res.render('home', { ejsRender: resInfo });
     }
     return next();
   },
@@ -20,7 +21,7 @@ router.get(
   },
 );
 
-// router.use("/",
+// router.use(
 //   (req, res, next) => {
 //     if (!req.user) {
 //       return res.render('home');

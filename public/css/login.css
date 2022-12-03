@@ -20,27 +20,26 @@
     display: block !important;
     visibility: visible !important;
   }
-  .loginButtonMedia{
+  .loginButtonMedia {
     display: flex;
     gap: 0.5rem;
   }
-  .loginButtonMedia a{
-    width:100%;
+  .loginButtonMedia a {
+    width: 100%;
   }
-  .footerComponent{
+  .footerComponent {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
-
 }
 
 .login-component {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content:center;
-  height:calc(80vh - 5rem);
+  justify-content: center;
+  height: calc(80vh - 5rem);
 }
 .google {
   color: cadetblue;

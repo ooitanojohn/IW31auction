@@ -1,0 +1,11 @@
+<%- include('partials/loginheader.ejs'); %>
+<main>
+  <%- include('partials/breadcrumb.ejs'); %>
+  <h1>オークションスケジュール確認(商品一覧確認)</h1>
+  <script>
+    const info = JSON.parse('<%- JSON.stringify(ejsRender) %>');
+    console.log(info);
+  </script>
+  <script src="/socket.io/socket.io.js"></script>
+</main>
+<%- include('partials/footer.ejs'); %>

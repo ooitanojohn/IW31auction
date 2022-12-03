@@ -1,7 +1,7 @@
-<%- include('partials/header.ejs'); %>
-<link rel="stylesheet" href="/css/mypage.css" />
+<%- include('partials/loginheader.ejs'); %>
+<!-- <link rel="stylesheet" href="/css/mypage.css" /> -->
 <main>
-  <h1>マイページ</h1>
+  <h1 class="visually-hidden">マイページ</h1>
   <%- include('partials/breadcrumb.ejs'); %>
   <article>
     <h2>マイ・オークション管理</h2>
@@ -29,5 +29,9 @@
   </article>
   <!-- 機能一覧表示 -->
 </main>
-<script type="text/javascript" src="/js/mypage/mypage.js"></script>
+<script>
+  const info = JSON.parse('<%- JSON.stringify(ejsRender) %>');
+  console.log(info);
+</script>
+<!-- <script type="text/javascript" src="/js/mypage/mypage.js"></script> -->
 <%- include('partials/footer.ejs'); %>

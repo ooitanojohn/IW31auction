@@ -49,4 +49,8 @@
     </div>
   </form>
 </div>
+<script>
+  const info = JSON.parse('<%- JSON.stringify(ejsRender) %>');
+  console.log(info);
+</script>
 <%- include('partials/footer.ejs'); %>
