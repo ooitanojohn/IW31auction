@@ -1,5 +1,5 @@
 <%- include('partials/loginheader.ejs'); %>
-<!-- <link rel="stylesheet" href="/css/mypage.css" /> -->
+<link rel="stylesheet" href="/css/mypage.css" />
 <main>
   <h1 class="visually-hidden">マイページ</h1>
   <%- include('partials/breadcrumb.ejs'); %>
@@ -8,9 +8,61 @@
     <div id="mypageList">
       <section>
         <h3>入札一覧</h3>
-        <ul>
-          <li>入札したもの</li>
-        </ul>
+        <table class="uk-table uk-table-justify uk-table-divider">
+          <thead>
+            <tr>
+              <th>オークションID</th>
+              <th>車名</th>
+              <th>画像</th>
+              <th>現時点最大入札金額</th>
+              <th>あなたの最大入札金額</th>
+              <th>現時点最終入札時間</th>
+              <th>オークション終了まで</th>
+              <th>入札ページへ</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% ejsRender.sql.forEach((value, key) => { %>
+            <tr>
+              <td><%= ejsRender.sql[key].product_id %></td>
+              <td><%= ejsRender.sql[key].car_name %></td>
+              <td>
+                <p>
+                  <img
+                    src="<%= ejsRender.sql[key].car_img %>"
+                    alt="車の画像"
+                    width="75px"
+                    height="50px"
+                  />
+                </p>
+              </td>
+              <td>
+                <!-- 最大入札者が誰かによって表示を変える -->
+                <%_ if(ejsRender.sql[key].product_id === ejsRender.sql2[key].product_id) { _%> <%_
+                if(ejsRender.sql[key]['MAX(bidding_money)'] >=
+                ejsRender.sql2[key]['MAX(bidding_money)']) { _%>
+                <p>最大入札者は貴方です<%= ejsRender.sql2[key]['MAX(bidding_money)'] %></p>
+                <%_ } else { _%>
+                <p>
+                  あと+<%- ejsRender.sql2[key]['MAX(bidding_money)'] -
+                  ejsRender.sql[key]['MAX(bidding_money)'] + 100 %>円で貴方が最大入札者です
+                </p>
+                <%_ } _%> <%_ } _%>
+              </td>
+              <td><%= ejsRender.sql[key]['MAX(bidding_money)'] %>円</td>
+              <td>
+                <%_ if(ejsRender.sql[key].product_id === ejsRender.sql2[key].product_id) { _%>
+                <p><%= ejsRender.sql2[key]['MAX(bidding_time)'] %></p>
+                <%_ } _%>
+              </td>
+              <td class="timeLeft"></td>
+              <td>
+                <button class="uk-button uk-button-default" type="button">入札ページへ</button>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
       </section>
       <section>
         <h3>落札一覧</h3>
@@ -30,8 +82,7 @@
   <!-- 機能一覧表示 -->
 </main>
 <script>
-  const info = JSON.parse('<%- JSON.stringify(ejsRender) %>');
-  console.log(info);
+  const info = JSON.parse('<%- JSON.stringify(ejsRender) %>'); console.log(info);
 </script>
-<!-- <script type="text/javascript" src="/js/mypage/mypage.js"></script> -->
+<script type="text/javascript" src="/js/mypage.js"></script>
 <%- include('partials/footer.ejs'); %>
