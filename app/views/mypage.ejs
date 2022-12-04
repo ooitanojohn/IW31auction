@@ -116,7 +116,7 @@
       </section>
     </div>
     <section>
-      <h3>アカウント情報変更・削除</h3>
+      <h3>アカウント情報変更</h3>
       <ul id="acountSettingList" class="uk-flex" style="gap: 10px;">
         <li>
           <a class="uk-button uk-button-default mypageButton" href="#modal-center" uk-toggle
@@ -142,50 +142,139 @@
                   />
                 </div>
                 <div class="loginButton">
-                  <button type="submit" style="width: 100%;">ログイン</button>
+                  <button type="submit" style="width: 100%;">変更</button>
                 </div>
               </form>
             </div>
           </div>
         </li>
         <li>
-          <a class="uk-button uk-button-default mypageButton" href="#modal-center" uk-toggle
+          <a class="uk-button uk-button-default mypageButton" href="#modal-card" uk-toggle
             ><button>カード情報変更</button></a
           >
-          <div id="modal-center" class="uk-flex-top" uk-modal>
+          <div id="modal-card" class="uk-flex-top" uk-modal>
             <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
               <button class="uk-modal-close-default" type="button" uk-close></button>
               <h4>カード情報変更</h4>
-              <form action="/mypage/acount" method="POST">
+              <form action="/mypage/card" method="POST">
                 <div>
-                  <label for="user_login_id">ログインID</label>
+                  <label for="card_number">クレカ番号</label>
                   <input
-                    type="text"
-                    name="user_login_id"
-                    id="user_login_id"
-                    autocomplete="username"
+                    name="card_number"
+                    id="card_number"
+                    type="number"
+                    value="<%= ejsRender.sql4[0].card_number %>"
+                    autocomplete="cc-number"
+                    maxlength="12"
                     required
                   />
                 </div>
                 <div>
-                  <label for="password">パスワード</label>
+                  <label for="card_key">クレカセキュリティコード</label>
                   <input
-                    id="password"
-                    name="password"
-                    type="password"
-                    autocomplete="current-password"
+                    id="card_key"
+                    name="card_key"
+                    type="number"
+                    value="<%= ejsRender.sql4[0].card_key %>"
+                    autocomplete="cc-csc"
+                    maxlength="3"
                     required
                   />
                 </div>
                 <div class="loginButton">
-                  <button type="submit" style="width: 100%;">ログイン</button>
+                  <button type="submit" style="width: 100%;">変更</button>
                 </div>
               </form>
             </div>
           </div>
         </li>
-        <li><button>住所変更</button></li>
-        <li><button>退会登録</button></li>
+        <li>
+          <a class="uk-button uk-button-default mypageButton" href="#modal-address" uk-toggle
+            ><button>配達先住所変更</button></a
+          >
+          <div id="modal-address" class="uk-flex-top" uk-modal>
+            <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
+              <button class="uk-modal-close-default" type="button" uk-close></button>
+              <h4>配達先住所登録・変更</h4>
+              <form action="/mypage/address" method="POST">
+                <div>
+                  <label for="user_name">user_name</label>
+                  <input
+                    type="text"
+                    name="user_name"
+                    id="user_name"
+                    autocomplete="name"
+                    value="<%= ejsRender.sql4[0].user_name %>"
+                  />
+                </div>
+                <div>
+                  <label for="user_mail">メール</label>
+                  <input
+                    type="mail"
+                    name="user_mail"
+                    id="user_mail"
+                    autocomplete="email"
+                    value="<%= ejsRender.sql4[0].user_mail %>"
+                    required
+                  />
+                </div>
+                <div>
+                  <label for="user_post_code">郵便番号</label>
+                  <input
+                    type="text"
+                    name="user_post_code"
+                    id="user_post_code"
+                    value="<%= ejsRender.sql4[0].user_post_code %>"
+                    autocomplete="postal-code"
+                    required
+                  />
+                </div>
+                <div>
+                  <label for="user_address">住所変更</label>
+                  <input
+                    id="user_address"
+                    name="user_address"
+                    type="text"
+                    value="<%= ejsRender.sql4[0].user_address %>"
+                    autocomplete="street-address"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label for="user_phone_number">携帯番号</label>
+                  <input
+                    id="user_phone_number"
+                    name="user_phone_number"
+                    type="tel"
+                    value="<%= ejsRender.sql4[0].user_phone_number %>"
+                    autocomplete="tel-national"
+                    required
+                  />
+                </div>
+                <div class="loginButton">
+                  <button type="submit" style="width: 100%;">変更</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </li>
+        <li>
+          <a class="uk-button uk-button-default mypageButton" href="#modal-drop" uk-toggle
+            ><button>アカウント退会</button></a
+          >
+          <div id="modal-drop" class="uk-flex-top" uk-modal>
+            <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
+              <button class="uk-modal-close-default" type="button" uk-close></button>
+              <h4>アカウント情報削除</h4>
+              <form action="/mypage/drop" method="POST">
+                <div class="loginButton">
+                  <button type="submit" style="width: 100%;">退会する</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </li>
       </ul>
     </section>
   </article>
