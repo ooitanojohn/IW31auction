@@ -1,6 +1,7 @@
 /**
  * 登録処理
  */
+const debug = require('debug')('http:mypage');
 const bcrypt = require('bcrypt');
 
 const saltRounds = 10;
@@ -8,21 +9,17 @@ const { beginTran } = require('../module/mysqlPool');
 
 /** userData登録 */
 const signup = async (req, res, next) => {
-  /** パスワードのハッシュ化と登録 */
-  let hashedPassword = '';
-  // eslint-disable-next-line consistent-return
-  await bcrypt.hash(req.body.password, saltRounds, (err, password) => {
-    hashedPassword = password;
-    if (err) return next(err);
-  });
-
   const tran = await beginTran();
   /** 新規登録ID初期化 */
   try {
-    let id = 0;
-    await tran
-      .query(
-        `INSERT INTO users (
+    /** パスワードのハッシュ化と登録 */
+    await bcrypt.hash(req.body.password, saltRounds, async (err, hashedPassword) => {
+      debug(tran);
+      if (err) throw new Error(err);
+      let id = 0;
+      await tran
+        .query(
+          `INSERT INTO users (
           user_login_id,
           hashed_password,
           user_name,
@@ -35,27 +32,29 @@ const signup = async (req, res, next) => {
           icon_img,
           user_state
           ) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-        [req.body.user_login_id, hashedPassword, '', '', '', '', '', '', '', '', 0],
-      )
-      .then((results) => {
-        id = results.insertId;
-      })
-      .catch((err) => {
-        throw new Error(err);
+          [req.body.user_login_id, hashedPassword, '', '', '', '', '', '', '', '', 0],
+        )
+        .then((results) => {
+          id = results.insertId;
+        })
+        .catch((error) => {
+          throw new Error(error);
+        });
+      await tran.commit();
+      /** 成功したらsessionにid付与してログイン */
+      const user = {
+        user_id: id,
+        user_login_id: req.body.user_login_id,
+      };
+      // eslint-disable-next-line no-shadow
+      req.login(user, (err) => {
+        if (err) {
+          return next(err);
+        }
+        return res.redirect('/');
       });
-    await tran.commit();
-    /** 成功したらsessionにid付与してログイン */
-    const user = {
-      user_id: id,
-      user_login_id: req.body.user_login_id,
-    };
-    // eslint-disable-next-line no-shadow
-    req.login(user, (err) => {
-      if (err) {
-        return next(err);
-      }
-      return res.redirect('/');
     });
+
     // eslint-disable-next-line no-shadow
   } catch (err) {
     await tran.rollback();

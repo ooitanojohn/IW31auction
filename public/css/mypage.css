@@ -11,6 +11,15 @@
     font-size: 1rem;
   }
 }
+.uk-button {
+  width: 150px;
+}
+.mypageButton{
+  border: none;
+  padding: 0;
+  width: 150px;
+}
+
 .uk-countdown-number {
   font-variant-numeric: tabular-nums;
   font-size: 2rem;
@@ -26,6 +35,4 @@
 .timeLeft {
   width: 300px;
 }
-.uk-button {
-  width: 200px;
-}
+

@@ -66,15 +66,125 @@
       </section>
       <section>
         <h3>落札一覧</h3>
-        <ul>
-          <li>落札したもの</li>
-        </ul>
+        <table class="uk-table uk-table-justify uk-table-divider">
+          <thead>
+            <tr>
+              <th>オークションID</th>
+              <th>車名</th>
+              <th>画像</th>
+              <th>落札金額</th>
+              <th>入金状態</th>
+              <th>入札、領収書はこちら</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% ejsRender.sql3.forEach((value, key) => { %>
+            <tr>
+              <td><%= ejsRender.sql3[key].product_id %></td>
+              <td><%= ejsRender.sql3[key].car_name %></td>
+              <td>
+                <p>
+                  <img
+                    src="<%= ejsRender.sql3[key].car_img %>"
+                    alt="車の画像"
+                    width="75px"
+                    height="50px"
+                  />
+                </p>
+              </td>
+              <td><%= ejsRender.sql3[key]['MAX(bidding_money)'] %>円</td>
+              <td>
+                <%_ if(ejsRender.sql3[key].product_state === 2 ) { _%>
+                <p>入金前</p>
+                <%_ } else { _%>
+                <p>いつもお支払いありがとうございます<%= ejsRender.sql3[key].product_state %></p>
+                <%_ } _%>
+              </td>
+              <td>
+                <%_ if(ejsRender.sql3[key].product_state === 2 ) { _%>
+                <button class="uk-button uk-button-default" type="button">入金ページへ</button> <%_
+                } else { _%>
+                <button class="uk-button uk-button-default" type="button">
+                  領収書印刷はこちら
+                </button>
+                <%_ } _%>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
       </section>
     </div>
     <section>
-      <h3>アカウント削除・変更</h3>
-      <ul id="acountSettingList">
-        <li><button>アカウント変更</button></li>
+      <h3>アカウント情報変更・削除</h3>
+      <ul id="acountSettingList" class="uk-flex" style="gap: 10px;">
+        <li>
+          <a class="uk-button uk-button-default mypageButton" href="#modal-center" uk-toggle
+            ><button>アカウント変更</button></a
+          >
+          <div id="modal-center" class="uk-flex-top" uk-modal>
+            <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
+              <button class="uk-modal-close-default" type="button" uk-close></button>
+              <h4>アカウント情報変更</h4>
+              <form action="/mypage/acount" method="POST">
+                <div>
+                  <label for="user_login_id">ログインID</label>
+                  <input type="text" value="<%= ejsRender.sql4[0].user_login_id %>" readonly />
+                </div>
+                <div>
+                  <label for="password">パスワード</label>
+                  <input
+                    id="password"
+                    name="password"
+                    type="password"
+                    autocomplete="current-password"
+                    required
+                  />
+                </div>
+                <div class="loginButton">
+                  <button type="submit" style="width: 100%;">ログイン</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </li>
+        <li>
+          <a class="uk-button uk-button-default mypageButton" href="#modal-center" uk-toggle
+            ><button>カード情報変更</button></a
+          >
+          <div id="modal-center" class="uk-flex-top" uk-modal>
+            <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
+              <button class="uk-modal-close-default" type="button" uk-close></button>
+              <h4>カード情報変更</h4>
+              <form action="/mypage/acount" method="POST">
+                <div>
+                  <label for="user_login_id">ログインID</label>
+                  <input
+                    type="text"
+                    name="user_login_id"
+                    id="user_login_id"
+                    autocomplete="username"
+                    required
+                  />
+                </div>
+                <div>
+                  <label for="password">パスワード</label>
+                  <input
+                    id="password"
+                    name="password"
+                    type="password"
+                    autocomplete="current-password"
+                    required
+                  />
+                </div>
+                <div class="loginButton">
+                  <button type="submit" style="width: 100%;">ログイン</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </li>
+        <li><button>住所変更</button></li>
         <li><button>退会登録</button></li>
       </ul>
     </section>
