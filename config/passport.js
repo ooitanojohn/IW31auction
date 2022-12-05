@@ -15,7 +15,8 @@ module.exports = (app) => {
   /** シリアライズ sessionにtokenを保存 */
   passport.serializeUser((user, cb) => {
     process.nextTick(() => {
-      cb(null, { id: user.id, user_login_id: user.user_login_id });
+      console.log(user);
+      cb(null, { id: user.user_id, user_login_id: user.user_login_id });
     });
   });
   /** デシリアライズ sessionからtokenを削除 */

@@ -38,6 +38,9 @@
     padding: 0.3rem 0.5rem;
     font-size: smaller;
   }
+  .loginHeaderbutton {
+    margin: 0;
+  }
   .footerNav {
     gap: 0.5rem;
     font-size: small;
@@ -47,7 +50,24 @@
     font-size: small;
   }
 }
+.footerNav {
+  font-size: small;
+}
+.footerComponent {
+  text-align: center;
+}
+.loginHeaderNav {
+  margin: 0;
+}
+.loginHeaderNavImg {
+  border-radius: 10px;
+  border: solid 1px;
 
+  margin: 0;
+}
+ul {
+  list-style: none;
+}
 .visually-hidden {
   position: fixed !important;
   /* keep it on viewport */
@@ -77,6 +97,7 @@
 .footerName {
   text-align: center;
   margin: 0;
+  font-size: small;
 }
 .headerH2 {
   margin: 0;
@@ -101,7 +122,7 @@
   --justify-important: left;
   --justify-normal: left;
   --line-height: 1.5;
-  --width-card: 285px;
+  --width-card: 155px;
   --width-card-medium: 460px;
   --width-card-wide: 800px;
   --width-content: 1080px;
@@ -200,7 +221,7 @@ header a strong {
 }
 
 header nav img {
-  margin: 1rem 0;
+  /* margin: rem 0; */
 }
 
 section header {
@@ -210,12 +231,6 @@ section header {
 
 /* Nav */
 nav {
-  align-items: center;
-  display: flex;
-  font-weight: bold;
-  justify-content: flex-end;
-  /* margin-bottom: 1rem; */
-  gap: 10px;
 }
 
 nav ul {
@@ -359,7 +374,7 @@ input[type='submit'] {
   font-size: medium;
   font-weight: bold;
   line-height: var(--line-height);
-  margin: 0.5rem 0;
+  /* margin: 0.5rem 0; */
   padding: 0.5rem 1rem;
 }
 
@@ -430,13 +445,13 @@ input[type='submit'][disabled]:hover {
 }
 
 form {
-  border: 1px solid var(--color-bg-secondary);
-  border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow) var(--color-shadow);
+  /* border: 1px solid var(--color-bg-secondary); */
+  /* border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow) var(--color-shadow); */
   display: block;
   max-width: var(--width-card-wide);
-  min-width: var(--width-card);
-  padding: 1.5rem;
+  /* min-width: var(--width-card); */
+  /* padding: 1.5rem; */
   text-align: var(--justify-normal);
 }
 
@@ -484,8 +499,8 @@ input[type='text'],
 textarea {
   width: calc(100% - 1.6rem);
 }
-input[type="password"]{
-  width:calc(100% - 1.6rem);
+input[type='password'] {
+  width: calc(100% - 1.6rem);
 }
 input[readonly],
 textarea[readonly] {

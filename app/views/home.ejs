@@ -22,4 +22,8 @@
     <a href=""><button class="topButton">車両を検索する</button></a>
   </div>
 </div>
+<script>
+  const info = JSON.parse('<%- JSON.stringify(ejsRender) %>');
+  console.log(info);
+</script>
 <%- include('partials/footer.ejs'); %>

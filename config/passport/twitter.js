@@ -1,5 +1,6 @@
-const debug = require('debug')('auth:twitter');
+const debug = require('debug')('http:twitter');
 const { beginTran } = require('../../app/module/mysqlPool');
+
 /**
  *  twitter 認証
  * @param {string} token accessToken
@@ -9,9 +10,6 @@ const { beginTran } = require('../../app/module/mysqlPool');
  * @returns {func} cb
  */
 const twitterAuth = async (token, tokenSecret, profile, cb) => {
-  debug(token);
-  debug(tokenSecret);
-  debug(profile);
   /**
    * token, tokenSecret tokenとtokenSecretの違いが分からん秘密、公開鍵的な？
    * どっちもばれたらアウトみたいだけど
@@ -29,8 +27,9 @@ const twitterAuth = async (token, tokenSecret, profile, cb) => {
       ])
       .catch((err) => cb(err));
 
+    /** 初回登録 */
+    let id = 0;
     if (row.length === 0) {
-      let id = '';
       /** userTableにlogin_idを追加 */
       await tran
         .query('INSERT INTO users (user_login_id,icon_img) VALUES (?,?)', [
@@ -41,9 +40,8 @@ const twitterAuth = async (token, tokenSecret, profile, cb) => {
           id = results.insertId;
         })
         .catch((err) => {
-          throw err;
+          throw new Error(err);
         });
-
       /** クレデンシャル tableに登録 */
       await tran
         .query('INSERT INTO federated_credentials (user_id, provider, subject) VALUES (?, ?, ?)', [
@@ -52,13 +50,14 @@ const twitterAuth = async (token, tokenSecret, profile, cb) => {
           token,
         ])
         .catch((err) => {
-          throw err;
+          throw new Error(err);
         });
       await tran.commit();
       const user = {
-        id,
+        user_id: id,
         user_login_id: profile.username,
       };
+      debug(user);
       return cb(null, user);
     }
     /** 既ログイン */
@@ -76,9 +75,3 @@ const twitterAuth = async (token, tokenSecret, profile, cb) => {
 };
 
 module.exports = { twitterAuth };
-
-// debug(token)
-// debug(tokenSecret)
-// debug(profile.provider)
-// debug(profile.username)
-// debug(profile.photos[0].value)
