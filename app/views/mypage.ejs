@@ -6,114 +6,128 @@
   <article>
     <h2>マイ・オークション管理</h2>
     <div id="mypageList">
-      <section>
-        <h3>入札一覧</h3>
-        <table class="uk-table uk-table-justify uk-table-divider">
-          <thead>
-            <tr>
-              <th>オークションID</th>
-              <th>車名</th>
-              <th>画像</th>
-              <th>現時点最大入札金額</th>
-              <th>あなたの最大入札金額</th>
-              <th>現時点最終入札時間</th>
-              <th>オークション終了まで</th>
-              <th>入札ページへ</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% ejsRender.sql.forEach((value, key) => { %>
-            <tr>
-              <td><%= ejsRender.sql[key].product_id %></td>
-              <td><%= ejsRender.sql[key].car_name %></td>
-              <td>
-                <p>
-                  <img
-                    src="<%= ejsRender.sql[key].car_img %>"
-                    alt="車の画像"
-                    width="75px"
-                    height="50px"
-                  />
-                </p>
-              </td>
-              <td>
-                <!-- 最大入札者が誰かによって表示を変える -->
-                <%_ if(ejsRender.sql[key].product_id === ejsRender.sql2[key].product_id) { _%> <%_
-                if(ejsRender.sql[key]['MAX(bidding_money)'] >=
-                ejsRender.sql2[key]['MAX(bidding_money)']) { _%>
-                <p>最大入札者は貴方です<%= ejsRender.sql2[key]['MAX(bidding_money)'] %></p>
-                <%_ } else { _%>
-                <p>
-                  あと+<%- ejsRender.sql2[key]['MAX(bidding_money)'] -
-                  ejsRender.sql[key]['MAX(bidding_money)'] + 100 %>円で貴方が最大入札者です
-                </p>
-                <%_ } _%> <%_ } _%>
-              </td>
-              <td><%= ejsRender.sql[key]['MAX(bidding_money)'] %>円</td>
-              <td>
-                <%_ if(ejsRender.sql[key].product_id === ejsRender.sql2[key].product_id) { _%>
-                <p><%= ejsRender.sql2[key]['MAX(bidding_time)'] %></p>
-                <%_ } _%>
-              </td>
-              <td class="timeLeft"></td>
-              <td>
-                <button class="uk-button uk-button-default" type="button">入札ページへ</button>
-              </td>
-            </tr>
-            <% }) %>
-          </tbody>
-        </table>
-      </section>
-      <section>
-        <h3>落札一覧</h3>
-        <table class="uk-table uk-table-justify uk-table-divider">
-          <thead>
-            <tr>
-              <th>オークションID</th>
-              <th>車名</th>
-              <th>画像</th>
-              <th>落札金額</th>
-              <th>入金状態</th>
-              <th>入札、領収書はこちら</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% ejsRender.sql3.forEach((value, key) => { %>
-            <tr>
-              <td><%= ejsRender.sql3[key].product_id %></td>
-              <td><%= ejsRender.sql3[key].car_name %></td>
-              <td>
-                <p>
-                  <img
-                    src="<%= ejsRender.sql3[key].car_img %>"
-                    alt="車の画像"
-                    width="75px"
-                    height="50px"
-                  />
-                </p>
-              </td>
-              <td><%= ejsRender.sql3[key]['MAX(bidding_money)'] %>円</td>
-              <td>
-                <%_ if(ejsRender.sql3[key].product_state === 2 ) { _%>
-                <p>入金前</p>
-                <%_ } else { _%>
-                <p>いつもお支払いありがとうございます<%= ejsRender.sql3[key].product_state %></p>
-                <%_ } _%>
-              </td>
-              <td>
-                <%_ if(ejsRender.sql3[key].product_state === 2 ) { _%>
-                <button class="uk-button uk-button-default" type="button">入金ページへ</button> <%_
-                } else { _%>
-                <button class="uk-button uk-button-default" type="button">
-                  領収書印刷はこちら
-                </button>
-                <%_ } _%>
-              </td>
-            </tr>
-            <% }) %>
-          </tbody>
-        </table>
-      </section>
+      <ul uk-accordion>
+        <li class="uk-open">
+          <a class="uk-accordion-title" href="#">
+            <h3>入札一覧</h3>
+          </a>
+          <div class="uk-accordion-content">
+            <table class="uk-table uk-table-justify uk-table-divider">
+              <thead>
+                <tr>
+                  <th>オークションID</th>
+                  <th>車名</th>
+                  <th>画像</th>
+                  <th>現時点最大入札金額</th>
+                  <th>あなたの最大入札金額</th>
+                  <th>現時点最終入札時間</th>
+                  <th>オークション終了まで</th>
+                  <th>入札ページへ</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% ejsRender.sql.forEach((value, key) => { %>
+                <tr>
+                  <td><%= ejsRender.sql[key].product_id %></td>
+                  <td><%= ejsRender.sql[key].car_name %></td>
+                  <td>
+                    <p>
+                      <img
+                        src="<%= ejsRender.sql[key].car_img %>"
+                        alt="車の画像"
+                        width="75px"
+                        height="50px"
+                      />
+                    </p>
+                  </td>
+                  <td>
+                    <!-- 最大入札者が誰かによって表示を変える -->
+                    <%_ if(ejsRender.sql[key].product_id === ejsRender.sql2[key].product_id) { _%>
+                    <%_ if(ejsRender.sql[key]['MAX(bidding_money)'] >=
+                    ejsRender.sql2[key]['MAX(bidding_money)']) { _%>
+                    <p>最大入札者は貴方です<%= ejsRender.sql2[key]['MAX(bidding_money)'] %></p>
+                    <%_ } else { _%>
+                    <p>
+                      あと+<%- ejsRender.sql2[key]['MAX(bidding_money)'] -
+                      ejsRender.sql[key]['MAX(bidding_money)'] + 100 %>円で貴方が最大入札者です
+                    </p>
+                    <%_ } _%> <%_ } _%>
+                  </td>
+                  <td><%= ejsRender.sql[key]['MAX(bidding_money)'] %>円</td>
+                  <td>
+                    <%_ if(ejsRender.sql[key].product_id === ejsRender.sql2[key].product_id) { _%>
+                    <p><%= ejsRender.sql2[key]['MAX(bidding_time)'] %></p>
+                    <%_ } _%>
+                  </td>
+                  <td class="timeLeft"></td>
+                  <td>
+                    <button class="uk-button uk-button-default" type="button">入札ページへ</button>
+                  </td>
+                </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+        </li>
+        <li>
+          <a class="uk-accordion-title" href="#">
+            <h3>落札一覧</h3>
+          </a>
+          <div class="uk-accordion-content">
+            <table class="uk-table uk-table-justify uk-table-divider">
+              <thead>
+                <tr>
+                  <th>オークションID</th>
+                  <th>車名</th>
+                  <th>画像</th>
+                  <th>落札金額</th>
+                  <th>入金状態</th>
+                  <th>入札、領収書はこちら</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% ejsRender.sql3.forEach((value, key) => { %>
+                <tr>
+                  <td><%= ejsRender.sql3[key].product_id %></td>
+                  <td><%= ejsRender.sql3[key].car_name %></td>
+                  <td>
+                    <p>
+                      <img
+                        src="<%= ejsRender.sql3[key].car_img %>"
+                        alt="車の画像"
+                        width="75px"
+                        height="50px"
+                      />
+                    </p>
+                  </td>
+                  <td><%= ejsRender.sql3[key]['MAX(bidding_money)'] %>円</td>
+                  <td>
+                    <%_ if(ejsRender.sql3[key].product_state === 2 ) { _%>
+                    <p>入金前</p>
+                    <%_ } else { _%>
+                    <p>
+                      いつもお支払いありがとうございます<%= ejsRender.sql3[key].product_state %>
+                    </p>
+                    <%_ } _%>
+                  </td>
+                  <td>
+                    <%_ if(ejsRender.sql3[key].product_state === 2 ) { _%>
+                    <button class="uk-button uk-button-default" type="button">入金ページへ</button>
+                    <%_ } else { _%>
+                    <button class="uk-button uk-button-default" type="button">
+                      領収書印刷はこちら
+                    </button>
+                    <%_ } _%>
+                  </td>
+                </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+        </li>
+      </ul>
+      <section></section>
+      <section></section>
     </div>
     <section>
       <h3>アカウント情報変更</h3>
@@ -162,7 +176,7 @@
                   <input
                     name="card_number"
                     id="card_number"
-                    type="number"
+                    type="text"
                     value="<%= ejsRender.sql4[0].card_number %>"
                     autocomplete="cc-number"
                     maxlength="12"
@@ -174,7 +188,7 @@
                   <input
                     id="card_key"
                     name="card_key"
-                    type="number"
+                    type="text"
                     value="<%= ejsRender.sql4[0].card_key %>"
                     autocomplete="cc-csc"
                     maxlength="3"
@@ -240,7 +254,6 @@
                     required
                   />
                 </div>
-
                 <div>
                   <label for="user_phone_number">携帯番号</label>
                   <input
@@ -263,6 +276,7 @@
           <a class="uk-button uk-button-default mypageButton" href="#modal-drop" uk-toggle
             ><button>アカウント退会</button></a
           >
+          \
           <div id="modal-drop" class="uk-flex-top" uk-modal>
             <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
               <button class="uk-modal-close-default" type="button" uk-close></button>
