@@ -4,12 +4,12 @@
   "description": "auctionProject",
   "main": "bin/www",
   "scripts": {
-    "dev": "set DEBUG=http* & nodemon config/server.js",
-    "debugMySQL": "set DEBUG=MySQL* & nodemon config/server.js",
-    "debugMAIL": "set DEBUG=MAIL* & nodemon config/server.js",
+    "dev": "set DEBUG=http* & nodemon ./bin/www",
+    "debugMySQL": "set DEBUG=MySQL* & nodemon ./bin/www",
+    "debugMAIL": "set DEBUG=MAIL* & nodemon ./bin/www",
     "lint": "eslint \"**/*.js\"",
     "fix": "eslint --fix \"**/*.js\"",
-    "fmt": "prettier --w \"**/*.js\" && prettier --parser html --w app/views/*.ejs",
+    "fmt": "prettier --w \"**/*.js\" && prettier --parser html --w app/views/*.ejs && prettier --w \"**/*.css\" ",
     "lint-staged": "lint-staged",
     "prepare": "husky install"
   },
@@ -25,11 +25,15 @@
     "ejs": "^3.1.8",
     "express": "^4.18.1",
     "express-fileupload": "^1.4.0",
+    "express-form-data": "^2.0.19",
     "express-session": "^1.17.3",
+    "http-errors": "^2.0.0",
     "mysql2": "^2.3.3",
     "nodemailer": "^6.8.0",
     "passport": "^0.6.0",
+    "passport-google-oidc": "^0.1.0",
     "passport-local": "^1.0.0",
+    "passport-twitter": "^1.0.4",
     "sharp": "^0.31.2",
     "socket.io": "^4.5.2"
   },
@@ -55,7 +59,7 @@
   },
   "homepage": "https://github.com/ooitanojohn/IW31auction#readme",
   "lint-staged": {
-      "**/*.js": [
+    "**/*.js": [
       "eslint",
       "prettier --w"
     ],
