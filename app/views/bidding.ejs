@@ -1,44 +1,51 @@
-<%- include('partials/header.ejs'); %>
-<!-- UIkit CSS -->
-<!-- 入札値 -->
-<h1>入札No<%= ejsRender.params.productId %></h1>
-<!-- 商品詳細 /top/product/:productId -->
-<a href="/top/product/1">商品詳細はこちら</a>
-<!-- 過去ログ 入札番号 価格 userId 入札時間 をふんわりと無限ループで流す -->
-<div id="biddingLog">
-  <% ejsRender.sql.forEach((value, key) => { %>
-  <p>
-    入札No:<%- key + 1 %> 入札者番号:<%= value.user_id %> 入札価格:<%= value.bidding_money %>万円
-    入札時間:<%- value.bidding_time %>
-  </p>
-  <% }) %>
-</div>
-<!-- 現在の最高価格とuserIdと入札時間(何分前に？購入を煽る表示) -->
-<p>
-  現在最高価格<span id="maxBiddingMoney"><%=ejsRender.max.bidding_money%></span>万円
-  <span id="maxUserId"><%= ejsRender.max.user_id %></span>番様
-  <span id="maxBiddingTime"><%- ejsRender.max.bidding_time%></span>分前に入札です。
-</p>
-<form id="biddingForm">
-  <!-- 必要な情報 userId,金額,,入札時間 -->
-  <!-- sessionからuserId取り出す -->
-  <input id="userId" type="hidden" value="1" />
-  <!-- 入札時間 jsで付与する、 -->
-  <!-- 最低表示から100万ずつ???とかにしようか -->
-  <input
-    id="biddingMoney"
-    type="number"
-    min="<%- ejsRender.max.bidding_money + 100 %>"
-    step="100"
-    placeholder="<%= ejsRender.max.bidding_money + 100 %>から振込めます"
-    required
-  />
-  <input type="submit" class="button" value="Send" />
-</form>
+<%- include('partials/loginheader.ejs'); %>
+<link rel="stylesheet" href="./css/bidding.css" />
+<main>
+  <div class="uk-container uk-container-large ">
+    <%- include('partials/breadcrumb.ejs'); %>
+    <h1>入札No<%= ejsRender.params.productId %></h1>
+    <!-- 商品詳細 /top/product/:productId -->
+    <a href="/top/product/1">商品詳細はこちら</a>
+    <!-- 過去ログ 入札番号 価格 userId 入札時間 をふんわりと無限ループで流す -->
+    <ul id="biddingLog">
+      <% ejsRender.sql.forEach((value, key) => { %>
+      <p>
+        入札No:<%- key + 1 %> 入札者番号:<%= value.user_id %> 入札価格:<%= value.bidding_money
+        %>万円 入札時間:<%- value.bidding_time %>
+      </p>
+      <% }) %>
+    </ul>
+    <!-- 現在の最高価格とuserIdと入札時間(何分前に？購入を煽る表示) -->
+    <p>
+      現在最高価格<span id="maxBiddingMoney"><%=ejsRender.max.bidding_money%></span>万円
+      <span id="maxUserId"><%= ejsRender.max.user_id %></span>番様
+      <span id="maxBiddingTime"><%- ejsRender.max.bidding_time%></span>分前に入札です。
+    </p>
+    <form id="biddingForm">
+      <!-- 必要な情報 userId,金額,,入札時間 -->
+      <!-- sessionからuserId取り出す -->
+      <input id="userId" type="hidden" value="1" />
+      <!-- 入札時間 jsで付与する、 -->
+      <!-- 最低表示から100万ずつ???とかにしようか -->
+      <input
+        id="biddingMoney"
+        type="number"
+        min="<%- ejsRender.max.bidding_money + 100 %>"
+        step="100"
+        placeholder="<%= ejsRender.max.bidding_money + 100 %>から振込めます"
+        required
+      />
+      <input type="submit" class="button" value="Send" />
+    </form>
+  </div>
+</main>
 <script>
   const info = JSON.parse('<%- JSON.stringify(ejsRender) %>');
   console.log(info);
 </script>
 <script src="/socket.io/socket.io.js"></script>
+<script>
+  var socket = io();
+</script>
 <script src="/js/renderBidding.js"></script>
 <%- include('partials/footer.ejs'); %>

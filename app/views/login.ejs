@@ -1,26 +1,56 @@
 <%- include('partials/header.ejs'); %>
-<main>
-  <link rel="stylesheet" href="/css/login.css" />
-  <h1>Sign in to your account</h1>
-  <p><% loginCheckMsg %></p>
-  <form action="/login" method="POST">
+<link rel="stylesheet" href="./css/login.css" />
+<div class="uk-container uk-container-expand login-component">
+  <h1 class="visually-hidden">ログイン</h1>
+  <% if (hasMessages) { %>
+  <div class="messages">
+    <% messages.forEach(function(message) { %>
+    <p><%= message %></p>
+    <% }); %>
+  </div>
+  <% } %>
+  <form action="/login/password" method="post">
     <div>
-      <label for="id">ID</label>
-      <input name="id" autocomplete="email" />
-      <label for="password">Password</label>
-      <input name="password" autocomplete="current-password" />
-      <label for="remember-me">remember-me</label>
-      <input id="remember-me" name="remember-me" type="checkbox" />
-      <button type="submit">Sign in</button>
+      <label for="user_login_id">ログインID</label>
+      <input id="user_login_id" name="user_login_id" type="text" autocomplete="username" required />
     </div>
-    <section>
-      <h2>Or Sign In with</h2>
-      <ul>
-        <li><button>Google</button></li>
-        <li><button>Twitter</button></li>
-      </ul>
-    </section>
+    <div>
+      <label for="password">パスワード</label>
+      <input
+        id="password"
+        name="password"
+        type="password"
+        autocomplete="current-password"
+        required
+      />
+    </div>
+    <div class="loginButton">
+      <button type="submit" style="width: 100%;">ログイン</button>
+    </div>
+    <p class="help" style="font-size: small;">
+      アカウントを持っていない方は <a href="/signup">アカウント作成<span uk-icon="user"></span></a>
+    </p>
+    <hr />
+    <div class="uk-flex-center@s loginButtonMedia">
+      <a class="google" href="/login/federated/google"
+        ><span class="uk-margin-small-right" uk-icon="icon: google"></span>Sign in<span
+          class="visually-hidden-480"
+        >
+          with Google</span
+        ></a
+      >
+      <a class="twitter" href="/auth/twitter"
+        ><span class="uk-margin-small-right" uk-icon="icon: twitter"></span>Sign in<span
+          class="visually-hidden-480"
+        >
+          with Twitter</span
+        ></a
+      >
+    </div>
   </form>
-</main>
-<script type="text/javascript" src="/js/login/login.js"></script>
+</div>
+<script>
+  const info = JSON.parse('<%- JSON.stringify(ejsRender) %>');
+  console.log(info);
+</script>
 <%- include('partials/footer.ejs'); %>

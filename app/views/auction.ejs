@@ -1,38 +1,11 @@
-<%- include('partials/header.ejs'); %>
+<%- include('partials/loginheader.ejs'); %>
 <main>
-  <link rel="stylesheet" href="/css/auction.css" />
-  <h1>オークション</h1>
   <%- include('partials/breadcrumb.ejs'); %>
-  <article>
-    <h2>オークション商品一覧</h2>
-    <form action="/login" method="POST">
-      <p>検索条件</p>
-      <%- csrfField %>
-      <label for="id">メーカー</label>
-      <input name="id" autocomplete="email" />
-      <label for="password">車種</label>
-      <input name="password" autocomplete="current-password" />
-      <button type="submit">Sign in</button>
-    </form>
-    <!-- 並べ替え -->
-    <section>
-      <h3>商品リスト</h3>
-      <ul>
-        <li>現在価格<i class="fa fa-sort"></i></li>
-      </ul>
-      <ul>
-        <li>
-          <img src="#" width="" height="" alt="" />
-          <div>
-            <p>商品タイトル メーカー車種</p>
-            <p>現在 10000円</p>
-          </div>
-          <a href="#">商品詳細</a>
-          <button>入札</button>
-        </li>
-      </ul>
-    </section>
-  </article>
+  <h1>オークションスケジュール確認(商品一覧確認)</h1>
+  <script>
+    const info = JSON.parse('<%- JSON.stringify(ejsRender) %>');
+    console.log(info);
+  </script>
+  <script src="/socket.io/socket.io.js"></script>
 </main>
-<script type="text/javascript" src="/js/auction/auction.js"></script>
 <%- include('partials/footer.ejs'); %>
