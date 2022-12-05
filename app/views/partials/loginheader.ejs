@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="author" content="board">
+    <title>HALオークション</title>
+    <link rel="stylesheet" href="../../css/mvp.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.15.15/dist/css/uikit.min.css" />
+  </head>
+  <body>
+    <header>
+      <div>
+        <h2 class="headerH2">HAL車両販売</h2>
+      </div>
+      <nav class="nav">
+        <ul class="loginHeaderNav">
+          <li class="user"><%= ejsRender.user.user_login_id %></li>
+          <li>
+            <p class="loginHeaderNavImg"><img src="" alt="user" width="30px" height="30px"></p>
+          </li>
+          <li>
+            <div style="display: flex;" class="logoutComponents">
+              <form action="/logout" method="post">
+                <button class="logout loginHeaderbutton" type="submit"><span uk-icon="sign-out"></span>sign-out</button>
+              </form>
+            </div>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <hr class="headerHr" />
