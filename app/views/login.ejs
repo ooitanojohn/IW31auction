@@ -25,27 +25,32 @@
       />
     </div>
     <div class="loginButton">
-      <button
-        type="submit"
-        style="
-        width: 100%;
-    "
-      >
-        ログイン
-      </button>
+      <button type="submit" style="width: 100%;">ログイン</button>
     </div>
-    <p class="help">
+    <p class="help" style="font-size: small;">
       アカウントを持っていない方は <a href="/signup">アカウント作成<span uk-icon="user"></span></a>
     </p>
     <hr />
-    <div class="uk-flex-center@s">
+    <div class="uk-flex-center@s loginButtonMedia">
       <a class="google" href="/login/federated/google"
-        ><span class="uk-margin-small-right" uk-icon="icon: google"></span> Sign in with Google</a
+        ><span class="uk-margin-small-right" uk-icon="icon: google"></span>Sign in<span
+          class="visually-hidden-480"
+        >
+          with Google</span
+        ></a
       >
       <a class="twitter" href="/auth/twitter"
-        ><span class="uk-margin-small-right" uk-icon="icon: twitter"></span>Sign in with Twitter</a
+        ><span class="uk-margin-small-right" uk-icon="icon: twitter"></span>Sign in<span
+          class="visually-hidden-480"
+        >
+          with Twitter</span
+        ></a
       >
     </div>
   </form>
 </div>
+<script>
+  const info = JSON.parse('<%- JSON.stringify(ejsRender) %>');
+  console.log(info);
+</script>
 <%- include('partials/footer.ejs'); %>

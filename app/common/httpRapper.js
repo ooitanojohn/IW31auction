@@ -10,6 +10,7 @@ const httpRapper = (req) => {
     query: req.query, // ?queryParam ?search="subaru"&order="ASC"
     session: req.session,
     cookie: req.cookie,
+    user: req.user,
   };
   return resInfo;
 };

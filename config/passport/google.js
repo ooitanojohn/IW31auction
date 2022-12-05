@@ -18,6 +18,7 @@ const googleAuth = async (issuer, profile, cb) => {
       ])
       .catch((err) => cb(err));
 
+    /**  */
     if (row.length === 0) {
       let id = '';
       /** userTableにlogin_idを追加 */
@@ -29,7 +30,7 @@ const googleAuth = async (issuer, profile, cb) => {
           id = results.insertId;
         })
         .catch((err) => {
-          throw err;
+          throw new Error(err);
         });
 
       /** クレデンシャル tableに登録 */
@@ -40,11 +41,11 @@ const googleAuth = async (issuer, profile, cb) => {
           profile.id,
         ])
         .catch((err) => {
-          throw err;
+          throw new Error(err);
         });
       await tran.commit();
       const user = {
-        id,
+        user_id: id,
         user_login_id: profile.displayName,
       };
       return cb(null, user);
