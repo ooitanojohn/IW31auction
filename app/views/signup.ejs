@@ -9,8 +9,8 @@
     <% }); %>
   </div>
   <% } %>
-  <form action="/signup" method="post">
-    <section>
+  <form action="/signup" method="post" style="width: 429px;">
+    <div>
       <label for="user-login-id">ログインID</label>
       <input
         id="user-login-id"
@@ -20,8 +20,8 @@
         maxlength="16"
         required
       />
-    </section>
-    <section>
+    </div>
+    <div>
       <label for="new-password">パスワード</label>
       <input
         id="new-password"
@@ -30,14 +30,17 @@
         autocomplete="current-password"
         required
       />
-    </section>
+    </div>
     <button type="submit" style="width: 100%;">新規登録</button>
   </form>
   <hr />
-  <p class="help">Already have an account? <a href="/login">Sign in</a></p>
+  <p class="help" style="font-size: small;">
+    既にアカウントを持っている方は <a href="/login">ログイン<span uk-icon="user"></span></a>
+  </p>
 </div>
 <script>
   const info = JSON.parse('<%- JSON.stringify(ejsRender) %>');
   console.log(info);
 </script>
+
 <%- include('partials/footer.ejs'); %>
