@@ -2,6 +2,8 @@
 /**
  * passport認証
  */
+const debug = require('debug')('http:passport');
+
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const GoogleStrategy = require('passport-google-oidc');
@@ -15,7 +17,8 @@ module.exports = (app) => {
   /** シリアライズ sessionにtokenを保存 */
   passport.serializeUser((user, cb) => {
     process.nextTick(() => {
-      cb(null, { id: user.id, user_login_id: user.user_login_id });
+      debug(user);
+      cb(null, { user_id: user.user_id, user_login_id: user.user_login_id });
     });
   });
   /** デシリアライズ sessionからtokenを削除 */

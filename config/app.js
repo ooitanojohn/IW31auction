@@ -28,6 +28,9 @@ app.use((req, res, next) => {
   next();
 });
 
+/** loginCheck */
+app.use('/', require('./middleware/loginCheck'));
+
 /** router */
 const adminRouter = require('../app/controller/admin/router');
 /**
@@ -43,34 +46,38 @@ adminRouter.use('/products', require('../app/controller/admin/productsManagement
 adminRouter.use('/users', require('../app/controller/admin/userManagementRouter'));
 /** 売上管理 */
 adminRouter.use('/sales', require('../app/controller/admin/salesManagementRouter'));
+
 /**
  * ユーザー側
  */
-app.use('/', require('../routes/index'));
+/** ログイン */
 app.use('/', require('../routes/auth'));
-// 入札ページ
-app.use('/auction', require('../app/controller/auctionRouter'));
-// マイページ (落札一覧、入札履歴、退会処理)
-app.use('/mypage', require('../app/controller/mypageRouter'));
-// 上記以外のURLを404ページに飛ばして404にTOPへのリンクをつける
 
-/** error */
+/** オークション一覧 */
+app.use('/', require('../routes/auction'));
+
+/** 入札ページ  */
+app.use('/bidding', require('../routes/bidding'));
+/** 商品詳細 */
+app.use('/product', require('../routes/product'));
+
+/** マイページ (落札一覧、入札履歴、退会処理) */
+app.use('/mypage', require('../routes/mypage'));
+
+const { httpRapper } = require('../app/common/httpRapper');
+
 /** http-error 404ページ */
 app.use((req, res, next) => {
-  /** 404を受け取るとエラーをthrowする */
   next(createError(404));
 });
 
-// error handler 404か500のエラーがthrowされたとき、catchする
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
-  /** local変数への格納 */
+  const resInfo = httpRapper(req);
   res.locals.message = err.message;
-  /** error内容 */
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-  /** 404か 500を返す */
   res.status(err.status || 500);
-  res.render('error');
+  res.render('error', { ejsRender: resInfo });
 });
 
 module.exports = app;
