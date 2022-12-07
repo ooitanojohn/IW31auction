@@ -1,0 +1,59 @@
+<%- include('../partials/header.ejs'); %> <main>
+    <h1>管理者ページ</h1> 
+    <%- include('../partials/breadcrumb.ejs'); %> 
+    <article>
+      <h2>管理者機能一覧</h2>
+      <div id="mypageList">
+        <section>
+          <h3><a href="/admin/carStocks">車両管理</a></h3>
+        </section>
+        <section>
+          <h3><a href="/admin/users">会員管理</a></h3>
+        </section>
+        <section>
+          <h3><a href="/admin/">売上管理</a></h3>
+        </section>
+        <section>
+          <h3><a href="/admin/products/1">出品管理</a></h3>
+        </section>
+      </div>
+    </article>
+    <!-- 機能一覧表示 -->
+    <table class="uk-table uk-table-divider">
+      <thead>
+          <tr>
+              <th>開始時間</th>
+              <th>開始金額</th>
+              <th>更新時間</th>
+          </tr>
+      </thead>
+      <tbody>
+        <% for (var i = 0; i < ejsRender.sql.length; i++) { %>
+          <form action="/admin/products/regist" method="post" enctype="multipart/form-data">
+            <tr>
+                <td><%- ejsRender.sql[i].arrival_time%></td>
+                <td><%- ejsRender.sql[i].arrival_price %></td>
+                <td><%- ejsRender.sql[i].updata_time %></td>
+                <td><input type="submit"></td>
+                <td><input type="hidden" name="id" value="<%- ejsRender.sql[i].stock_id%>"></td>
+            </tr>
+            <tr>
+                <td><input type="file" name="multi-files" accept='image/*' multiple></td>
+            </tr>
+          </form>
+        <% } %>
+      </tbody>
+  </table>
+  </main>
+  <script>
+    const info = JSON.parse('<%- JSON.stringify(ejsRender) %>');
+    console.log(ejsRender.sql);
+  </script>
+  <script type="text/javascript" src="/js/admin/top.js"></script> 
+  <!-- UIkit CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.15.14/dist/css/uikit.min.css" />
+
+<!-- UIkit JS -->
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.15.14/dist/js/uikit.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.15.14/dist/js/uikit-icons.min.js"></script>
+  <%- include('../partials/footer.ejs'); %>
