@@ -1,0 +1,29 @@
+<%- include('partials/header.ejs'); %>
+<link rel="stylesheet" href="./css/home.css" />
+<div
+  class="uk-container uk-container-expand uk-background-cover uk-height-medium uk-panel uk-flex uk-flex-center uk-flex-middle topImg"
+>
+  <div class="homemain">
+    <h1>
+      オークション会場から<span class="visually-hidden-480">仕入れた車両を</span
+      ><span
+        style="
+    display: block;
+"
+        >楽々検索</span
+      >
+    </h1>
+    <p class="topInfo">
+      お問い合わせじゃこちら
+      <span class="telInfo"
+        ><span class="telIcon" uk-icon="receiver"></span> TEL 000-0000-0000</span
+      >
+    </p>
+    <a href=""><button class="topButton">車両を検索する</button></a>
+  </div>
+</div>
+<script>
+  const info = JSON.parse('<%- JSON.stringify(ejsRender) %>');
+  console.log(info);
+</script>
+<%- include('partials/footer.ejs'); %>

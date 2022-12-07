@@ -1,0 +1,46 @@
+<%- include('partials/header.ejs'); %>
+<link rel="stylesheet" href="./css/login.css" />
+<div class="uk-container uk-container-expand login-component">
+  <h1 class="visually-hidden">新規登録</h1>
+  <% if (hasMessages) { %>
+  <div class="messages">
+    <% messages.forEach(function(message) { %>
+    <p><%= message %></p>
+    <% }); %>
+  </div>
+  <% } %>
+  <form action="/signup" method="post" style="width: 429px;">
+    <div>
+      <label for="user-login-id">ログインID</label>
+      <input
+        id="user-login-id"
+        name="user_login_id"
+        type="text"
+        autocomplete="username"
+        maxlength="16"
+        required
+      />
+    </div>
+    <div>
+      <label for="new-password">パスワード</label>
+      <input
+        id="new-password"
+        name="password"
+        type="password"
+        autocomplete="current-password"
+        required
+      />
+    </div>
+    <button type="submit" style="width: 100%;">新規登録</button>
+  </form>
+  <hr />
+  <p class="help" style="font-size: small;">
+    既にアカウントを持っている方は <a href="/login">ログイン<span uk-icon="user"></span></a>
+  </p>
+</div>
+<script>
+  const info = JSON.parse('<%- JSON.stringify(ejsRender) %>');
+  console.log(info);
+</script>
+
+<%- include('partials/footer.ejs'); %>

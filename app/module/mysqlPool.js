@@ -25,8 +25,8 @@ module.exports = {
 /** 使用側 */
 
 /** 更新処理の場合 */
+// const { beginTran } = require("/app/module/mysqlTransaction");
 // app.get("/", async (req, res, next) => {
-//   const { beginTran } = require("/app/module/mysqlTransaction");
 //   const tran = await beginTran();
 //   try {
 //     await tran.query(
@@ -45,9 +45,9 @@ module.exports = {
 // });
 
 /** 参照処理の場合 */
+// const { executeQuery } = require("app/module/mysqlTransaction");
 // app.get("/", async (req, res, next) => {
 // app/module/mysqlTransactionを読み込む
-//   const { executeQuery } = require("app/module/mysqlTransaction");
 //   try {
 //     const data = await executeQuery('SELECT * FROM `user_tbl` WHERE `user_id` = ? AND `card_key` = ?', ['1', 556])
 //     console.log(data);

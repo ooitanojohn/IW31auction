@@ -1,0 +1,65 @@
+.homeMain {
+  left: -200px;
+  position: relative;
+  bottom: -10px;
+}
+h1 {
+  color: aliceblue;
+  font-weight: 600;
+  font-size: xxx-large;
+}
+.topImg {
+  background-image: url('../img/top.jpg');
+  height: calc(80vh - 4rem);
+}
+.topInfo {
+  color: snow;
+  font-size: larger;
+}
+.telIcon {
+  margin-left: 10px;
+}
+.topButton {
+  padding: 0.7rem 2rem;
+  font-size: larger;
+}
+@media screen and (max-width: 959px) {
+  /* 959px以下に適用されるCSS（タブレット用） */
+}
+@media screen and (max-width: 480px) {
+  /* 480px以下に適用されるCSS（スマホ用） */
+  .homeMain {
+    left: 0px;
+    position: relative;
+    bottom: 0px;
+  }
+  .topImg::before {
+    content: '';
+    background-color: rgba(0, 0, 0, 0.03);
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+  h1 {
+    font-size: xx-large;
+    text-shadow: 1px 1px darkgrey;
+    color: aliceblue;
+  }
+  .topInfo {
+    font-size: medium;
+    color: whitesmoke;
+  }
+  .telInfo {
+    display: block;
+  }
+  .telIcon {
+    margin-left: 0;
+  }
+  .topButton {
+    padding: 0.3rem 1rem;
+    font-size: medium;
+    font-weight: 500;
+  }
+}
