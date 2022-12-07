@@ -1,13 +1,27 @@
 const express = require('express');
 const passport = require('passport');
 const { signup } = require('../app/controller/authController');
+const { httpRapper } = require('../app/common/httpRapper');
 
 const router = express.Router();
 
 /** ログイン画面表示 */
 router.get('/login', (req, res) => {
-  res.render('login');
+  const resInfo = httpRapper(req);
+
+  res.render('login', { ejsRender: resInfo });
 });
+/** 登録画面表示 */
+router.get('/signup', (req, res) => {
+  const resInfo = httpRapper(req);
+
+  res.render('signup', { ejsRender: resInfo });
+});
+/** 登録処理 */
+router.post('/signup', (req, res, next) => {
+  signup(req, res, next);
+});
+
 /** 認証 */
 /** local */
 router.post(
@@ -46,14 +60,6 @@ router.post('/logout', (req, res, next) => {
     }
     res.redirect('/');
   });
-});
-/** 登録画面表示 */
-router.get('/signup', (req, res) => {
-  res.render('signup');
-});
-/** 登録処理 */
-router.post('/signup', (req, res, next) => {
-  signup(req, res, next);
 });
 
 module.exports = router;
