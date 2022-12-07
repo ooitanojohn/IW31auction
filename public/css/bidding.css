@@ -1,3 +1,54 @@
 .biddingComponent {
   display: flex;
 }
+.biddingH2 {
+  font-weight: 800;
+}
+.biddingH3 {
+  margin: 0;
+}
+.biddngH4{
+  margin:0;
+}
+.biddingP{
+  font-size:small;
+  margin:0;
+}
+
+@media (min-width: 960px) {
+  .uk-countdown-number {
+    font-size: 2rem;
+  }
+  .uk-countdown-separator {
+    font-size: 2rem;
+  }
+}
+@media (min-width: 640px) {
+  .uk-countdown-number {
+    font-size: 1rem;
+  }
+}
+.uk-button {
+  width: 150px;
+}
+.mypageButton {
+  border: none;
+  padding: 0;
+  width: 150px;
+}
+
+.uk-countdown-number {
+  font-variant-numeric: tabular-nums;
+  font-size: 2rem;
+  line-height: 0.8;
+}
+.uk-countdown-separator {
+  font-size: 2rem;
+  line-height: 0.7;
+}
+.uk-text-center {
+  font-size: small;
+}
+.timeLeft {
+  width: 300px;
+}
