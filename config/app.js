@@ -59,7 +59,7 @@ app.use('/', require('../routes/auction'));
 /** 入札ページ  */
 app.use('/bidding', require('../routes/bidding'));
 /** 商品詳細 */
-// app.use('/product', require('../routes/product'));
+app.use('/product', require('../routes/product'));
 
 /** マイページ (落札一覧、入札履歴、退会処理) */
 app.use('/mypage', require('../routes/mypage'));

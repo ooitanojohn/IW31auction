@@ -115,9 +115,13 @@
 <script>
   const socket = io();
 </script>
-<script src="https://cdn.jsdelivr.net/npm/luxon@3.1.1/build/global/luxon.min.js"></script>
+<script
+  src="https://cdn.jsdelivr.net/npm/luxon@3.1.1/build/global/luxon.min.js"
+  type="module"
+></script>
 <script>
-  const DateTime = luxon.DateTime;
+  import { DateTime } from "luxon";
+  // const DateTime = luxon.DateTime;
   // console.log(info.max[0]['MAX(bidding_time)'])
   // console.log(DateTime.fromISO(info.max[0]['MAX(bidding_time)']));
   const dt = DateTime.now().diff(DateTime.fromISO(info.max[0]['MAX(bidding_time)']), ['days', 'hours', 'minutes', 'second']);
