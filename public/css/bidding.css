@@ -7,12 +7,12 @@
 .biddingH3 {
   margin: 0;
 }
-.biddngH4{
-  margin:0;
+.biddngH4 {
+  margin: 0;
 }
-.biddingP{
-  font-size:small;
-  margin:0;
+.biddingP {
+  font-size: small;
+  margin: 0;
 }
 
 @media (min-width: 960px) {

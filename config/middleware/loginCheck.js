@@ -4,7 +4,7 @@ const router = express.Router();
 
 const { httpRapper } = require('../../app/common/httpRapper');
 
-/* ログイン判定 */
+/** ログイン判定 urlを変数にしてrender */
 router.get(
   '/',
   (req, res, next) => {

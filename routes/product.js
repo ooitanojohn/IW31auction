@@ -9,4 +9,6 @@ router.get('/:productId', async (req, res) => {
   res.render('product', { ejsRender: resInfo });
 });
 
+/**  */
+
 module.exports = router;
