@@ -33,6 +33,7 @@ app.use('/', require('./middleware/loginCheck'));
 
 /** router */
 const adminRouter = require('../app/controller/admin/router');
+
 /**
  * 管理者側
  */
@@ -50,6 +51,7 @@ adminRouter.use('/sales', require('../app/controller/admin/salesManagementRouter
 /**
  * ユーザー側
  */
+// 上記以外のURLを404ページに飛ばして404にTOPへのリンクをつける
 /** ログイン */
 app.use('/', require('../routes/auth'));
 
