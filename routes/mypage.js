@@ -32,7 +32,6 @@ router.get('/', async (req, res, next) => {
       [3],
       /** req.user.user_idに変更 */
     );
-    /** user更新の為の情報一覧 */
     resInfo.sql4 = await executeQuery('SELECT * FROM users WHERE user_id = ?;', [req.user.user_id]);
     res.render('mypage.ejs', { ejsRender: resInfo });
   } catch (err) {
