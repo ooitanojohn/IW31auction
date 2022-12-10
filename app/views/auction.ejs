@@ -2,6 +2,20 @@
 <main>
   <%- include('partials/breadcrumb.ejs'); %>
   <h1>オークションスケジュール確認(商品一覧確認)</h1>
+  <table>
+    <tr>
+      <td></td>
+      <td>車名</td>
+      <td>開催期間</td>
+    </tr>
+  <% ejsRender.sql.forEach((value, key) => { %>
+    <tr>
+      <td><a href="/bidding/<%= value[key].product_id %>">入札ページへ</a></td>
+      <td><%= value[key].car_name</td>
+      <td><%= value[key].start_price</td>
+    </tr>
+  <% )} %>
+</table>
   <script>
     const info = JSON.parse('<%- JSON.stringify(ejsRender) %>');
     console.log(info);
