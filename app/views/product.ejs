@@ -1,0 +1,8 @@
+<%- include('partials/loginheader.ejs'); %>
+<link rel="stylesheet" href="/css/bidding.css" />
+<main><%- include('partials/breadcrumb.ejs'); %></main>
+<script>
+  const info = JSON.parse('<%- JSON.stringify(ejsRender) %>');
+  console.log(info);
+</script>
+<%- include('partials/footer.ejs'); %>

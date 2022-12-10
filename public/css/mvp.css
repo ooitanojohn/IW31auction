@@ -30,8 +30,7 @@
     padding: 0.5rem 1rem;
   }
   .headerH2 {
-    font-size: larger;
-    font-weight: 700;
+    margin: 0;
   }
   .headerbutton {
     margin: 0;
@@ -49,6 +48,10 @@
   small {
     font-size: small;
   }
+}
+.headerH2 {
+  margin: 0;
+  font-weight: 600;
 }
 .footerNav {
   font-size: small;
@@ -99,9 +102,7 @@ ul {
   margin: 0;
   font-size: small;
 }
-.headerH2 {
-  margin: 0;
-}
+
 :root {
   --active-brightness: 0.85;
   --border-radius: 5px;

@@ -10,4 +10,10 @@ router.get('/', (req, res) => {
   res.render('auction', { ejsRender: resInfo });
 });
 
+/** オークション  */
+router.post('/', (req, res) => {
+  const resInfo = httpRapper(req);
+  res.render('', { ejsRender: resInfo });
+});
+
 module.exports = router;
