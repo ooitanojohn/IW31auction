@@ -27,7 +27,6 @@
   "ignorePatterns": [
     "temp/",
     "public/js",
-    "app/common/",
-    "/app/controller/admin/productsManagementRouter.js"
+    "app/common/"
   ]
 }

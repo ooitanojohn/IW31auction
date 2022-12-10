@@ -5,6 +5,8 @@ const {
   adminExhibitSelect,
   adminPrepareSelect,
   adminExhibitInsert,
+  adminExhibitUpdate,
+  adminExhibitDelete,
 } = require('../../app/controller/admin/adminProductController');
 
 /**
@@ -25,6 +27,20 @@ router.get('/prepare/:pageId', (req, res, next) => {
  */
 router.post('/insert', async (req, res, next) => {
   adminExhibitInsert(req, res, next);
+});
+
+/**
+ * 出品予定商品更新
+ */
+router.post('/update/', async (req, res, next) => {
+  adminExhibitUpdate(req, res, next);
+});
+
+/**
+ * 出品予定商品削除
+ */
+router.get('/delete/:productId', async (req, res, next) => {
+  adminExhibitDelete(req, res, next);
 });
 
 // /** 出品登録画面での更新(PUT)、論理削除処理 (form) */

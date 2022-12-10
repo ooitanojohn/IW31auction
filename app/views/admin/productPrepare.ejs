@@ -28,7 +28,7 @@
         <td><%- ejsRender.sql[i].car_id %></td>
         <td><%- ejsRender.sql[i].car_name %></td>
         <td><%- ejsRender.sql[i].stock %></td>
-        <td><%- ejsRender.sql[i].maker_id %></td>
+        <td><%- ejsRender.sql[i].maker_name %></td>
         <td>
           <a class="uk-button uk-button-default alinkButton" href="#modal-center<%= i %>" uk-toggle>
             <button class="alinkButtonSize">オークション登録</button></a>
@@ -38,12 +38,12 @@
         <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
           <button class="uk-modal-close-default" type="button" uk-close></button>
           <form method="post" action="/admin/product/INSERT">
-            <div>
-              <label for="car_id">車ID <span><%- ejsRender.sql[i].car_id %></span></label>
-              <input type="hidden" name="car_id" id="car_id" value="<%- ejsRender.sql[i].stock_id %>">
-            </div>
+            <label for="car_id">車ID <span><%- ejsRender.sql[i].car_id %></span></label>
+            <input type="hidden" name="car_id" id="car_id" value="<%- ejsRender.sql[i].stock_id %>">
             <label for="stock_id">在庫(車特定)ID <span><%- ejsRender.sql[i].stock_id %></span></label>
             <input type="hidden" id="stock_id" name="stock_id" value="<%- ejsRender.sql[i].stock_id %>">
+            <label for="car_state">車状態ID <span><%- ejsRender.sql[i].car_state %></span></label>
+            <input type="hidden" id="car_state" name="car_state" value="<%- ejsRender.sql[i].car_state %>">
             <label for="start_price">開始金額</label>
             <input type="number" step="100" name="start_price" id="start_price" required>
             <label for="asking_price">希望金額</label>
@@ -60,18 +60,16 @@
       </div> <% } %>
     </tbody>
   </table>
-  <ul class="uk-pagination uk-flex-between" >
+  <ul class="uk-pagination uk-flex-between">
     <li class="<%_ if(ejsRender.params.pageId <= 1) { _%> uk-disabled <% } %>"><a
         href="/admin/product/prepare/<%- ejsRender.params.pageId - 1 %>"><span class="uk-margin-small-right"
           uk-pagination-previous></span>Previous</a></li>
-    <div class="uk-pagination">
-      <% for(let i = 1; i <= ejsRender.sql2; i++) { %>
-      <li><a href="/admin/product/prepare/<%= i %>"><%= i %></a></li>
-      <!-- <li class="uk-disabled"><span>…</span></li> -->
-      <% } %>
-    </div>
-    <li class="<%_ if(ejsRender.params.pageId >= ejsRender.sql2) { _%> uk-disabled <% } %>"><a href="/admin/product/prepare/<%- ejsRender.params.pageId+1  %>">Next<span
-          class="uk-margin-small-left" uk-pagination-next></span></a>
+    <div class="uk-pagination"> <% for(let i = 1; i <= ejsRender.sql2; i++) { %> <li><a
+          href="/admin/product/prepare/<%= i %>"><%= i %></a></li>
+      <!-- <li class="uk-disabled"><span>…</span></li> --> <% } %> </div>
+    <li class="<%_ if(ejsRender.params.pageId >= ejsRender.sql2) { _%> uk-disabled <% } %>"><a
+        href="/admin/product/prepare/<%- ejsRender.params.pageId+1  %>">Next<span class="uk-margin-small-left"
+          uk-pagination-next></span></a>
     </li>
   </ul>
 </main>
