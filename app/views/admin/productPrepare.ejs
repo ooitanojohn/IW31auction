@@ -1,0 +1,81 @@
+<%- include('../partials/admin/adminHeader.ejs'); %>
+<link rel="stylesheet" href="/css/common/button.css">
+<link rel="stylesheet" href="/css/admin/productPrepare.css">
+<main>
+  <h2>在庫一覧管理</h2>
+  <a href="/admin/product/exhibit/1"><button>出品管理、情報更新ページへ</button></a>
+  <!-- 現在在庫一覧 時間軸で並び替え + 出品状態で並び替え + 新規登録をmodal  -->
+  <table class="uk-table uk-table-divider">
+    <thead>
+      <tr>
+        <th>在庫ID</th>
+        <th>車の状態</th>
+        <th>入荷時期</th>
+        <th>車両情報最終更新時間</th>
+        <th>落札価格希望金額</th>
+        <th>車ID</th>
+        <th>車名</th>
+        <th>在庫</th>
+        <th>メーカー</th>
+      </tr>
+    </thead>
+    <tbody> <% for (var i = 0; i < ejsRender.sql.length; i++) { %> <tr>
+        <td><%- ejsRender.sql[i].stock_id %></td>
+        <td><%- ejsRender.sql[i].car_state %></td>
+        <td><%- ejsRender.sql[i].arrival_time %></td>
+        <td><%- ejsRender.sql[i].updata_time %></td>
+        <td><%- ejsRender.sql[i].arrival_price %></td>
+        <td><%- ejsRender.sql[i].car_id %></td>
+        <td><%- ejsRender.sql[i].car_name %></td>
+        <td><%- ejsRender.sql[i].stock %></td>
+        <td><%- ejsRender.sql[i].maker_id %></td>
+        <td>
+          <a class="uk-button uk-button-default alinkButton" href="#modal-center<%= i %>" uk-toggle>
+            <button class="alinkButtonSize">オークション登録</button></a>
+        </td>
+      </tr>
+      <div id="modal-center<%= i %>" class="uk-flex-top" uk-modal>
+        <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
+          <button class="uk-modal-close-default" type="button" uk-close></button>
+          <form method="post" action="/admin/product/INSERT">
+            <div>
+              <label for="car_id">車ID <span><%- ejsRender.sql[i].car_id %></span></label>
+              <input type="hidden" name="car_id" id="car_id" value="<%- ejsRender.sql[i].stock_id %>">
+            </div>
+            <label for="stock_id">在庫(車特定)ID <span><%- ejsRender.sql[i].stock_id %></span></label>
+            <input type="hidden" id="stock_id" name="stock_id" value="<%- ejsRender.sql[i].stock_id %>">
+            <label for="start_price">開始金額</label>
+            <input type="number" step="100" name="start_price" id="start_price" required>
+            <label for="asking_price">希望金額</label>
+            <input type="number" step="100" id="asking_price" name="asking_price" required>
+            <label for="start_time">開始時間</label>
+            <input type="date" id="start_time" name="start_time" required>
+            <label for="end_time">終了時間</label>
+            <input type="date" id="end_time" name="end_time" required>
+            <!-- <label for="car_img">車画像</label>
+            <input type="file" id="car_img" required> -->
+            <button type="submit">新規登録</button>
+          </form>
+        </div>
+      </div> <% } %>
+    </tbody>
+  </table>
+  <ul class="uk-pagination uk-flex-between" >
+    <li class="<%_ if(ejsRender.params.pageId <= 1) { _%> uk-disabled <% } %>"><a
+        href="/admin/product/prepare/<%- ejsRender.params.pageId - 1 %>"><span class="uk-margin-small-right"
+          uk-pagination-previous></span>Previous</a></li>
+    <div class="uk-pagination">
+      <% for(let i = 1; i <= ejsRender.sql2; i++) { %>
+      <li><a href="/admin/product/prepare/<%= i %>"><%= i %></a></li>
+      <!-- <li class="uk-disabled"><span>…</span></li> -->
+      <% } %>
+    </div>
+    <li class="<%_ if(ejsRender.params.pageId >= ejsRender.sql2) { _%> uk-disabled <% } %>"><a href="/admin/product/prepare/<%- ejsRender.params.pageId+1  %>">Next<span
+          class="uk-margin-small-left" uk-pagination-next></span></a>
+    </li>
+  </ul>
+</main>
+<script>
+  const info = JSON.parse('<%- JSON.stringify(ejsRender) %>');
+  console.log(info);
+</script> <%- include('../partials/admin/adminFooter.ejs'); %>

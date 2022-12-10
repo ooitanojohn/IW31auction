@@ -1,0 +1,66 @@
+<%- include('../partials/admin/adminHeader.ejs'); %>
+<link rel="stylesheet" href="/css/common/button.css">
+<link rel="stylesheet" href="/css/admin/productExhibit.css">
+<main>
+  <h2>出品一覧管理</h2>
+  <a href="/admin/product/prepare/1"><button>オークション新規登録ページへ</button></a>
+  <!-- 現在出品中一覧 時間軸で並び替え？ + 出品状態で並び替え + 更新をmodal?  -->
+  <table class="uk-table uk-table-divider">
+    <thead>
+      <tr>
+        <th>商品ID</th>
+        <th>開始金額</th>
+        <th>希望金額</th>
+        <th>開始時間</th>
+        <th>終了時間</th>
+        <th>落札者</th>
+        <th>車画像</th>
+        <th>商品状態 1=出品中 2=購入権取得 </th>
+        <th>車の名前</th>
+        <th>在庫数</th>
+        <th>車の状態</th>
+        <th>入荷価格</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for (var i = 0; i < ejsRender.sql.length; i++) { %>
+        <tr>
+        <td><%- ejsRender.sql[i].product_id %></td>
+        <td><%- ejsRender.sql[i].start_price %></td>
+        <td><%- ejsRender.sql[i].asking_price %></td>
+        <td><%- ejsRender.sql[i].start_time %></td>
+        <td><%- ejsRender.sql[i].end_time %></td>
+        <td><%- ejsRender.sql[i].user_id %></td>
+        <td><%- ejsRender.sql[i].car_img %></td>
+        <td><%- ejsRender.sql[i].product_state %></td>
+        <td><%- ejsRender.sql[i].car_name%></td>
+        <td><%- ejsRender.sql[i].stock %></td>
+        <td><%- ejsRender.sql[i].car_state %></td>
+        <td><%- ejsRender.sql[i].arrival_price %></td>
+        </tr>
+      <% } %>
+    </tbody>
+  </table>
+    <ul class="uk-pagination uk-flex-between">
+      <li class="<%_ if(ejsRender.params.pageId <= 1) { _%> uk-disabled <% } %>"><a
+          href="/admin/product/prepare/<%- ejsRender.params.pageId - 1 %>"><span class="uk-margin-small-right"
+            uk-pagination-previous></span>Previous</a></li>
+      <div class="uk-pagination"> <% for(let i = 1; i <= ejsRender.sql2; i++) { %> <li><a
+            href="/admin/product/prepare/<%= i %>"><%= i %></a></li>
+        <!-- <li class="uk-disabled"><span>…</span></li> --> <% } %> </div>
+      <li class="<%_ if(ejsRender.params.pageId >= ejsRender.sql2) { _%> uk-disabled <% } %>"><a
+          href="/admin/product/prepare/<%- ejsRender.params.pageId+1  %>">Next<span class="uk-margin-small-left"
+            uk-pagination-next></span></a>
+      </li>
+    </ul>
+</main>
+<script>
+  const info = JSON.parse('<%- JSON.stringify(ejsRender) %>');
+  console.log(info);
+</script>
+<!-- UIkit CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.15.14/dist/css/uikit.min.css" />
+<!-- UIkit JS -->
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.15.14/dist/js/uikit.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.15.14/dist/js/uikit-icons.min.js"></script>
+<%- include('../partials/admin/adminFooter.ejs'); %>
