@@ -2,36 +2,41 @@
 <link rel="stylesheet" href="/css/common/button.css">
 <link rel="stylesheet" href="/css/admin/productPrepare.css">
 <main>
-  <h2>在庫一覧管理</h2>
-  <a href="/admin/product/exhibit/1"><button>出品管理、情報更新ページへ</button></a>
+<div style="display: flex;">
+  <h2 style="width: 20%;">出品管理</h2>
+  <a style="width: 20%;" href="/admin/product/prepare/1"><button style="width: 80%;">出品する</button></a>
+  <a style="width: 20%;" href="/admin/product/exhibit/1?state=schedule"><button style="width: 80%;">出品変更する</button></a>
+  <a style="width: 20%;" href="/admin/product/exhibit/1?state=open"><button style="width: 80%;">入札状況</button></a>
+  <a style="width: 20%;" href="/admin/product/exhibit/1?state=close"><button style="width: 80%;">落札連絡する</button></a>
+</div>
+  <h3>在庫一覧からオークション出品登録が出来ます</h3>
+
   <!-- 現在在庫一覧 時間軸で並び替え + 出品状態で並び替え + 新規登録をmodal  -->
   <table class="uk-table uk-table-divider">
     <thead>
       <tr>
         <th>在庫ID</th>
+        <th>車名</th>
+        <th>メーカー</th>
         <th>車の状態</th>
+        <th>落札価格希望金額</th>
         <th>入荷時期</th>
         <th>車両情報最終更新時間</th>
-        <th>落札価格希望金額</th>
-        <th>車ID</th>
-        <th>車名</th>
-        <th>在庫</th>
-        <th>メーカー</th>
+        <th>同車種数</th>
       </tr>
     </thead>
     <tbody> <% for (var i = 0; i < ejsRender.sql.length; i++) { %> <tr>
         <td><%- ejsRender.sql[i].stock_id %></td>
+        <td><%- ejsRender.sql[i].car_name %></td>
+        <td><%- ejsRender.sql[i].maker_name %></td>
         <td><%- ejsRender.sql[i].car_state %></td>
+        <td><%- ejsRender.sql[i].arrival_price %></td>
         <td><%- ejsRender.sql[i].arrival_time %></td>
         <td><%- ejsRender.sql[i].updata_time %></td>
-        <td><%- ejsRender.sql[i].arrival_price %></td>
-        <td><%- ejsRender.sql[i].car_id %></td>
-        <td><%- ejsRender.sql[i].car_name %></td>
         <td><%- ejsRender.sql[i].stock %></td>
-        <td><%- ejsRender.sql[i].maker_name %></td>
         <td>
-          <a class="uk-button uk-button-default alinkButton" href="#modal-center<%= i %>" uk-toggle>
-            <button class="alinkButtonSize">オークション登録</button></a>
+          <a href="#modal-center<%= i %>" uk-toggle>
+            <button class="uk-button uk-button-default alinkButtonSize">出品する</button></a>
         </td>
       </tr>
       <div id="modal-center<%= i %>" class="uk-flex-top" uk-modal>
@@ -39,19 +44,21 @@
           <button class="uk-modal-close-default" type="button" uk-close></button>
           <form method="post" action="/admin/product/INSERT">
             <label for="car_id">車ID <span><%- ejsRender.sql[i].car_id %></span></label>
-            <input type="hidden" name="car_id" id="car_id" value="<%- ejsRender.sql[i].stock_id %>">
+            <input type="hidden" name="car_id" id="car_id" value="<%- ejsRender.sql[i].car_id %>">
             <label for="stock_id">在庫(車特定)ID <span><%- ejsRender.sql[i].stock_id %></span></label>
             <input type="hidden" id="stock_id" name="stock_id" value="<%- ejsRender.sql[i].stock_id %>">
+            <label for="stock">在庫(同車種数) <span><%- ejsRender.sql[i].stock %></span></label>
+            <input type="hidden" id="stock" name="stock" value="<%- ejsRender.sql[i].stock %>">
             <label for="car_state">車状態ID <span><%- ejsRender.sql[i].car_state %></span></label>
             <input type="hidden" id="car_state" name="car_state" value="<%- ejsRender.sql[i].car_state %>">
             <label for="start_price">開始金額</label>
-            <input type="number" step="100" name="start_price" id="start_price" required>
+            <input type="number" step="100" min="0" name="start_price" id="start_price" placeholder="<%- ejsRender.sql[i].arrival_price %>" value="<%- ejsRender.sql[i].arrival_price / 2%>" required>
             <label for="asking_price">希望金額</label>
-            <input type="number" step="100" id="asking_price" name="asking_price" required>
+            <input type="number" step="100" min="0" id="asking_price" name="asking_price" placeholder="<%- ejsRender.sql[i].arrival_price %>" value="<%- ejsRender.sql[i].arrival_price %>" required>
             <label for="start_time">開始時間</label>
-            <input type="date" id="start_time" name="start_time" required>
+            <input type="datetime-local" id="start_time" name="start_time" required>
             <label for="end_time">終了時間</label>
-            <input type="date" id="end_time" name="end_time" required>
+            <input type="datetime-local" id="end_time" name="end_time" required>
             <!-- <label for="car_img">車画像</label>
             <input type="file" id="car_img" required> -->
             <button type="submit">新規登録</button>
@@ -64,7 +71,7 @@
     <li class="<%_ if(ejsRender.params.pageId <= 1) { _%> uk-disabled <% } %>"><a
         href="/admin/product/prepare/<%- ejsRender.params.pageId - 1 %>"><span class="uk-margin-small-right"
           uk-pagination-previous></span>Previous</a></li>
-    <div class="uk-pagination"> <% for(let i = 1; i <= ejsRender.sql2; i++) { %> <li><a
+    <div class="uk-pagination"> <% for(let i = 1; i <= ejsRender.sql2; i++) { %> <li class="<%_ if(ejsRender.params.pageId === i) { _%> uk-disabled <% } %>"><a
           href="/admin/product/prepare/<%= i %>"><%= i %></a></li>
       <!-- <li class="uk-disabled"><span>…</span></li> --> <% } %> </div>
     <li class="<%_ if(ejsRender.params.pageId >= ejsRender.sql2) { _%> uk-disabled <% } %>"><a

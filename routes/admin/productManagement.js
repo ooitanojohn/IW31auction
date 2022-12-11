@@ -7,6 +7,7 @@ const {
   adminExhibitInsert,
   adminExhibitUpdate,
   adminExhibitDelete,
+  adminBidRegist,
 } = require('../../app/controller/admin/adminProductController');
 
 /**
@@ -39,8 +40,15 @@ router.post('/update/', async (req, res, next) => {
 /**
  * 出品予定商品削除
  */
-router.get('/delete/:productId', async (req, res, next) => {
+router.post('/delete/:productId', async (req, res, next) => {
   adminExhibitDelete(req, res, next);
+});
+
+/**
+ * 落札者登録
+ */
+router.post('/regist/:productId', async (req, res, next) => {
+  adminBidRegist(req, res, next);
 });
 
 // /** 出品登録画面での更新(PUT)、論理削除処理 (form) */
