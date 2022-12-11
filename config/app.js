@@ -32,16 +32,17 @@ app.use((req, res, next) => {
 app.use('/', require('./middleware/loginCheck'));
 
 /** router */
-const adminRouter = require('../app/controller/admin/router');
+const adminRouter = require('../routes/admin/admin');
 /**
  * 管理者側
  */
-/** 管理画面  */
+/** 管理画面 */
 app.use('/admin', adminRouter);
-/** 車両管理  */
+
+/** 車両管理 */
 adminRouter.use('/carStocks', require('../app/controller/admin/carStocksManagementRouter'));
 /** 出品管理 */
-adminRouter.use('/products', require('../app/controller/admin/productsManagementRouter'));
+adminRouter.use('/product', require('../routes/admin/productManagement'));
 /** 会員管理 */
 adminRouter.use('/users', require('../app/controller/admin/userManagementRouter'));
 /** 売上管理 */
@@ -50,16 +51,15 @@ adminRouter.use('/sales', require('../app/controller/admin/salesManagementRouter
 /**
  * ユーザー側
  */
+// 上記以外のURLを404ページに飛ばして404にTOPへのリンクをつける
 /** ログイン */
 app.use('/', require('../routes/auth'));
-
 /** オークション一覧 */
 app.use('/', require('../routes/auction'));
-
-/** 入札ページ  */
+/** 入札ページ */
 app.use('/bidding', require('../routes/bidding'));
 /** 商品詳細 */
-// app.use('/product', require('../routes/product'));
+app.use('/product', require('../routes/product'));
 
 /** マイページ (落札一覧、入札履歴、退会処理) */
 app.use('/mypage', require('../routes/mypage'));
