@@ -1,6 +1,98 @@
 <%- include('partials/loginheader.ejs'); %>
 <link rel="stylesheet" href="/css/bidding.css" />
 <main><%- include('partials/breadcrumb.ejs'); %></main>
+<div class="uk-child-width-expand@s" uk-grid>
+  <div class="uk-grid-item-match">
+    <div class="uk-card uk-card-default uk-card-body">
+      <h3>Heading</h3>
+      <p>Lorem ipsum dolor sit amet.</p>
+    </div>
+  </div>
+  <div>
+    <div class="uk-flex uk-flex-column uk-width-1-3">
+      <div class="uk-card uk-card-default uk-card-body"><%= ejsRender.sql[0].car_name %></div>
+      <div class="uk-card uk-card-default uk-card-body uk-margin-top">
+        <%= ejsRender.sql[0].maker_name %>
+      </div>
+      <div class="uk-card uk-card-default uk-card-body uk-margin-top">
+        <a class="uk-button uk-button-default" href="#modal-center" uk-toggle>詳細を確認</a>
+
+        <div id="modal-center" class="uk-flex-top" uk-modal>
+          <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
+            <button class="uk-modal-close-default" type="button" uk-close></button>
+            <ul class="uk-list uk-list-bullet">
+              <% if(ejsRender.sql2[0].aircon == 1){ %>
+              <li>エアコン：有</li>
+              <% } %> <% if(ejsRender.sql2[0].powerstee == 1){ %>
+              <li>パワーステアリング：有</li>
+              <% } %> <% if(ejsRender.sql2[0].powerwidou == 1){ %>
+              <li>パワーウィンドウ：有</li>
+              <% } %> <% if(ejsRender.sql2[0].centraldoor == 1){ %>
+              <li>集中ドアロック：有</li>
+              <% } %> <% if(ejsRender.sql2[0].abs == 1){ %>
+              <li>アンチブレーキシステム：有</li>
+              <% } %> <% if(ejsRender.sql2[0].airback == 1){ %>
+              <li>エアバッグ：有</li>
+              <% } %> <% if(ejsRender.sql2[0].ETC == 1){ %>
+              <li>ETC：有</li>
+              <% } %> <% if(ejsRender.sql2[0].keyless == 1){ %>
+              <li>キーレスエントリー：有</li>
+              <% } %> <% if(ejsRender.sql2[0].smartkey ==1){ %>
+              <li>スマートキー：有</li>
+              <% } %> <% if(ejsRender.sql2[0].cd == 1){ %>
+              <li>CD：有</li>
+              <% } %> <% if(ejsRender.sql2[0].md == 1){ %>
+              <li>MD：有</li>
+              <% } %> <% if(ejsRender.sql2[0].dvd == 1){ %>
+              <li>DVD：有</li>
+              <% } %> <% if(ejsRender.sql2[0].tv == 1){ %>
+              <li>テレビ：有</li>
+              <% } %> <% if(ejsRender.sql2[0].navi == 1){ %>
+              <li>ナビゲーション：有</li>
+              <% } %> <% if(ejsRender.sql2[0].backcamera == 1){ %>
+              <li>バックカメラ：有</li>
+              <% } %> <% if(ejsRender.sql2[0].autodoor == 1){ %>
+              <li>電動スライド：有</li>
+              <% } %> <% if(ejsRender.sql2[0].sunroof == 1){ %>
+              <li>サンルーフ：有</li>
+              <% } %> <% if(ejsRender.sql2[0].leather == 1){ %>
+              <li>本革シート：有</li>
+              <% } %> <% if(ejsRender.sql2[0].aero == 1){ %>
+              <li>純正エアロパーツ：有</li>
+              <% } %> <% if(ejsRender.sql2[0].alumi == 1){ %>
+              <li>純正アルミホイール：有</li>
+              <% } %> <% if(ejsRender.sql2[0].esc == 1){ %>
+              <li>横滑り防止装置：有</li>
+              <% } %> <% if(ejsRender.sql2[0].tractioncon == 1){ %>
+              <li>トランクションコントロール：有</li>
+              <% } %> <% if(ejsRender.sql2[0].coldareas == 1){ %>
+              <li>寒冷地帯使用車</li>
+              <% } %> <% if(ejsRender.sql2[0].welfare == 1){ %>
+              <li>福祉車両</li>
+              <% } %> <% if(ejsRender.sql2[0].lowdown == 1){ %>
+              <li>ローダウン：有</li>
+              <% } %> <% if(ejsRender.sql2[0].nosmoking == 1){ %>
+              <li>禁煙車</li>
+              <% } %> <% if(ejsRender.sql2[0].pet == 1){ %>
+              <li>ペット搭乗：有</li>
+              <% } %> <% if(ejsRender.sql2[0].exclusive == 1){ %>
+              <li>限定車</li>
+              <% } %> <% if(ejsRender.sql2[0].confirmation == 1){ %>
+              <li>試乗可能</li>
+              <% } %> <% if(ejsRender.sql2[0].instruction == 1){ %>
+              <li>取扱説明書：有</li>
+              <% } %> <% if(ejsRender.sql2[0].newguarantee == 1){ %>
+              <li>新車時保証書：有</li>
+              <% } %> <% if(ejsRender.sql2[0].spare == 1){ %>
+              <li>スペアタイヤ：有</li>
+              <% } %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <script>
   const info = JSON.parse('<%- JSON.stringify(ejsRender) %>');
   console.log(info);
