@@ -11,7 +11,20 @@ const paginate = (limit, reqParams) => {
   return offset;
 };
 
-module.exports = { paginate };
+/**
+ * DBのカラム数からMAXページ数を取得
+ * @param {int} count データベースから取ってきたカラム数
+ * @param {int} limit 上限値
+ */
+const paginateCount = (count, limit) => {
+  if (count % limit === 0) {
+    return Math.trunc(count / limit);
+  } else {
+    return Math.trunc(count / limit) + 1;
+  }
+};
+
+module.exports = { paginate, paginateCount };
 
 /** 使用例 */
 // const { paginate } = require("../../common/paginate");

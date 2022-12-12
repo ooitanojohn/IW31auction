@@ -27,6 +27,7 @@
   "ignorePatterns": [
     "temp/",
     "public/js",
-    "app/common/"
+    "app/common/",
+    "/app/controller/admin/carStocksManagementRouter.js"
   ]
 }
