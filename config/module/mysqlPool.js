@@ -9,7 +9,7 @@ const { mysqlPoolConf } = require('../conf/mysql');
 
 /** Poolインスタンス */
 const pool = mysql.createPool(mysqlPoolConf);
-debugMySQL(pool);
+debugMySQL(pool.config);
 // pool.getConnectionプロミス化
 const getConnection = promisify(pool.getConnection).bind(pool);
 // pool.queryをプロミス化、prepared

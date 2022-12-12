@@ -1,4 +1,5 @@
-const debug = require('debug')('http:server');
+const debug = require('debug')('http:socket');
+const { biddingInsert } = require('./socket/bidding');
 
 module.exports = (io) => {
   /** ソケット */
@@ -14,14 +15,6 @@ module.exports = (io) => {
     /**
      *  biddingPageで使うソケット
      */
-    /** biddingRoom 接続 */
-    socket.on('toServerJoin', (join) => {
-      // debug("product商品" + join.productId + "に参加しました");
-      socket.join(join.productId);
-    });
-    /** 入札が来たらMySQLへの登録処理と入札記録を返す */
-    socket.on('toServerBiddingSend', (biddingData) => {
-      io.to(biddingData.productId).emit('toRenderBiddingSend', biddingData);
-    });
+    biddingInsert(io, socket);
   });
 };
