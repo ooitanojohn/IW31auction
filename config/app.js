@@ -42,7 +42,7 @@ app.use('/admin', adminRouter);
 /** 車両管理 */
 adminRouter.use('/carStocks', require('../app/controller/admin/carStocksManagementRouter'));
 /** 出品管理 */
-adminRouter.use('/product', require('../routes/admin/productManagement'));
+adminRouter.use('/product', require('../routes/admin/product'));
 /** 会員管理 */
 adminRouter.use('/users', require('../app/controller/admin/userManagementRouter'));
 /** 売上管理 */
