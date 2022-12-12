@@ -9,12 +9,12 @@ const { beginTran } = require('../module/mysqlPool');
 
 /** userData登録 */
 const signup = async (req, res, next) => {
+  debug(req.body);
   const tran = await beginTran();
   /** 新規登録ID初期化 */
   try {
     /** パスワードのハッシュ化と登録 */
     await bcrypt.hash(req.body.password, saltRounds, async (err, hashedPassword) => {
-      debug(tran);
       if (err) throw new Error(err);
       let id = 0;
       await tran

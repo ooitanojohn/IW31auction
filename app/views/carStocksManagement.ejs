@@ -1,0 +1,174 @@
+<%- include('partials/header.ejs'); %>
+<main>
+  <h1>車両登録</h1>
+  <form id="" enctype="multipart/form-data" method="post">
+    <input id="chat-input1" name="file" type="file" />
+    <input type="submit" class="button" value="send" />
+  </form>
+  <style>
+    .form{
+        display: grid;
+        margin-right: 10%;
+        margin-left: 10%;
+    }
+    .column{
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        border: 1px solid #000;
+        margin-right: 10%;
+        margin-left: 10%;
+    }
+    #car_element{
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        border: 1px solid #000;
+    }
+    .option{
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        border: 1px solid #000;
+        display: none;
+    }
+    .element{
+        margin-right: 10%;
+        margin-left: 10%;
+    }
+  </style>
+  <div class="column">
+    <p class="element1">車名</p>
+    <p class="element2">製造会社</p>
+    <p class="element3">状態</p>
+    <p class="element4">購入日</p>
+    <p class="element5">入荷金額</p>
+    <p class="element6">ボタン</p>
+    <p>オプション表示</p>
+  </div>
+  <% ejsRender.sql.forEach((value, key) => { %>
+  <form class="element" method="post">
+    <div id="car_element">
+      <p class="car_name"><%= value.car_name%></p>
+      <p class="maker_name"><%= value.maker_name%></p>
+      <p class="car_state"><%= value.car_state%></p>
+      <p><%= value.arrival_time%></p>
+      <p><%= value.arrival_price%></p>
+      <button class="element_btn" type="button" name="update" value="<%" ="value.stock_id" %>
+        >更新
+      </button>
+      <p class="row" name="row">↓</p>
+    </div>
+    <div class="option" name="option">
+      <p>
+        <input class name="option" type="checkbox" <%= value.aircon ? 'checked': ' ' %>
+        disabled>エアコン
+      </p>
+      <p>
+        <input name="option" type="checkbox" <%= value.powerstee ? 'checked': ' ' %>
+        disabled>パワーステア
+      </p>
+      <p>
+        <input name="option" type="checkbox" <%= value.powerwidou ? 'checked': ' ' %>
+        disabled>パワーウィンド
+      </p>
+      <p>
+        <input name="option" type="checkbox" <%= value.centraldoor ? 'checked': ' ' %>
+        disabled>集中ドアロック
+      </p>
+      <p>
+        <input name="option" type="checkbox" <%= value.abs ? 'checked': ' ' %>
+        disabled>アンチブレーキシステム
+      </p>
+      <p>
+        <input name="option" type="checkbox" <%= value.airback ? 'checked': ' ' %>
+        disabled>エアバック
+      </p>
+      <p><input name="option" type="checkbox" <%= value.ETC ? 'checked': ' ' %> disabled>ETC</p>
+      <p>
+        <input name="option" type="checkbox" <%= value.keyless ? 'checked': ' ' %>
+        disabled>キーレスエントリー
+      </p>
+      <p>
+        <input name="option" type="checkbox" <%= value.smartkey ? 'checked': ' ' %>
+        disabled>スマートキー
+      </p>
+      <p><input name="option" type="checkbox" <%= value.cd ? 'checked': ' ' %> disabled>CD</p>
+      <p><input name="option" type="checkbox" <%= value.md ? 'checked': ' ' %> disabled>MD</p>
+      <p><input name="option" type="checkbox" <%= value.dvd? 'checked': ' ' %> disabled>DVD</p>
+      <p><input name="option" type="checkbox" <%= value.tv ? 'checked': ' ' %> disabled>TV</p>
+      <p>
+        <input name="option" type="checkbox" <%= value.navi ? 'checked': ' ' %>
+        disabled>ナビゲーション
+      </p>
+      <p>
+        <input name="option" type="checkbox" <%= value.backcamera ? 'checked': ' ' %>
+        disabled>バックカメラ
+      </p>
+      <p>
+        <input name="option" type="checkbox" <%= value.autodoor ? 'checked': ' ' %>
+        disabled>電動スライド
+      </p>
+      <p>
+        <input name="option" type="checkbox" <%= value.sunroof ? 'checked': ' ' %>
+        disabled>サンルーフ
+      </p>
+      <p>
+        <input name="option" type="checkbox" <%= value.leather ? 'checked': ' ' %>
+        disabled>本革シート
+      </p>
+      <p>
+        <input name="option" type="checkbox" <%= value.aero ? 'checked': ' ' %>
+        disabled>純正エアロバック
+      </p>
+      <p>
+        <input name="option" type="checkbox" <%= value.alumi ? 'checked': ' ' %>
+        disabled>純正アルミホイール
+      </p>
+      <p>
+        <input name="option" type="checkbox" <%= value.esc ? 'checked': ' ' %>
+        disabled>横滑り防止装置
+      </p>
+      <p>
+        <input name="option" type="checkbox" <%= value.tractioncon ? 'checked': '' %>
+        disabled>トランクションコントロール
+      </p>
+      <p>
+        <input name="option" type="checkbox" <%= value.coldareas ? 'checked': '' %>
+        disabled>寒冷地帯仕様車
+      </p>
+      <p>
+        <input name="option" type="checkbox" <%= value.welfare ? 'checked': '' %> disabled>福祉車両
+      </p>
+      <p>
+        <input name="option" type="checkbox" <%= value.lowdown ? 'checked': '' %>
+        disabled>ローダウン
+      </p>
+      <p>
+        <input name="option" type="checkbox" <%= value.nosmoking ? 'checked': '' %> disabled>禁煙車
+      </p>
+      <p>
+        <input name="option" type="checkbox" <%= value.pet ? 'checked': '' %> disabled>ペット有無
+      </p>
+      <p>
+        <input name="option" type="checkbox" <%= value.exclusive ? 'checked': '' %> disabled>限定車
+      </p>
+      <p>
+        <input name="option" type="checkbox" <%= value.confirmation ? 'checked': '' %>
+        disabled>試乗、現車確認
+      </p>
+      <p>
+        <input name="option" type="checkbox" <%= value.instruction ? 'checked': '' %>
+        disabled>取扱説明書あり
+      </p>
+      <p>
+        <input name="option" type="checkbox" <%= value.newguarantee ? 'checked': '' %>
+        disabled>新車保証書
+      </p>
+      <p>
+        <input name="option" type="checkbox" <%= value.spare ? 'checked': '' %>
+        disabled>スペアタイヤ
+      </p>
+    </div>
+  </form>
+  <% }); %>
+  <script type="text/javascript" src="/js/admin/carStocksmanagement.js"></script>
+  <%- include('partials/footer.ejs'); %>
+</main>

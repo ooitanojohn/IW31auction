@@ -1,33 +1,32 @@
-<%- include('../partials/header.ejs'); %>
-<main>
-  <h1>管理者ページ</h1>
-  <%- include('../partials/breadcrumb.ejs'); %> 
+<%- include('../partials/header.ejs'); %> <main>
+  <h1>管理者ページ</h1> <%- include('../partials/breadcrumb.ejs'); %>
   <!-- 会員一覧表示 -->
   <form action="/admin/users/" method="post">
-  <table border="1">
-    <tr><th>user_id</th><th>user_name</th><th>user_login_id</th><th>user_password</th>
-      <th>user_mail</th><th>user_post_code</th><th>user_address</th><th>user_phone_number</th>
-      <th>card_number</th><th>card_key</th><th>icon_img</th><th>user_state</th><th>更新する</th>
-    </tr>
-    <% for (let i = 0; i < ejsRender.sql.length; i++){ %>
-    <tr>
-      <% Object.keys(ejsRender.sql[i]).forEach(function(key){ %>
-        <td>
-          <%- ejsRender.sql[i][key] %>
-        </td>
-      <% }) %>
-      <% if(ejsRender.sql[i]['user_state'] != 1){ %>
-        <td>
-          <button type="submit" name="upbutton" value="<%- ejsRender.sql[i]['user_id'] %>"><%- ejsRender.sql[i]['user_state'] === 2 ? '通常(0)に変更':'垢バン(2)に変更' %></button>	        	
-        </td>
-      <% } %>
-    </tr>
-    <% } %>
-  </table>
-</form>
+    <table border="1">
+      <tr>
+        <th>user_id</th>
+        <th>user_name</th>
+        <th>user_login_id</th>
+        <th>user_password</th>
+        <th>user_mail</th>
+        <th>user_post_code</th>
+        <th>user_address</th>
+        <th>user_phone_number</th>
+        <th>card_number</th>
+        <th>card_key</th>
+        <th>icon_img</th>
+        <th>user_state</th>
+        <th>更新する</th>
+      </tr> <% for (let i = 0; i < ejsRender.sql.length; i++){ %> <tr>
+        <% Object.keys(ejsRender.sql[i]).forEach(function(key){ %> <td> <%- ejsRender.sql[i][key] %> </td> <% }) %>
+        <% if(ejsRender.sql[i]['user_state'] != 1){ %> <td>
+          <button type="submit" name="upbutton"
+            value="<%- ejsRender.sql[i]['user_id'] %>"><%- ejsRender.sql[i]['user_state'] === 2 ? '通常(0)に変更':'垢バン(2)に変更' %></button>
+        </td> <% } %> </tr> <% } %>
+    </table>
+  </form>
 </main>
 <script>
   const info = JSON.parse('<%- JSON.stringify(ejsRender) %>');
   console.log(info);
-</script>
-<%- include('../partials/footer.ejs'); %>
+</script> <%- include('../partials/footer.ejs'); %>
