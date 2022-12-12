@@ -18,3 +18,4 @@ const productDetail = async (req, res, next) => {
   }
 };
 module.exports = { productDetail };
+

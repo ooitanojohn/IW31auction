@@ -7,4 +7,6 @@ router.get('/:productId', async (req, res, next) => {
   await productDetail(req, res, next);
 });
 
+/**  */
+
 module.exports = router;
