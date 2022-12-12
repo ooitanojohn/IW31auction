@@ -1,7 +1,8 @@
 /**
  * 登録処理
  */
-const debug = require('debug')('http:mypage');
+ 
+debug = require('debug')('http:mypage');
 const bcrypt = require('bcrypt');
 
 const saltRounds = 10;
