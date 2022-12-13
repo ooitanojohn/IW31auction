@@ -2,17 +2,17 @@
 <link rel="stylesheet" href="/css/common/button.css">
 <link rel="stylesheet" href="/css/admin/productPrepare.css">
 <main>
-<div style="display: flex;">
-  <h2 style="width: 20%;">出品管理</h2>
-  <a style="width: 20%;" href="/admin/product/prepare/1"><button style="width: 80%;">出品する</button></a>
-  <a style="width: 20%;" href="/admin/product/exhibit/1?state=schedule"><button style="width: 80%;">出品変更する</button></a>
-  <a style="width: 20%;" href="/admin/product/exhibit/1?state=open"><button style="width: 80%;">入札状況</button></a>
-  <a style="width: 20%;" href="/admin/product/exhibit/1?state=close"><button style="width: 80%;">落札連絡する</button></a>
-</div>
+  <div style="display: flex;">
+    <h2 style="width: 20%;">出品管理</h2>
+    <a style="width: 20%;" href="/admin/product/prepare/1"><button style="width: 80%;">出品する</button></a>
+    <a style="width: 20%;" href="/admin/product/exhibit/1?state=schedule"><button
+        style="width: 80%;">出品変更する</button></a>
+    <a style="width: 20%;" href="/admin/product/exhibit/1?state=open"><button style="width: 80%;">入札状況</button></a>
+    <a style="width: 20%;" href="/admin/product/exhibit/1?state=close"><button style="width: 80%;">落札連絡する</button></a>
+  </div>
   <h3>在庫一覧からオークション出品登録が出来ます</h3>
-
-  <!-- 現在在庫一覧 時間軸で並び替え + 出品状態で並び替え + 新規登録をmodal  -->
-  <table class="uk-table uk-table-divider">
+  <!-- 現在在庫一覧 時間軸で並び替え + 出品状態で並び替え + 新規登録をmodal  --> <% if(ejsRender.sql.length === 0){ %> <p>出品予定の在庫一覧はありません</p>
+  <% } else { %> <table class="uk-table uk-table-divider">
     <thead>
       <tr>
         <th>在庫ID</th>
@@ -42,7 +42,7 @@
       <div id="modal-center<%= i %>" class="uk-flex-top" uk-modal>
         <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
           <button class="uk-modal-close-default" type="button" uk-close></button>
-          <form method="post" action="/admin/product/INSERT">
+          <form method="post" action="/admin/product/insert" enctype="multipart/form-data">
             <label for="car_id">車ID <span><%- ejsRender.sql[i].car_id %></span></label>
             <input type="hidden" name="car_id" id="car_id" value="<%- ejsRender.sql[i].car_id %>">
             <label for="stock_id">在庫(車特定)ID <span><%- ejsRender.sql[i].stock_id %></span></label>
@@ -52,16 +52,28 @@
             <label for="car_state">車状態ID <span><%- ejsRender.sql[i].car_state %></span></label>
             <input type="hidden" id="car_state" name="car_state" value="<%- ejsRender.sql[i].car_state %>">
             <label for="start_price">開始金額</label>
-            <input type="number" step="100" min="0" name="start_price" id="start_price" placeholder="<%- ejsRender.sql[i].arrival_price %>" value="<%- ejsRender.sql[i].arrival_price / 2%>" required>
+            <input type="number" step="100" min="0" name="start_price" id="start_price"
+              placeholder="<%- ejsRender.sql[i].arrival_price %>" value="<%- ejsRender.sql[i].arrival_price / 2%>"
+              required>
             <label for="asking_price">希望金額</label>
-            <input type="number" step="100" min="0" id="asking_price" name="asking_price" placeholder="<%- ejsRender.sql[i].arrival_price %>" value="<%- ejsRender.sql[i].arrival_price %>" required>
+            <input type="number" step="100" min="0" id="asking_price" name="asking_price"
+              placeholder="<%- ejsRender.sql[i].arrival_price %>" value="<%- ejsRender.sql[i].arrival_price %>"
+              required>
             <label for="start_time">開始時間</label>
             <input type="datetime-local" id="start_time" name="start_time" required>
             <label for="end_time">終了時間</label>
             <input type="datetime-local" id="end_time" name="end_time" required>
-            <!-- <label for="car_img">車画像</label>
-            <input type="file" id="car_img" required> -->
-            <button type="submit">新規登録</button>
+            <!-- upload -->
+            <div class="js-upload uk-placeholder uk-text-center">
+              <span uk-icon="icon: cloud-upload"></span>
+              <span class="uk-text-middle">ここに写真ファイルをドロップしてください or</span>
+              <div uk-form-custom>
+                <input type="file" name="product" multiple>
+                <span class="uk-link">選択してください 10枚まで送信可能です</span>
+              </div>
+            </div>
+            <progress id="js-progressbar" class="uk-progress" value="0" max="100" hidden></progress> <button
+              type="submit">新規登録</button>
           </form>
         </div>
       </div> <% } %>
@@ -71,16 +83,18 @@
     <li class="<%_ if(ejsRender.params.pageId <= 1) { _%> uk-disabled <% } %>"><a
         href="/admin/product/prepare/<%- ejsRender.params.pageId - 1 %>"><span class="uk-margin-small-right"
           uk-pagination-previous></span>Previous</a></li>
-    <div class="uk-pagination"> <% for(let i = 1; i <= ejsRender.sql2; i++) { %> <li class="<%_ if(ejsRender.params.pageId === i) { _%> uk-disabled <% } %>"><a
+    <div class="uk-pagination"> <% for(let i = 1; i <= ejsRender.sql2; i++) { %> <li
+        class="<%_ if(ejsRender.params.pageId === i) { _%> uk-disabled <% } %>"><a
           href="/admin/product/prepare/<%= i %>"><%= i %></a></li>
       <!-- <li class="uk-disabled"><span>…</span></li> --> <% } %> </div>
     <li class="<%_ if(ejsRender.params.pageId >= ejsRender.sql2) { _%> uk-disabled <% } %>"><a
         href="/admin/product/prepare/<%- ejsRender.params.pageId+1  %>">Next<span class="uk-margin-small-left"
           uk-pagination-next></span></a>
     </li>
-  </ul>
+  </ul> <% } %>
 </main>
 <script>
   const info = JSON.parse('<%- JSON.stringify(ejsRender) %>');
   console.log(info);
 </script> <%- include('../partials/admin/adminFooter.ejs'); %>
+<script src="/js/components/upload.js"></script>

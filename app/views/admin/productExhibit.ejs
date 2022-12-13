@@ -10,7 +10,9 @@
     <a style="width: 20%;" href="/admin/product/exhibit/1?state=open"><button style="width: 80%;">入札状況</button></a>
     <a style="width: 20%;" href="/admin/product/exhibit/1?state=close&close=not"><button style="width: 80%;">落札連絡する</button></a>
   </div>
-  <!-- 現在の最大入札者一覧を確認できます --> <% if(ejsRender.query.state === 'open'){ %> <h3>現在の最大入札者一覧を確認できます</h3>
+  <!-- 現在の最大入札者一覧を確認できます -->
+  <% if(ejsRender.query.state === 'open'){ %>
+    <h3>現在の最大入札者一覧を確認できます</h3>
   <table class="uk-table uk-table-divider">
     <thead>
       <tr>
@@ -32,12 +34,21 @@
         <td><%- ejsRender.sql3[i].car_img %></td>
         <td><%- ejsRender.sql3[i].car_name%></td>
       </tr> <% } %> </tbody>
-  </table> <% } %> <% if(ejsRender.query.state === 'schedule'){ %> <h3>出品前のオークションを確認・変更・削除が出来ます</h3>
-  <% } else if(ejsRender.query.state === 'open'){ %> <h3>出品中のオークションの入札状況を確認出来ます</h3>
-  <% } else if(ejsRender.query.state === 'close'){ %> <h3>出品終了のオークションから落札者確認・落札登録・落札連絡が出来ます</h3> <% } %>
-  <!-- 現在出品中一覧 時間軸で並び替え？ + 出品状態で並び替え + 更新をmodal?  -->
-  <% if(ejsRender.query.state === 'open' || ejsRender.query.state === 'schedule'){ %> <table
-    class="uk-table uk-table-divider">
+  </table>
+  <% } %>
+  <% if(ejsRender.query.state === 'schedule'){ %>
+    <h3>出品前のオークションを確認・変更・削除が出来ます</h3>
+  <% } else if(ejsRender.query.state === 'open'){ %>
+    <h3>出品中のオークションの入札状況を確認出来ます</h3>
+  <% } else if(ejsRender.query.state === 'close'){ %>
+    <h3>出品終了のオークションから落札者確認・落札登録・落札連絡が出来ます</h3>
+  <% } %>
+  <!-- 現在出品中一覧 時間軸で並び替え？ + 出品状態で並び替え + 更新をmodal? -->
+  <% if(ejsRender.query.state === 'open' || ejsRender.query.state === 'schedule'){ %>
+    <% if(ejsRender.sql.length === 0){ %>
+      <p>出品予定の商品一覧はありません</p>
+    <% } else { %>
+  <table class="uk-table uk-table-divider">
     <thead>
       <tr>
         <th>商品ID</th>
@@ -52,7 +63,9 @@
         <th>入荷価格</th>
       </tr>
     </thead>
-    <tbody> <% for (var i = 0; i < ejsRender.sql.length; i++) { %> <tr>
+    <tbody>
+    <% for (var i = 0; i < ejsRender.sql.length; i++) { %>
+      <tr>
         <td><%- ejsRender.sql[i].product_id %></td>
         <td><%- ejsRender.sql[i].start_price %></td>
         <td><%- ejsRender.sql[i].asking_price %></td>
@@ -106,7 +119,9 @@
             </form>
           </div>
         </div> <% } %>
-      </tr> <% } %> </tbody>
+      </tr>
+    <% } %>
+    </tbody>
   </table>
   <ul class="uk-pagination uk-flex-between">
     <li class="<%_ if(ejsRender.params.pageId <= 1) { _%> uk-disabled <% } %>"><a
@@ -120,7 +135,9 @@
         href="/admin/product/exhibit/<%- ejsRender.params.pageId+1  %>">Next<span class="uk-margin-small-left"
           uk-pagination-next></span></a>
     </li>
-  </ul> <% } %>
+  </ul>
+    <% } %>
+  <% } %>
   <!-- 落札連絡 -->
   <% if(ejsRender.query.state === 'close'){ %> 
     <div style="display: flex; gap: 20px;">
