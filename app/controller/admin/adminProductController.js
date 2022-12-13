@@ -1,5 +1,4 @@
 const debug = require('debug')('http:products');
-// const multer = require('multer');
 const { DateTime } = require('luxon');
 
 const { executeQuery, beginTran } = require('../../module/mysqlPool');

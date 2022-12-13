@@ -25,8 +25,11 @@
                   <th>入札ページへ</th>
                 </tr>
               </thead>
+              <!-- sql1 -->
               <tbody>
-                <% ejsRender.sql.forEach((value, key) => { %>
+                <% if(ejsRender.sql.length === 0) { %>
+                <p>入札履歴がありません</p>
+                <% } else { %> <% ejsRender.sql.forEach((value, key) => { %>
                 <tr>
                   <td><%= ejsRender.sql[key].product_id %></td>
                   <td><%= ejsRender.sql[key].car_name %></td>
@@ -68,7 +71,7 @@
                     >
                   </td>
                 </tr>
-                <% }) %>
+                <% }) %> <% } %>
               </tbody>
             </table>
           </div>
@@ -90,7 +93,8 @@
                 </tr>
               </thead>
               <tbody>
-                <% ejsRender.sql3.forEach((value, key) => { %>
+                <% if(ejsRender.sql3.length === 0) { %> <% } else { %> <%
+                ejsRender.sql3.forEach((value, key) => { %>
                 <tr>
                   <td><%= ejsRender.sql3[key].product_id %></td>
                   <td><%= ejsRender.sql3[key].car_name %></td>
@@ -124,7 +128,7 @@
                     <%_ } _%>
                   </td>
                 </tr>
-                <% }) %>
+                <% }) %> <% } %>
               </tbody>
             </table>
           </div>
@@ -147,7 +151,11 @@
               <form action="/mypage/acount" method="POST">
                 <div>
                   <label for="user_login_id">ログインID</label>
-                  <input type="text" value="<%= ejsRender.sql4[0].user_login_id %>" readonly />
+                  <input
+                    type="text"
+                    value="<% if(ejsRender.sql4.length !== 0) { %><%= ejsRender.sql4[0].user_login_id %><% } %>"
+                    readonly
+                  />
                 </div>
                 <div>
                   <label for="password">パスワード</label>
@@ -181,7 +189,7 @@
                     name="card_number"
                     id="card_number"
                     type="text"
-                    value="<%= ejsRender.sql4[0].card_number %>"
+                    value="<% if(ejsRender.sql4.length !== 0){ %><%= ejsRender.sql4[0].card_number %> <% } %>"
                     autocomplete="cc-number"
                     maxlength="12"
                     required
@@ -193,7 +201,7 @@
                     id="card_key"
                     name="card_key"
                     type="text"
-                    value="<%= ejsRender.sql4[0].card_key %>"
+                    value="<% if(ejsRender.sql4.length !== 0){ %><%= ejsRender.sql4[0].card_key %><% } %>"
                     autocomplete="cc-csc"
                     maxlength="3"
                     required
@@ -222,7 +230,7 @@
                     name="user_name"
                     id="user_name"
                     autocomplete="name"
-                    value="<%= ejsRender.sql4[0].user_name %>"
+                    value="<% if(ejsRender.sql4.length !== 0) {%><%= ejsRender.sql4[0].user_name %><% } %>"
                   />
                 </div>
                 <div>
@@ -232,7 +240,7 @@
                     name="user_mail"
                     id="user_mail"
                     autocomplete="email"
-                    value="<%= ejsRender.sql4[0].user_mail %>"
+                    value="<% if(ejsRender.sql4.length !== 0){%><%= ejsRender.sql4[0].user_mail %><% } %>"
                     required
                   />
                 </div>
@@ -242,7 +250,7 @@
                     type="text"
                     name="user_post_code"
                     id="user_post_code"
-                    value="<%= ejsRender.sql4[0].user_post_code %>"
+                    value="<% if(ejsRender.sql4.length !== 0) {%><%= ejsRender.sql4[0].user_post_code %><% } %>"
                     autocomplete="postal-code"
                     required
                   />
@@ -253,7 +261,7 @@
                     id="user_address"
                     name="user_address"
                     type="text"
-                    value="<%= ejsRender.sql4[0].user_address %>"
+                    value="<% if(ejsRender.sql4.length !== 0) {%><%= ejsRender.sql4[0].user_address %><% } %>"
                     autocomplete="street-address"
                     required
                   />
@@ -264,7 +272,7 @@
                     id="user_phone_number"
                     name="user_phone_number"
                     type="tel"
-                    value="<%= ejsRender.sql4[0].user_phone_number %>"
+                    value="<% if(ejsRender.sql4.length !== 0) {%><%= ejsRender.sql4[0].user_phone_number %><% } %>"
                     autocomplete="tel-national"
                     required
                   />
