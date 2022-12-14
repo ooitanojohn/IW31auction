@@ -21,7 +21,6 @@ router.get('/:page', async (req, res, next) => {
   let data;
   let offset;
   resInfo.maxpage = 0;
-  debug(offset);
   try {
     debugMySQL(resInfo);
     /** リンクがクリックされた時の処理 */
