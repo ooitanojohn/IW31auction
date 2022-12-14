@@ -5,6 +5,9 @@
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
 ### インストール
+MySQL 8.0
+create database auction;
+mysql -u root -p auction < auction.sql
 npm i
 
 ### 鯖起動

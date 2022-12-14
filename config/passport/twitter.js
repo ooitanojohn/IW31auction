@@ -25,7 +25,9 @@ const twitterAuth = async (token, tokenSecret, profile, cb) => {
         profile.provider,
         token,
       ])
-      .catch((err) => cb(err));
+      .catch((err) => {
+        throw new Error(err);
+      });
 
     /** 初回登録 */
     let id = 0;
