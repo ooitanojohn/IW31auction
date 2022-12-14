@@ -1,5 +1,4 @@
 const debug = require('debug')('http:products');
-// const multer = require('multer');
 const { DateTime } = require('luxon');
 
 const { executeQuery, beginTran } = require('../../module/mysqlPool');
@@ -187,7 +186,7 @@ const adminExhibitInsert = async (req, res) => {
     /** 出品登録をする */
     await tran
       .query(
-        `INSERT INTO products(car_id, stock_id, start_price, asking_price, start_time, end_time, product_state,user_id) VALUES(?, ?, ?, ?, ?, ?, ?);`,
+        `INSERT INTO products(car_id, stock_id, start_price, asking_price, start_time, end_time, product_state,user_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?);`,
         [
           req.body.car_id,
           req.body.stock_id,

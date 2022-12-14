@@ -31,8 +31,8 @@ const signup = async (req, res, next) => {
           card_key,
           icon_img,
           user_state
-          ) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-          [req.body.user_login_id, hashedPassword, '', '', '', '', '', '', '', '', 0],
+          ) VALUES(?, ?, ?, ?, ?, 0, 0, 0, 0, ?, 0)`,
+          [req.body.user_login_id, hashedPassword, '', '', '', ''],
         )
         .then((results) => {
           id = results.insertId;
