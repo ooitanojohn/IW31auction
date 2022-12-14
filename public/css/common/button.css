@@ -1,24 +1,3 @@
-.biddingComponent {
-  display: flex;
-}
-.biddingH2 {
-  font-weight: 800;
-}
-.biddingH3 {
-  margin: 0;
-}
-.biddngH4 {
-  margin: 0;
-}
-.biddingP {
-  font-size: small;
-  margin: 0;
-}
-
-#biddingLog {
-  margin: 0;
-}
-
 @media (min-width: 960px) {
   .uk-countdown-number {
     font-size: 2rem;
@@ -35,7 +14,7 @@
 .uk-button {
   width: 150px;
 }
-.mypageButton {
+.alinkButton {
   border: none;
   padding: 0;
   width: 150px;
