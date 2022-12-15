@@ -1,4 +1,4 @@
-const debug = require('debug')('http:bidding');
+// const debug = require('debug')('http:bidding');
 
 const { DateTime } = require('luxon');
 
@@ -16,23 +16,24 @@ const biddingSelect = async (req, res, next) => {
       throw new Error(err);
     });
     /** 日付フォーマット処理 */
-    for (let i = 0; i < resInfo.sql.length; i += 1) {
-      const time = new Date(`${resInfo.sql[i].bidding_time}`).toISOString();
+    for (let i = 1; i < resInfo.sql.length; i += 1) {
+      const time = new Date(resInfo.sql[i].bidding_time).toISOString();
       resInfo.sql[i].bidding_time = DateTime.fromISO(`${time}`).toFormat('yyyy-LL-dd HH:mm:ss');
     }
+
     /** 最高額入札情報  */
     resInfo.max = resInfo.sql[resInfo.sql.length - 1];
     /** 日付の差分 */
     const start = DateTime.now();
     const end = DateTime.fromISO(new Date(`${resInfo.max.bidding_time}`).toISOString());
     const diff = start.diff(end, ['days', 'hours', 'minutes', 'seconds']);
-    debug(diff.values);
+    // debug(diff.values);
     resInfo.max.diff = diff.values;
+    res.render('bidding.ejs', { ejsRender: resInfo });
   } catch (err) {
-    debug(err);
+    // debug(err);
     next(err);
   }
-  res.render('bidding.ejs', { ejsRender: resInfo });
 };
 
 module.exports = { biddingSelect };

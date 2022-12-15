@@ -4,7 +4,7 @@ const { executeQuery } = require('../../app/module/mysqlPool');
 
 /**
  * ログインチェック
- * @param {string} user_login_id ログインID＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
+ * @param {string} user_login_id ログインID
  * @param {string} password パスワード
  * @param {function} cb passportのコールバック関数
  * @returns msgとかリダイレクト先
