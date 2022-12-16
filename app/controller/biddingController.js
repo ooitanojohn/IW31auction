@@ -8,7 +8,7 @@ const { httpRapper } = require('../common/httpRapper');
 const biddingSelect = async (req, res, next) => {
   const resInfo = httpRapper(req);
   try {
-    /** 入札情報過去5件数 */
+    /** 入札情報 */
     resInfo.sql = await executeQuery(
       'SELECT b.user_id, b.product_id, b.bidding_money, b.bidding_time, p.car_img,p.end_time, c.car_name FROM biddings as b, products as p, cars as c WHERE b.product_id = ? AND p.product_id = ? AND p.car_id = c.car_id ORDER BY b.bidding_time ASC;',
       [req.params.productId, req.params.productId],

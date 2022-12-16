@@ -6,25 +6,27 @@ const join = {
 };
 socketIo.emit('toServerJoin', join);
 
+let biddingLogId = document.querySelectorAll('#biddingLogId');
+let biddingId = Number(biddingLogId[0].textContent) + 1;
+
 // ボタンが押されたらserverへsocket送信
 const form = document.getElementById('biddingForm');
 form.addEventListener('submit', (event) => {
-  let biddingLogId = document.querySelectorAll('#biddingLogId');
   event.preventDefault();
   const biddingData = {
     userId: info.user.user_id,
     productId: info.params.productId,
     biddingMoney: document.getElementById('biddingMoney').value,
     biddingTime: DateTime.now(),
-    id: Number(biddingLogId[biddingLogId.length - 1].textContent) + 1,
+    id: biddingId,
   };
   socketIo.emit('toServerBiddingSend', biddingData);
 });
 
 // ボタンが押されたらserverへsocket送信
 const formBtn = document.getElementById('biddingFormBtn');
-formBtn.addEventListener('click', (event) => {
-  let biddingLogId = document.querySelectorAll('#biddingLogId');
+formBtn.addEventListener('click', async (event) => {
+  console.log(biddingId);
   event.preventDefault();
   const biddingData = {
     userId: info.user.user_id,
@@ -32,7 +34,7 @@ formBtn.addEventListener('click', (event) => {
     biddingMoney:
       Number(document.getElementById('biddingMoneyBtn').value) + Number(event.target.id),
     biddingTime: DateTime.now(),
-    id: Number(biddingLogId[biddingLogId.length - 1].textContent) + 1,
+    id: biddingId,
   };
   console.log(biddingData);
   socketIo.emit('toServerBiddingSend', biddingData);
@@ -55,8 +57,9 @@ socketIo.on('toRenderBiddingSend', (biddingData) => {
       biddingData.biddingTime,
   );
   p.appendChild(text);
-  div.appendChild(p);
-
+  p.setAttribute('class', 'uk-animation-slide-top-small');
+  div.prepend(p);
+  biddingId = biddingId + 1;
   /** 最高入札額の更新 */
   const maxBiddingMoney = document.querySelector('#maxBiddingMoney');
   const maxUserId = document.querySelector('#maxUserId');
@@ -65,9 +68,13 @@ socketIo.on('toRenderBiddingSend', (biddingData) => {
   const biddingMoneyBtn = document.querySelector('#biddingMoneyBtn');
 
   maxBiddingMoney.textContent = biddingData.biddingMoney;
+  maxBiddingMoney.setAttribute('class', 'uk-animation-slide-top-small');
   maxUserId.textContent = biddingData.userId;
+  maxUserId.setAttribute('class', 'uk-animation-slide-top-small');
   maxBiddingTime.textContent = biddingData.biddingTime;
+  maxBiddingTime.setAttribute('class', 'uk-animation-slide-top-small');
   biddingMoney.min = Number(biddingData.biddingMoney) + 100;
-  biddingMoney.placeholder = Number(biddingData.biddingMoney) + 100;
+  biddingMoney.setAttribute('class', 'uk-animation-slide-top-small');
+  biddingMoney.placeholder = Number(biddingData.biddingMoney) + 10000;
   biddingMoneyBtn.value = biddingData.biddingMoney;
 });
