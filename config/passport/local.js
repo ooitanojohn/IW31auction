@@ -25,7 +25,7 @@ const loginCheck = async (user_login_id, password, cb) => {
     bcrypt.compare(password, row[0].hashed_password, (err, result) => {
       if (!result) return cb(null, false, { message: 'ログインID又はパスワードが違います。' });
       const user = {
-        id: row[0].user_id,
+        user_id: row[0].user_id,
         user_login_id,
       };
       return cb(null, user);

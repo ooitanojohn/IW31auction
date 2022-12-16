@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 const debug = require('debug')('http:mypage');
 const bcrypt = require('bcrypt');
 const { executeQuery, beginTran } = require('../module/mysqlPool');
@@ -49,12 +50,9 @@ const selectMypage = async (req, res, next) => {
  */
 const saltRounds = 10;
 const updateAccount = async (req, res, next) => {
-  const tran = await beginTran();
-  try {
-    // eslint-disable-next-line consistent-return
-    await bcrypt.hash(req.body.password, saltRounds, async (err, hashedPassword) => {
-      debug(tran);
-      if (err) throw new Error(err);
+  await bcrypt.hash(req.body.password, saltRounds, async (err, hashedPassword) => {
+    const tran = await beginTran();
+    try {
       await tran
         .query(`UPDATE users SET hashed_password = ? WHERE user_id = ?;`, [
           hashedPassword,
@@ -63,14 +61,14 @@ const updateAccount = async (req, res, next) => {
         .catch((error) => {
           throw new Error(error);
         });
-    });
-    await tran.commit();
-
-    res.redirect(301, '/mypage');
-  } catch (err) {
-    await tran.rollback();
-    next(err);
-  }
+      if (err) throw new Error(err);
+      await tran.commit();
+    } catch (errN) {
+      await tran.rollback();
+      next(errN);
+    }
+  });
+  res.redirect(301, '/mypage');
 };
 
 /**
