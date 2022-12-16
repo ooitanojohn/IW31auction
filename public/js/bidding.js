@@ -7,7 +7,13 @@ const join = {
 socketIo.emit('toServerJoin', join);
 
 let biddingLogId = document.querySelectorAll('#biddingLogId');
-let biddingId = Number(biddingLogId[0].textContent) + 1;
+console.log(typeof biddingLogId[0]);
+if (typeof biddingLogId[0] === 'undefined') {
+  var biddingId = 1;
+} else {
+  var biddingId = Number(biddingLogId[0].textContent) + 1;
+}
+
 const maxBiddingMoney = document.querySelector('#maxBiddingMoney');
 const maxUserId = document.querySelector('#maxUserId');
 const maxBiddingTimeSeconds = document.querySelector('#maxBiddingTimeSeconds');

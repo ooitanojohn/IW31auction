@@ -3,7 +3,7 @@
 <main>
   <%- include('partials/breadcrumb.ejs'); %>
   <h2 class="biddingH2">
-    オークションNo<%= ejsRender.params.productId %> <%= ejsRender.sql[0].car_name %>の入札開催中
+    オークションNo<%= ejsRender.params.productId %> <%= ejsRender.sql2[0].car_name %>の入札開催中
     <a
       href="/product/<%= ejsRender.params.productId %>"
       style=" font-size: smaller; margin-left: 30px; "
@@ -64,7 +64,8 @@
       </div>
     </div>
     <ul id="biddingLog" style="width: 270px; height: 470px;" class="uk-panel uk-panel-scrollable">
-      <% for(let i = ejsRender.sql.length-2; i >= 0 ; i--) { %>
+      <% if(ejsRender.sql.length !== 0) { %> <% for(let i = ejsRender.sql.length-2; i >= 0 ; i--) {
+      %>
       <li>
         <div class="biddingP">
           <span style="display: block;">入札No : <span id="biddingLogId"><%- i + 1 %></span></span>
@@ -73,7 +74,7 @@
           <span style="display: block;">入札時間 :<%- ejsRender.sql[i].bidding_time%> </span>
         </div>
       </li>
-      <% } %>
+      <% } %> <% } %>
     </ul>
   </div>
   <div class="uk-flex" style="gap: 100px;">
@@ -131,7 +132,7 @@
 </script>
 <!-- countdown -->
 <script src="/js/common/createElement.js"></script>
-<script type="text/javascript" src="/js/mypage.js"></script>
+<script type="text/javascript" src="/js/components/biddingCount.js"></script>
 <script src="/js/bidding.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <%- include('partials/footer.ejs'); %>
