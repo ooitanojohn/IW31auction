@@ -14,7 +14,6 @@ const {
 router.get('/', async (req, res, next) => {
   await selectMypage(req, res, next);
 });
-
 /** アカウント変更 */
 router.post('/acount', async (req, res, next) => {
   await updateAccount(req, res, next);
