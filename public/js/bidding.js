@@ -7,12 +7,43 @@ const join = {
 socketIo.emit('toServerJoin', join);
 
 let biddingLogId = document.querySelectorAll('#biddingLogId');
-let biddingId = Number(biddingLogId[0].textContent) + 1;
+console.log(typeof biddingLogId[0]);
+if (typeof biddingLogId[0] === 'undefined') {
+  var biddingId = 1;
+} else {
+  var biddingId = Number(biddingLogId[0].textContent) + 1;
+}
+
+const maxBiddingMoney = document.querySelector('#maxBiddingMoney');
+const maxUserId = document.querySelector('#maxUserId');
+const maxBiddingTimeSeconds = document.querySelector('#maxBiddingTimeSeconds');
+const maxBiddingTimeMinute = document.querySelector('#maxBiddingTimeMinute');
+
+const biddingMoney = document.querySelector('#biddingMoney');
+const biddingMoneyBtn = document.querySelector('#biddingMoneyBtn');
+
+/** 時間経過 */
+const timer = () => {
+  if (Number(maxBiddingTimeSeconds.textContent) >= 60) {
+    if (!isNaN(maxBiddingTimeMinute.textContent)) {
+      maxBiddingTimeMinute.textContent = Number(maxBiddingTimeMinute.textContent) + 1;
+    } else {
+      maxBiddingTimeMinute.textContent = 1;
+    }
+    maxBiddingTimeSeconds.textContent = 0;
+  }
+  maxBiddingTimeSeconds.textContent = Number(maxBiddingTimeSeconds.textContent) + 1;
+};
+setInterval(timer, 1000);
 
 // ボタンが押されたらserverへsocket送信
 const form = document.getElementById('biddingForm');
 form.addEventListener('submit', (event) => {
   event.preventDefault();
+  maxBiddingMoney.classList.remove('uk-animation-slide-top-small');
+  maxUserId.classList.remove('uk-animation-slide-top-small');
+  maxBiddingTimeSeconds.classList.remove('uk-animation-slide-top-small');
+  biddingMoney.classList.remove('uk-animation-slide-top-small');
   const biddingData = {
     userId: info.user.user_id,
     productId: info.params.productId,
@@ -27,6 +58,10 @@ form.addEventListener('submit', (event) => {
 const formBtn = document.getElementById('biddingFormBtn');
 formBtn.addEventListener('click', async (event) => {
   console.log(biddingId);
+  maxBiddingMoney.classList.remove('uk-animation-slide-top-small');
+  maxUserId.classList.remove('uk-animation-slide-top-small');
+  maxBiddingTimeSeconds.classList.remove('uk-animation-slide-top-small');
+  biddingMoney.classList.remove('uk-animation-slide-top-small');
   event.preventDefault();
   const biddingData = {
     userId: info.user.user_id,
@@ -45,36 +80,53 @@ socketIo.on('toRenderBiddingSend', (biddingData) => {
   /** 上記の入札履歴リスト更新 */
   const div = document.getElementById('biddingLog');
   let p = document.createElement('p');
-  let text = document.createTextNode(
-    '入札No:' +
-      biddingData.id +
-      '入札価格:' +
-      biddingData.biddingMoney +
-      '万円' +
-      '入札者番号:' +
-      biddingData.userId +
-      '入札時間:' +
-      biddingData.biddingTime,
+  let text = myCreateElement('span', '入札No:' + biddingData.id, 'displayBlock');
+  let text2 = myCreateElement(
+    'span',
+    '入札価格:' + biddingData.biddingMoney + '円',
+    'displayBlock',
+  );
+  let text3 = myCreateElement('span', '入札者番号:' + biddingData.userId, 'displayBlock');
+  let text4 = myCreateElement(
+    'span',
+    '入札時間:' + DateTime.fromISO(biddingData.biddingTime).toFormat('yyyy-LL-dd HH:mm:ss'),
+    'displayBlock',
   );
   p.appendChild(text);
+  p.appendChild(text2);
+  p.appendChild(text3);
+  p.appendChild(text4);
+
   p.setAttribute('class', 'uk-animation-slide-top-small');
   div.prepend(p);
   biddingId = biddingId + 1;
+
   /** 最高入札額の更新 */
-  const maxBiddingMoney = document.querySelector('#maxBiddingMoney');
-  const maxUserId = document.querySelector('#maxUserId');
-  const maxBiddingTime = document.querySelector('#maxBiddingTime');
-  const biddingMoney = document.querySelector('#biddingMoney');
-  const biddingMoneyBtn = document.querySelector('#biddingMoneyBtn');
+
+  // while (maxBidding.hasChildNodes()) { // 子要素削除
+  //   if (maxBidding.childNodes.length === 0) { break; } // 要素が一つになると終了
+  //   maxBidding.removeChild(maxBidding.childNodes[0]);
+  // }
 
   maxBiddingMoney.textContent = biddingData.biddingMoney;
-  maxBiddingMoney.setAttribute('class', 'uk-animation-slide-top-small');
+
+  maxBiddingMoney.classList.add('uk-animation-slide-top-small');
   maxUserId.textContent = biddingData.userId;
-  maxUserId.setAttribute('class', 'uk-animation-slide-top-small');
-  maxBiddingTime.textContent = biddingData.biddingTime;
-  maxBiddingTime.setAttribute('class', 'uk-animation-slide-top-small');
+
+  maxUserId.classList.add('uk-animation-slide-top-small');
+  const diff = DateTime.now().diff(DateTime.fromISO(biddingData.biddingTime), [
+    'minutes',
+    'second',
+  ]);
+  console.log(diff.values);
+  maxBiddingTimeMinute.textContent = 0;
+  maxBiddingTimeSeconds.textContent = Math.floor(diff.values.seconds);
+
+  maxBiddingTimeSeconds.classList.add('uk-animation-slide-top-small');
   biddingMoney.min = Number(biddingData.biddingMoney) + 100;
-  biddingMoney.setAttribute('class', 'uk-animation-slide-top-small');
-  biddingMoney.placeholder = Number(biddingData.biddingMoney) + 10000;
+
+  biddingMoney.classList.add('uk-animation-slide-top-small');
+  biddingMoney.placeholder = Number(biddingData.biddingMoney) + 10000 + 'から入札できます';
+
   biddingMoneyBtn.value = biddingData.biddingMoney;
 });

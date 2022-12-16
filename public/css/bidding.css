@@ -10,9 +10,12 @@
 .biddngH4 {
   margin: 0;
 }
-.biddingP {
+/* .biddingP {
   font-size: small;
   margin: 0;
+} */
+.displayBlock {
+  display: block;
 }
 
 #biddingLog {
