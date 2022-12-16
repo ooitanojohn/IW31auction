@@ -27,6 +27,7 @@ const biddingSelect = async (req, res, next) => {
     const end = DateTime.fromISO(new Date(`${resInfo.max.bidding_time}`).toISOString());
     const diff = start.diff(end, ['days', 'hours', 'minutes', 'seconds']);
     debug(diff.values);
+    diff.values.seconds = Math.floor(diff.values.seconds);
     resInfo.max.diff = diff.values;
   } catch (err) {
     debug(err);
