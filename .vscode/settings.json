@@ -9,10 +9,12 @@
     "Ldata",
     "loginheader",
     "luxon",
+    "maxpage",
     "mypage",
     "oidc",
     "promiss",
     "regist",
+    "upbutton",
     "updata"
   ]
 }

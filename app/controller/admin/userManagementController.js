@@ -1,12 +1,7 @@
-const express = require('express');
-
-const router = express.Router();
 /**
  * 会員管理 router + controller
  */
-/** 必要module読み込み */
-/** resに渡す情報とSQLモジュールの読み込み */
-const debug = require('debug')('http:usermanage');
+const debug = require('debug')('http:userManage');
 const debugMySQL = require('debug')('MySQL:user');
 const { executeQuery, beginTran } = require('../../module/mysqlPool');
 const { httpRapper } = require('../../common/httpRapper');
@@ -14,8 +9,7 @@ const { paginate } = require('../../common/paginate');
 
 /** 会員+-管理 一覧表示 */
 /** 詳細 slider modalで表示 */
-router.get('/:page', async (req, res, next) => {
-  /** resに渡す情報とSQLモジュールの読み込み */
+const userSelect = async (req, res, next) => {
   const resInfo = httpRapper(req);
   const limit = 5;
   let data;
@@ -40,14 +34,15 @@ router.get('/:page', async (req, res, next) => {
     ).catch((err) => {
       throw new Error(err);
     });
-    res.render('admin/userManagement.ejs', { ejsRender: resInfo });
+    res.render('admin/userManagement', { ejsRender: resInfo });
   } catch (err) {
+    debug(err);
     next(err);
   }
-});
+};
 
 /** 出品登録画面での垢バン 論理削除処理 (form) */
-router.post('/', async (req, res, next) => {
+const userDelete = async (req, res, next) => {
   debug(req.body);
   const tran = await beginTran();
   const resInfo = httpRapper(req);
@@ -80,7 +75,7 @@ router.post('/', async (req, res, next) => {
     next(err);
   }
   res.redirect(301, `/admin/users/${req.body.now}`);
-});
+};
 
 /**
  * ユーザーごとの購入データ表示 グラフ化 chart.js
@@ -108,5 +103,4 @@ router.post('/', async (req, res, next) => {
 //     next(err);
 //   }
 // });
-
-module.exports = router;
+module.exports = { userSelect, userDelete };
