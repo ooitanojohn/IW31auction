@@ -1,32 +1,52 @@
-<%- include('../partials/header.ejs'); %> <main>
-  <h1>管理者ページ</h1> <%- include('../partials/breadcrumb.ejs'); %>
+<%- include('../partials/admin/adminHeader.ejs'); %> <style>
+  a.before {
+    pointer-events: none;
+    color: black;
+  }
+
+  a.next {
+    pointer-events: none;
+    color: black;
+  }
+
+</style>
+<main>
+  <h1>管理者ページ</h1>
   <!-- 会員一覧表示 -->
   <form action="/admin/users/" method="post">
-    <table border="1">
-      <tr>
-        <th>user_id</th>
-        <th>user_name</th>
-        <th>user_login_id</th>
-        <th>user_password</th>
-        <th>user_mail</th>
-        <th>user_post_code</th>
-        <th>user_address</th>
-        <th>user_phone_number</th>
-        <th>card_number</th>
-        <th>card_key</th>
-        <th>icon_img</th>
-        <th>user_state</th>
-        <th>更新する</th>
-      </tr> <% for (let i = 0; i < ejsRender.sql.length; i++){ %> <tr>
-        <% Object.keys(ejsRender.sql[i]).forEach(function(key){ %> <td> <%- ejsRender.sql[i][key] %> </td> <% }) %>
-        <% if(ejsRender.sql[i]['user_state'] != 1){ %> <td>
-          <button type="submit" name="upbutton"
-            value="<%- ejsRender.sql[i]['user_id'] %>"><%- ejsRender.sql[i]['user_state'] === 2 ? '通常(0)に変更':'垢バン(2)に変更' %></button>
-        </td> <% } %> </tr> <% } %>
+    <input type="hidden" name="now" value="<%- ejsRender.now %>">
+    <table class="uk-table uk-table-divider">
+      <thead>
+        <tr>
+          <th>user_id</th>
+          <th>user_name</th>
+          <th>user_login_id</th>
+          <th>user_password</th>
+          <th>user_mail</th>
+          <th>user_state</th>
+          <th>更新する</th>
+        </tr>
+      </thead> <% for (let i = 0; i < ejsRender.sql.length; i++){ %> <tr>
+        <td><%- ejsRender.sql[i]['user_id'] %></td>
+        <td><%- ejsRender.sql[i]['user_name'] %></td>
+        <td><%- ejsRender.sql[i]['user_login_id'] %></td>
+        <td><%- ejsRender.sql[i]['user_password'] %></td>
+        <td><%- ejsRender.sql[i]['user_mail'] %></td>
+        <td><%- ejsRender.sql[i]['user_state'] %></td> <% if(ejsRender.sql[i]['user_state'] != 1){ %> <td>
+          <a href><button class="uk-button uk-button-default alinkButtonSize" style="width: 170px;" type="submit"
+              name="upbutton"
+              value="<%- ejsRender.sql[i]['user_id'] %>"><%- ejsRender.sql[i]['user_state'] === 2 ? '通常(0)に変更':'垢バン(2)に変更' %></button></a>
+        </td> <% } %>
+      </tr> <% } %>
     </table>
+    <a class="<%- ejsRender.now > 1?'':'before' %>" href="/admin/users/<%-ejsRender.now-1 %>" name="return">前へ</a>
+    <% for(let i = 1; i <= ejsRender.maxpage; i++){ %> <% if(i != ejsRender.now){ %> <a
+      href="/admin/users/<%=i %>"><%=i %></a> <% }else{ %> <%=i %> <% } %> <% } %> <a
+      class="<%- ejsRender.maxpage > ejsRender.now?'':'next' %>" href="/admin/users/<%=ejsRender.now+1 %>"
+      name="next">次へ</a><br>
   </form>
 </main>
 <script>
   const info = JSON.parse('<%- JSON.stringify(ejsRender) %>');
   console.log(info);
-</script> <%- include('../partials/footer.ejs'); %>
+</script> <%- include('../partials/admin/adminFooter.ejs'); %>
