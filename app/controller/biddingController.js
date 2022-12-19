@@ -25,10 +25,11 @@ const biddingSelect = async (req, res, next) => {
     debug(resInfo.sql);
     debug(resInfo.sql2);
     /** 日付フォーマット処理 */
-    for (let i = 0; i < resInfo.sql.length; i += 1) {
-      const time = new Date(`${resInfo.sql[i].bidding_time}`).toISOString();
+    for (let i = 1; i < resInfo.sql.length; i += 1) {
+      const time = new Date(resInfo.sql[i].bidding_time).toISOString();
       resInfo.sql[i].bidding_time = DateTime.fromISO(`${time}`).toFormat('yyyy-LL-dd HH:mm:ss');
     }
+
     /** 最高額入札情報  */
     if (resInfo.sql.length !== 0) {
       resInfo.max = resInfo.sql[resInfo.sql.length - 1];
@@ -55,10 +56,9 @@ const biddingSelect = async (req, res, next) => {
       };
     }
   } catch (err) {
-    debug(err);
+    // debug(err);
     next(err);
   }
-  res.render('bidding.ejs', { ejsRender: resInfo });
 };
 
 module.exports = { biddingSelect };

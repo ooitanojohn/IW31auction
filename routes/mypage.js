@@ -20,7 +20,6 @@ const { beginTran } = require('../app/module/mysqlPool');
 router.get('/', async (req, res, next) => {
   await selectMypage(req, res, next);
 });
-
 /** アカウント変更 */
 /**
  * 画像,パスワード登録処理
