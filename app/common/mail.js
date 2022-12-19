@@ -4,7 +4,7 @@ require('dotenv').config();
 /**
  *  SMTP の設定
  */
-
+/** 引数中身　例 */
 const options = {
   host: process.env.SMTP_HOST, // メールサーバー
   port: process.env.SMTP_PORT, // ポート番号 25 など(gmailは587)
@@ -21,7 +21,7 @@ const options = {
 };
 
 // メールメッセージ
-
+/** 引数中身　例 */
 const mails = {
   from: process.env.SMTP_USER, // 送信元メールアドレス
   to: process.env.SMTP_USER, // 送信先メールアドレス
