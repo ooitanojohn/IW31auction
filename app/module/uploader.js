@@ -12,13 +12,13 @@ const uploadImgUser = multer({
 });
 
 /** 単体アップロード */
-const uploadImgUserSingle = uploadImgUser.single('avatar');
+const uploadImgUserSingle = uploadImgUser.single('userImg');
 const uploadUser = (req, res) =>
   new Promise((resolve, reject) => {
     try {
       uploadImgUserSingle(req, res, (err) => {
-        debug(req.body);
-        debug(req.files);
+        // debug(req.body);
+        // debug(req.file);
         if (err instanceof multer.MulterError) {
           throw new Error(err);
         } else if (err) {

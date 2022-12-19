@@ -12,6 +12,12 @@ const productDetail = async (req, res, next) => {
       'SELECT * FROM products as p, options as o WHERE p.stock_id = o.stock_id AND p.product_id = ?',
       [req.params.productId],
     );
+    /** user更新の為の情報一覧 */
+    resInfo.sql4 = await executeQuery('SELECT * FROM users WHERE user_id = ?;', [
+      req.user.user_id,
+    ]).catch((err) => {
+      throw new Error(err);
+    });
     res.render('product', { ejsRender: resInfo });
   } catch (err) {
     next(err);
