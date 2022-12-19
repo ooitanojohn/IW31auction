@@ -148,12 +148,17 @@
             <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
               <button class="uk-modal-close-default" type="button" uk-close></button>
               <h4>アカウント情報変更</h4>
-              <form action="/mypage/acount" method="POST">
+              <form
+                action="/mypage/acount/<%= ejsRender.user.user_id %>"
+                method="POST"
+                enctype="multipart/form-data"
+              >
                 <div>
                   <label for="user_login_id">ログインID</label>
                   <input
                     type="text"
                     value="<% if(ejsRender.sql4.length !== 0) { %><%= ejsRender.sql4[0].user_login_id %><% } %>"
+                    id="user_login_id"
                     readonly
                   />
                 </div>
@@ -167,6 +172,21 @@
                     required
                   />
                 </div>
+                <div class="js-upload uk-placeholder uk-text-center">
+                  <span uk-icon="icon: cloud-upload"></span>
+                  <span class="uk-text-middle">ここに写真ファイルをドロップしてください or</span>
+                  <div uk-form-custom>
+                    <input type="file" name="userImg" />
+                    <span class="uk-link">選択してください</span>
+                  </div>
+                </div>
+                <progress
+                  id="js-progressbar"
+                  class="uk-progress"
+                  value="0"
+                  max="100"
+                  hidden
+                ></progress>
                 <div class="loginButton">
                   <button type="submit" style="width: 100%;">変更</button>
                 </div>
@@ -310,3 +330,4 @@
 </script>
 <script type="text/javascript" src="/js/mypage.js"></script>
 <%- include('partials/footer.ejs'); %>
+<script src="/js/components/upload.js"></script>

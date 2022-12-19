@@ -22,11 +22,13 @@ const fs = require('fs');
  * @param {*} fileName 保存したいファイル名を入力
  * @returns multerEngine
  */
-const storage = (fileName) => {
+const storage = (folderName) => {
   return multer.diskStorage({
     /** どのフォルダにどんな名前で保存するか */
     destination: (req, file, cb) => {
-      const dir = path.join(__dirname, `../../uploads/product/${req.body.name}/`);
+      debug(req.params);
+      const dir = path.join(__dirname, `../../uploads/${folderName}/${req.params.userId}/`);
+      debug(dir);
       if (!fs.existsSync(dir)) fs.mkdirSync(dir);
       cb(null, dir);
     },
@@ -50,7 +52,7 @@ const storage = (fileName) => {
  */
 /** imgフィルタ */
 const fileFilterImg = (req, file, cb) => {
-  // debug(file);
+  debug(file);
   if (['image/png', 'image/jpeg', 'image/jpg'].includes(file.mimetype)) {
     cb(null, true);
     return;
@@ -68,124 +70,4 @@ const fileFilterPdf = (req, file, cb) => {
   cb(new TypeError('Invalid File Type'));
 };
 
-/**
- * multerのインスタンス設定
- * 下記に各種類の細かい設定
- * ファイル種類毎に変えよう！
- */
-/** 画像ファイルアップロード */
-/** admin */
-const uploadImgAdmin = multer({
-  storage: storage('temp'),
-  fileFilter: fileFilterImg,
-  // 画像の制限の最適が不明
-  // limits: {}
-});
-/** user */
-const uploadImgUser = multer({
-  storage: storage,
-  fileFilter: fileFilterImg,
-});
-
-/** 画像のリサイズ  */
-const memoryStorage = multer.memoryStorage;
-const uploadThumbnail = multer({
-  storage: storage(),
-  fileFilter: fileFilterImg,
-});
-
-/** pdfアップロード */
-const uploadPdf = multer({
-  storage: storage(),
-  fileFilter: fileFilterPdf,
-});
-
-module.exports = { uploadImgAdmin, uploadImgUser, uploadPdf, uploadThumbnail };
-
-/** 使用例 */
-
-// const uploadImgAdminSingle = uploadImgAdmin.single('avatar');
-// /** file単体で送る場合のファイルとリクエストbody */
-// app.post('/single', (req, res, next) => {
-//   debug(req.file);
-//   debug(req.body);
-//   try {
-//     uploadImgAdminSingle(req, res, (err) => {
-//       /** マルターで判定できたエラー  */
-//       if (err instanceof multer.MulterError) {
-//         throw new Error(err);
-//       } else if (err) {
-//         /** 謎エラー */
-//         throw new Error(err);
-//       }
-//     })
-//   } catch {
-//     debug(err);
-//     next(err);
-//   }
-//   // req.body.jsonを参照
-//   res.redirect(301, '/');
-// });
-
-// const uploadImgAdminArray = uploadImgAdmin.array('photos', 12);
-// /** 複数fileをアップロードする時 */
-// app.post('/multiple', (req, res, next) => {
-//   debug(req.files);
-//   debug(req.body);
-//   try {
-//     uploadImgAdminArray(req, res, (err) => {
-//       if (err instanceof multer.MulterError) {
-//         throw new Error(err);
-//       } else if (err) {
-//         throw new Error(err);
-//       }
-//     })
-//   } catch {
-//     debug(err);
-//     next(err);
-//   }
-
-//   res.redirect(301, '/');
-// });
-
-// /** 複数種類nameの組み合わせ */
-// const uploadAdminField = uploadImgAdmin.fields([{ name: 'avatar', maxCount: 1 }, { name: 'gallery', maxCount: 8 }])
-
-// app.post('/multipart', (req, res, next) => {
-//   debug(req.files);
-//   debug(req.body);
-//   try {
-//     uploadAdminField(req, res, (err) => {
-//       if (err instanceof multer.MulterError) {
-//         throw new Error(err);
-//       } else if (err) {
-//         throw new Error(err);
-//       }
-//     })
-//   } catch {
-//     debug(err);
-//     next(err);
-//   }
-//   res.redirect(301, '/');
-// })
-
-/** 使用例フォーム */
-
-{
-  /* <h2>単体ファイルupload</h2>
-<form action="/single" method="post" enctype="multipart/form-data">
-  <input type="file" name="avatar" />
-  <button type="submit">送信</button>
-</form>
-<h2>複数ファイルアップロード</h2>
-<form action="/multiple" method="post" enctype="multipart/form-data">
-  <input type="file" name="photos" multiple />
-  <button type="submit">送信</button>
-</form>
-<h2>複数種類nameの組み合わせ</h2>
-<form action="/multipart" method="post" enctype="multipart/form-data">
-  <input type="file" name="avatar" />
-  <input type="file" name="gallery" multiple />
-  <button type="submit">送信</button>
-</form> */
-}
+module.exports = { storage, fileFilterImg, fileFilterPdf };
