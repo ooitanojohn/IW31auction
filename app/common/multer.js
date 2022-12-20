@@ -26,8 +26,15 @@ const storage = (folderName) => {
   return multer.diskStorage({
     /** どのフォルダにどんな名前で保存するか */
     destination: (req, file, cb) => {
-      // debug(req.params);
-      const dir = path.join(__dirname, `../../public/uploads/${folderName}/${req.params.userId}/`);
+      debug(req.params);
+      let paramId;
+      if (req.params.userId !== 'undefined') {
+        paramId = req.params.userId;
+      }
+      if (req.params.productId !== 'undefined') {
+        paramId = req.params.productId;
+      }
+      const dir = path.join(__dirname, `../../uploads/${folderName}/${paramId}/`);
       if (!fs.existsSync(dir)) fs.mkdirSync(dir);
       cb(null, dir);
     },

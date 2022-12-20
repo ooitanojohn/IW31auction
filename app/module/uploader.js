@@ -39,11 +39,9 @@ const uploadUser = (req, res) =>
 const uploadImgAdmin = multer({
   storage: storage('product'),
   fileFilter: fileFilterImg,
-  // 画像の制限の最適が不明
-  // limits: {}
 });
 /** 単体アップロード */
-const uploadImgAdminSingle = uploadImgAdmin.single('productId');
+const uploadImgAdminSingle = uploadImgAdmin.single('product');
 const uploadAdmin = (req, res) =>
   new Promise((resolve, reject) => {
     try {
@@ -62,12 +60,12 @@ const uploadAdmin = (req, res) =>
   });
 
 /** 複数枚アップロード */
-const uploadImgAdminArray = uploadImgAdmin.array('photos', 12);
+const uploadImgAdminArray = uploadImgAdmin.array('product', 10);
 const multiUploadAdmin = (req, res) =>
   new Promise((resolve, reject) => {
     try {
       uploadImgAdminArray(req, res, (err) => {
-        // debug(req.files);
+        debug(req.files);
         if (err instanceof multer.MulterError) {
           throw new Error(err);
         } else if (err) {

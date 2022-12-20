@@ -36,14 +36,11 @@ router.post('/upload/:userId', async (req, res, next) => {
             throw new Error(error);
           });
         await tran.commit();
-      } catch (errN) {
+      } catch (err) {
         await tran.rollback();
-        debug(errN);
-        next(errN);
+        debug(err);
+        next(err);
       }
-    })
-    .catch((err) => {
-      debug(err);
     });
   res.redirect(301, '/mypage');
 });
