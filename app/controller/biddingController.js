@@ -63,6 +63,7 @@ const biddingSelect = async (req, res, next) => {
     // debug(err);
     next(err);
   }
+  res.render('bidding.ejs', { ejsRender: resInfo });
 };
 
 module.exports = { biddingSelect };
