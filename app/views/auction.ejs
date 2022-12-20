@@ -2,10 +2,37 @@
 <main>
   <%- include('partials/breadcrumb.ejs'); %>
   <h1>オークションスケジュール確認(商品一覧確認)</h1>
+  <table>
+    <tr>
+      <td></td>
+      <td>車名</td>
+      <td>メーカー名</td>
+      <td>値段</td>
+      <td>開催期間</td>
+    </tr>
+    <% ejsRender.sql.forEach((value, key) => { %>
+    <tr>
+      <td><a href="/bidding/<%= value[key].product_id %>">入札ページへ</a></td>
+      <td><%= value[key].car_name %></td>
+      <td><%= value[key].maker_name %></td>
+      <div uk-countdown="<%= value[key].end_time - new Date() %>">
+        <td>
+          <span class="uk-countdown-number uk-countdown-days"></span>
+          <span class="uk-countdown-number uk-countdown-hours"></span>
+          <span class="uk-countdown-number uk-countdown-minutes"></span>
+          <span class="uk-countdown-number uk-countdown-seconds"></span>
+        </td>
+      </div>
+      <td><%= value[key].start_price %></td>
+      <td></td>
+    </tr>
+    <% )} %>
+  </table>
   <script>
     const info = JSON.parse('<%- JSON.stringify(ejsRender) %>');
     console.log(info);
   </script>
+  <script src="/js/auction.js"></script>
   <script src="/socket.io/socket.io.js"></script>
 </main>
 <%- include('partials/footer.ejs'); %>

@@ -1,7 +1,5 @@
 'use strict';
 /** map UI系  */
-exports.__esModule = true;
-exports.addMarker = exports.myCreateElement = void 0;
 /**
  * element作成関数
  * @param tag htmlタグ
@@ -40,4 +38,4 @@ var myCreateElement = function (tag, text, className, AttributeObj) {
   }
   return myElement;
 };
-exports.myCreateElement = myCreateElement;
+// exports.myCreateElement = myCreateElement;

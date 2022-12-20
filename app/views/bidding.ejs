@@ -3,7 +3,7 @@
 <main>
   <%- include('partials/breadcrumb.ejs'); %>
   <h2 class="biddingH2">
-    オークションNo<%= ejsRender.params.productId %> <%= ejsRender.sql[0].car_name %>の入札開催中
+    オークションNo<%= ejsRender.params.productId %> <%= ejsRender.sql2[0].car_name %>の入札開催中
     <a
       href="/product/<%= ejsRender.params.productId %>"
       style=" font-size: smaller; margin-left: 30px; "
@@ -14,11 +14,10 @@
   <!-- 商品画像 -->
   <div
     class="uk-flex"
-    style="
-    padding-bottom: 100px;
+    style="gap: 20px;
 "
   >
-    <div style="width:1050px;height:400px">
+    <div style="width:1000px;height:480px">
       <div class="uk-position-relative" uk-slideshow="animation: fade">
         <ul class="uk-slideshow-items">
           <li>
@@ -64,31 +63,33 @@
         </div>
       </div>
     </div>
-    <ul id="biddingLog" style="width: 270px; height: 400px;" class="uk-panel uk-panel-scrollable">
-      <% ejsRender.sql.forEach((value, key) => { %>
+    <ul id="biddingLog" style="width: 270px; height: 470px;" class="uk-panel uk-panel-scrollable">
+      <% if(ejsRender.sql.length !== 0) { %> <% for(let i = ejsRender.sql.length-2; i >= 0 ; i--) {
+      %>
       <li>
-        <p class="biddingP">
-          入札No:<span id="biddingLogId"><%- key + 1 %></span> 入札価格:<%= value.bidding_money
-          %>万円<span style="display: block;"
-            >入札者番号:<%= value.user_id %>入札時間:<%- value.bidding_time %></span
-          >
-        </p>
+        <div class="biddingP">
+          <span style="display: block;">入札No : <span id="biddingLogId"><%- i + 1 %></span></span>
+          <span style="display: block;">入札価格 : <%= ejsRender.sql[i].bidding_money %>円</span>
+          <span style="display: block;">入札者番号 : <%= ejsRender.sql[i].user_id %></span>
+          <span style="display: block;">入札時間 :<%- ejsRender.sql[i].bidding_time%> </span>
+        </div>
       </li>
-      <% }) %>
+      <% } %> <% } %>
     </ul>
   </div>
   <div class="uk-flex" style="gap: 100px;">
     <!-- 最高価格 -->
-    <h3>
+    <h3 id="maxBidding">
       <p>
-        現在 最高価格...<span id="maxBiddingMoney"> <%=ejsRender.max.bidding_money %></span>万円で
+        現在 最高入札価格...<span id="maxBiddingMoney"> <%= ejsRender.max.bidding_money %></span>円
       </p>
-      <p><span id="maxUserId"><%= ejsRender.max.user_id %></span>番様が</p>
+      <p><span id="maxUserId"><%= ejsRender.max.user_id %></span>番様</p>
       <p>
-        <span id="maxBiddingTime">
-          <%- ejsRender.max.diff.days %>日<%- ejsRender.max.diff.hours %>時<%-
-          ejsRender.max.diff.minutes %>分<%- ejsRender.max.diff.seconds %>秒</span
-        >前に入札中
+        <% if(ejsRender.max.diff.days !== 0) {%><%- ejsRender.max.diff.days %>日<% } %> <%
+        if(ejsRender.max.diff.hours !== 0) {%><%- ejsRender.max.diff.hours %>時<% } %>
+        <span id="maxBiddingTimeMinute"
+          ><% if(ejsRender.max.diff.minutes !== 0) {%><%- ejsRender.max.diff.minutes %><% } %></span
+        >分 <span id="maxBiddingTimeSeconds"> <%- ejsRender.max.diff.seconds %></span>秒前に入札
       </p>
     </h3>
     <!-- 残り時間 -->
@@ -100,23 +101,20 @@
       <input
         id="biddingMoney"
         type="number"
-        min="<%- ejsRender.max['MAX(bidding_money)'] + 100 %>"
-        step="10"
-        placeholder="<%= ejsRender.max['MAX(bidding_money)'] + 100 %>から振込めます"
+        min="<%- ejsRender.max.bidding_money + 10000 %>"
+        step="10000"
+        placeholder="<%= ejsRender.max.bidding_money + 10000 %>から振込めます"
         required
       />
     </form>
     <form id="biddingFormBtn" style="display: flex; gap:10px;">
       <input id="userId" type="hidden" value="<%= ejsRender.user.user_id %>" />
-      <input
-        id="biddingMoneyBtn"
-        type="hidden"
-        value="<%= ejsRender.max['MAX(bidding_money)'] %>"
-      />
-      <input type="submit" class="button" id="1" value="+1万円" />
-      <input type="submit" class="button" id="10" value="+10万円" />
-      <input type="submit" class="button" id="100" value="+100万円" />
-      <input type="submit" class="button" id="1000" value="+1000万円" />
+      <input id="biddingMoneyBtn" type="hidden" value="<%= ejsRender.max.bidding_money %>" />
+      <input type="submit" class="button" id="10000" value="+1万円" />
+      <input type="submit" class="button" id="50000" value="+5万円" />
+      <input type="submit" class="button" id="100000" value="+10万円" />
+      <input type="submit" class="button" id="300000" value="+30万円" />
+      <input type="submit" class="button" id="500000" value="+50万円" />
     </form>
   </div>
 </main>
@@ -131,12 +129,10 @@
 <script src="https://cdn.jsdelivr.net/npm/luxon@3.1.1/build/global/luxon.min.js"></script>
 <script>
   const DateTime = luxon.DateTime;
-  // console.log(info.max[0]['MAX(bidding_time)'])
-  // console.log(DateTime.fromISO(info.max[0]['MAX(bidding_time)']));
-  const dt = DateTime.now().diff(DateTime.fromISO(info.max.bidding_time), ['days', 'hours', 'minutes', 'second']);
-  // console.log(dt)
 </script>
 <!-- countdown -->
-<script type="text/javascript" src="/js/mypage.js"></script>
+<script src="/js/common/createElement.js"></script>
+<script type="text/javascript" src="/js/components/biddingCount.js"></script>
 <script src="/js/bidding.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <%- include('partials/footer.ejs'); %>

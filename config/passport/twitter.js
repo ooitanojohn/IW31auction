@@ -71,6 +71,7 @@ const twitterAuth = async (token, tokenSecret, profile, cb) => {
     }
     return cb(null, row2[0]);
   } catch (err) {
+    debug(err);
     await tran.rollback();
     return cb(err);
   }
