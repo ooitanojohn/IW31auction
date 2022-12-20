@@ -1,4 +1,7 @@
+/* eslint-disable no-shadow */
 const express = require('express');
+const debug = require('debug')('http:adminProduct');
+const multer = require('multer');
 
 const router = express.Router();
 const {
@@ -9,6 +12,9 @@ const {
   adminExhibitDelete,
   adminBidRegist,
 } = require('../../app/controller/admin/adminProductController');
+
+const { storage, fileFilterImg } = require('../../app/common/multer');
+const { beginTran } = require('../../app/module/mysqlPool');
 
 /**
  * 出品状態一覧の商品を取ってきて表示
@@ -35,6 +41,48 @@ router.post('/insert', (req, res, next) => {
  */
 router.post('/update/', async (req, res, next) => {
   adminExhibitUpdate(req, res, next);
+});
+
+/** upload設定 */
+const uploadImgAdmin = multer({
+  storage: storage('product'),
+  fileFilter: fileFilterImg,
+});
+const uploadImgAdminArray = uploadImgAdmin.array('product', 10);
+/** 出品予定画像登録 */
+router.post('/upload/:productId', async (req, res, next) => {
+  const imgList = [];
+  try {
+    uploadImgAdminArray(req, res, async (err) => {
+      imgList.push(req.files[0].filename);
+      debug(req.files);
+      if (err instanceof multer.MulterError) {
+        throw new Error(err);
+      } else if (err) {
+        throw new Error(err);
+      }
+      const tran = await beginTran();
+      try {
+        await tran
+          .query(`UPDATE products SET car_img = ? WHERE product_id = ?;`, [
+            JSON.stringify(req.files[0].filename),
+            req.params.productId,
+          ])
+          .catch((err) => {
+            throw new Error(err);
+          });
+        await tran.commit();
+      } catch (err) {
+        await tran.rollback();
+        debug(err);
+        next(err);
+      }
+    });
+  } catch (err) {
+    debug(err);
+  }
+  debug(imgList);
+  res.redirect(301, '/admin/product/exhibit/1?state=schedule');
 });
 
 /**

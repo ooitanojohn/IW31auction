@@ -1,8 +1,13 @@
 const bar = document.getElementById('js-progressbar');
+const uploadForm = document.querySelector('#uploadForm');
+const uploadFile = document.querySelector('#uploadFile');
+const uploadComplete = document.querySelector('.uk-text-middle');
+const uploadComplete2 = document.querySelector('.uk-link');
 
 UIkit.upload('.js-upload', {
-  url: '',
-  multiple: true,
+  url: `http://127.0.0.1:3000${uploadForm.getAttribute('action')}`,
+  multiple: false,
+  name: uploadFile.getAttribute('name'),
 
   beforeSend: function () {
     console.log('beforeSend', arguments);
@@ -30,25 +35,22 @@ UIkit.upload('.js-upload', {
 
   progress: function (e) {
     console.log('progress', arguments);
-
     bar.max = e.total;
     bar.value = e.loaded;
   },
 
   loadEnd: function (e) {
     console.log('loadEnd', arguments);
-
     bar.max = e.total;
     bar.value = e.loaded;
   },
 
   completeAll: function () {
     console.log('completeAll', arguments);
-
+    uploadComplete.textContent = 'upload完了しました';
+    uploadComplete2.textContent = '';
     setTimeout(function () {
       bar.setAttribute('hidden', 'hidden');
     }, 1000);
-
-    alert('Upload Completed');
   },
 });

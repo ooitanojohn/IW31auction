@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 const debug = require('debug')('http:mypage');
-// const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
 const { executeQuery, beginTran } = require('../module/mysqlPool');
 const { httpRapper } = require('../common/httpRapper');
 // const { uploadUser } = require("../module/uploader");
@@ -47,39 +47,29 @@ const selectMypage = async (req, res, next) => {
 /**
  * 画像,パスワード登録処理
  */
-// const saltRounds = 10;
+const saltRounds = 10;
 
-// const updateAccount = async (req, res, next) => {
-//   await uploadUser(req, res, next)
-//     // eslint-disable-next-line no-shadow
-//     .then((req) => {
-//       debug(req.body);
-//       debug(req.file);
-//       bcrypt.hash(req.body.password, saltRounds, async (er, hashedPassword) => {
-//         const tran = await beginTran();
-//         try {
-//           await tran
-//             .query(`UPDATE users SET hashed_password = ? WHERE user_id = ?;`, [
-//               hashedPassword,
-//               req.user.user_id,
-//             ])
-//             .catch((error) => {
-//               throw new Error(error);
-//             });
-//           await tran.commit();
-//         } catch (errN) {
-//           await tran.rollback();
-//           debug(errN);
-//           next(errN);
-//         }
-//       });
-//     })
-//     .catch((err) => {
-//       debug(err);
-//     });
-
-//   res.redirect(301, '/mypage');
-// };
+const updateAccount = async (req, res, next) => {
+  bcrypt.hash(req.body.password, saltRounds, async (er, hashedPassword) => {
+    const tran = await beginTran();
+    try {
+      await tran
+        .query(`UPDATE users SET hashed_password = ? WHERE user_id = ?;`, [
+          hashedPassword,
+          req.user.user_id,
+        ])
+        .catch((error) => {
+          throw new Error(error);
+        });
+      await tran.commit();
+    } catch (errN) {
+      await tran.rollback();
+      debug(errN);
+      next(errN);
+    }
+  });
+  res.redirect(301, '/mypage');
+};
 
 /**
  * card 更新処理
@@ -171,7 +161,7 @@ const updateDrop = async (req, res, next) => {
 };
 module.exports = {
   selectMypage,
-  // updateAccount
+  updateAccount,
   updateCard,
   updateAddress,
   updateDrop,

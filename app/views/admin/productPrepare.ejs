@@ -42,7 +42,7 @@
       <div id="modal-center<%= i %>" class="uk-flex-top" uk-modal>
         <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
           <button class="uk-modal-close-default" type="button" uk-close></button>
-          <form method="post" action="/admin/product/insert" enctype="multipart/form-data">
+          <form method="post" action="/admin/product/insert">
             <label for="car_id">車ID <span><%- ejsRender.sql[i].car_id %></span></label>
             <input type="hidden" name="car_id" id="car_id" value="<%- ejsRender.sql[i].car_id %>">
             <label for="stock_id">在庫(車特定)ID <span><%- ejsRender.sql[i].stock_id %></span></label>
@@ -63,15 +63,6 @@
             <input type="datetime-local" id="start_time" name="start_time" required>
             <label for="end_time">終了時間</label>
             <input type="datetime-local" id="end_time" name="end_time" required>
-            <!-- upload -->
-            <div class="js-upload uk-placeholder uk-text-center">
-              <span uk-icon="icon: cloud-upload"></span>
-              <span class="uk-text-middle">ここに写真ファイルをドロップしてください or</span>
-              <div uk-form-custom>
-                <input type="file" name="product" multiple>
-                <span class="uk-link">選択してください 10枚まで送信可能です</span>
-              </div>
-            </div>
             <progress id="js-progressbar" class="uk-progress" value="0" max="100" hidden></progress> <button
               type="submit">新規登録</button>
           </form>
@@ -97,4 +88,4 @@
   const info = JSON.parse('<%- JSON.stringify(ejsRender) %>');
   console.log(info);
 </script> <%- include('../partials/admin/adminFooter.ejs'); %>
-<script src="/js/components/upload.js"></script>
+<script src="/js/common/uploadMulti.js"></script>
