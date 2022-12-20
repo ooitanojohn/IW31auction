@@ -1,15 +1,15 @@
+/* eslint-disable camelcase */
 const debug = require('debug')('http:mypage');
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
 const { executeQuery, beginTran } = require('../module/mysqlPool');
-
 const { httpRapper } = require('../common/httpRapper');
-
+// const { uploadUser } = require("../module/uploader");
 /**
  * 入札履歴、落札一覧
  */
 const selectMypage = async (req, res, next) => {
   const resInfo = httpRapper(req);
-  debug(req.body);
+  // debug(req.body);
   try {
     /** 入札一覧 */
     resInfo.sql = await executeQuery(
@@ -37,7 +37,7 @@ const selectMypage = async (req, res, next) => {
     ]).catch((err) => {
       throw new Error(err);
     });
-    debug(resInfo);
+    // debug(resInfo.sql);
     res.render('mypage.ejs', { ejsRender: resInfo });
   } catch (err) {
     next(err);
@@ -47,31 +47,39 @@ const selectMypage = async (req, res, next) => {
 /**
  * 画像,パスワード登録処理
  */
-const saltRounds = 10;
-const updateAccount = async (req, res, next) => {
-  const tran = await beginTran();
-  try {
-    // eslint-disable-next-line consistent-return
-    await bcrypt.hash(req.body.password, saltRounds, async (err, hashedPassword) => {
-      debug(tran);
-      if (err) throw new Error(err);
-      await tran
-        .query(`UPDATE users SET hashed_password = ? WHERE user_id = ?;`, [
-          hashedPassword,
-          req.user.user_id,
-        ])
-        .catch((error) => {
-          throw new Error(error);
-        });
-    });
-    await tran.commit();
+// const saltRounds = 10;
 
-    res.redirect(301, '/mypage');
-  } catch (err) {
-    await tran.rollback();
-    next(err);
-  }
-};
+// const updateAccount = async (req, res, next) => {
+//   await uploadUser(req, res, next)
+//     // eslint-disable-next-line no-shadow
+//     .then((req) => {
+//       debug(req.body);
+//       debug(req.file);
+//       bcrypt.hash(req.body.password, saltRounds, async (er, hashedPassword) => {
+//         const tran = await beginTran();
+//         try {
+//           await tran
+//             .query(`UPDATE users SET hashed_password = ? WHERE user_id = ?;`, [
+//               hashedPassword,
+//               req.user.user_id,
+//             ])
+//             .catch((error) => {
+//               throw new Error(error);
+//             });
+//           await tran.commit();
+//         } catch (errN) {
+//           await tran.rollback();
+//           debug(errN);
+//           next(errN);
+//         }
+//       });
+//     })
+//     .catch((err) => {
+//       debug(err);
+//     });
+
+//   res.redirect(301, '/mypage');
+// };
 
 /**
  * card 更新処理
@@ -161,4 +169,10 @@ const updateDrop = async (req, res, next) => {
     next(err);
   }
 };
-module.exports = { selectMypage, updateAccount, updateCard, updateAddress, updateDrop };
+module.exports = {
+  selectMypage,
+  // updateAccount
+  updateCard,
+  updateAddress,
+  updateDrop,
+};

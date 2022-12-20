@@ -44,7 +44,7 @@ adminRouter.use('/carStocks', require('../app/controller/admin/carStocksManageme
 /** 出品管理 */
 adminRouter.use('/product', require('../routes/admin/product'));
 /** 会員管理 */
-adminRouter.use('/users', require('../app/controller/admin/userManagementRouter'));
+adminRouter.use('/users', require('../routes/admin/user'));
 /** 売上管理 */
 adminRouter.use('/sales', require('../app/controller/admin/salesManagementRouter'));
 
