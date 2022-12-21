@@ -64,7 +64,7 @@
                   </td>
                   <td class="timeLeft"></td>
                   <td>
-                    <a href="/bidding/"
+                    <a href="/bidding/<%= ejsRender.sql[key].product_id %>"
                       ><button class="uk-button uk-button-default" type="button">
                         入札ページへ
                       </button></a
@@ -141,6 +141,39 @@
       <h3>アカウント情報変更</h3>
       <ul id="acountSettingList" class="uk-flex" style="gap: 10px;">
         <li>
+          <a class="uk-button uk-button-default mypageButton" href="#modal-img" uk-toggle
+            ><button>画像変更</button></a
+          >
+          <div id="modal-img" class="uk-flex-top" uk-modal>
+            <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
+              <button class="uk-modal-close-default" type="button" uk-close></button>
+              <h4>アカウント情報変更</h4>
+              <form
+                action="/mypage/upload/<%= ejsRender.user.user_id %>"
+                method="POST"
+                enctype="multipart/form-data"
+                id="uploadForm"
+              >
+                <div class="js-upload uk-placeholder uk-text-center">
+                  <span uk-icon="icon: cloud-upload"></span>
+                  <span class="uk-text-middle">ここに写真ファイルをドロップしてください or</span>
+                  <div uk-form-custom>
+                    <input type="file" name="userImg" id="uploadFile" />
+                    <span class="uk-link">選択してください</span>
+                  </div>
+                </div>
+                <progress
+                  id="js-progressbar"
+                  class="uk-progress"
+                  value="0"
+                  max="100"
+                  hidden
+                ></progress>
+              </form>
+            </div>
+          </div>
+        </li>
+        <li>
           <a class="uk-button uk-button-default mypageButton" href="#modal-center" uk-toggle
             ><button>アカウント変更</button></a
           >
@@ -148,12 +181,17 @@
             <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
               <button class="uk-modal-close-default" type="button" uk-close></button>
               <h4>アカウント情報変更</h4>
-              <form action="/mypage/acount" method="POST">
+              <form
+                action="/mypage/acount/<%= ejsRender.user.user_id %>"
+                method="POST"
+                enctype="multipart/form-data"
+              >
                 <div>
                   <label for="user_login_id">ログインID</label>
                   <input
                     type="text"
                     value="<% if(ejsRender.sql4.length !== 0) { %><%= ejsRender.sql4[0].user_login_id %><% } %>"
+                    id="user_login_id"
                     readonly
                   />
                 </div>
@@ -310,3 +348,4 @@
 </script>
 <script type="text/javascript" src="/js/mypage.js"></script>
 <%- include('partials/footer.ejs'); %>
+<script src="/js/common/uploadSingle.js"></script>

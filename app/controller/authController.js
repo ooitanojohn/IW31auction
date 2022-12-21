@@ -1,6 +1,7 @@
 /**
  * 登録処理
  */
+
 const debug = require('debug')('http:mypage');
 const bcrypt = require('bcrypt');
 
@@ -22,17 +23,9 @@ const signup = async (req, res, next) => {
           `INSERT INTO users (
           user_login_id,
           hashed_password,
-          user_name,
-          user_mail,
-          user_post_code,
-          user_address,
-          user_phone_number,
-          card_number,
-          card_key,
-          icon_img,
           user_state
-          ) VALUES(?, ?, ?, ?, ?, 0, 0, 0, 0, ?, 0)`,
-          [req.body.user_login_id, hashedPassword, '', '', '', ''],
+          ) VALUES(?, ?, 0)`,
+          [req.body.user_login_id, hashedPassword],
         )
         .then((results) => {
           id = results.insertId;

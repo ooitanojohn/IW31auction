@@ -16,7 +16,7 @@
         <ul class="loginHeaderNav">
           <li class="user"><%= ejsRender.user.user_login_id %></li>
           <li>
-            <p class="loginHeaderNavImg"><img src="" alt="user" width="30px" height="30px"></p>
+            <p class="loginHeaderNavImg"><img src="/user/<%= ejsRender.user.user_id %>/<%= ejsRender.sql4[0].icon_img %>" alt="user" width="30px" height="30px"></p>
           </li>
           <li>
             <div style="display: flex;" class="logoutComponents">

@@ -15,6 +15,8 @@ app.set('views', path.join(__dirname, '../app/views'));
 app.set('view engine', 'ejs');
 /** middleware */
 app.use(express.static(`${__dirname}/../public`, { index: false }));
+app.use(express.static(`${__dirname}/../uploads`, { index: false }));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -44,7 +46,7 @@ adminRouter.use('/carStocks', require('../app/controller/admin/carStocksManageme
 /** 出品管理 */
 adminRouter.use('/product', require('../routes/admin/product'));
 /** 会員管理 */
-adminRouter.use('/users', require('../app/controller/admin/userManagementRouter'));
+adminRouter.use('/users', require('../routes/admin/user'));
 /** 売上管理 */
 adminRouter.use('/sales', require('../app/controller/admin/salesManagementRouter'));
 
