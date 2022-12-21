@@ -1,3 +1,4 @@
+const debug = require('debug')('http:google');
 const { beginTran } = require('../../app/module/mysqlPool');
 
 /**
@@ -8,6 +9,7 @@ const { beginTran } = require('../../app/module/mysqlPool');
  */
 const googleAuth = async (issuer, profile, cb) => {
   /** 初ログイン */
+  debug(profile);
   const tran = await beginTran();
   try {
     /** 既にgoogleログインしているか credentialに引っかかるか否か */
