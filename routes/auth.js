@@ -27,7 +27,7 @@ router.post('/signup', (req, res, next) => {
 router.post(
   '/login/password',
   passport.authenticate('local', {
-    successReturnToOrRedirect: '/',
+    successReturnToOrRedirect: '/auction',
     failureRedirect: '/login',
     failureMessage: true,
   }),
@@ -37,7 +37,7 @@ router.get('/login/federated/google', passport.authenticate('google'));
 router.get(
   '/oauth2/redirect/google',
   passport.authenticate('google', {
-    successRedirect: '/',
+    successRedirect: '/auction',
     failureRedirect: '/login',
   }),
 );
@@ -47,7 +47,7 @@ router.get(
   '/auth/twitter/callback',
   passport.authenticate('twitter', { failureRedirect: '/login' }),
   (req, res) => {
-    res.redirect('/');
+    res.redirect('/auction');
   },
 );
 

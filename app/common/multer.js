@@ -26,9 +26,16 @@ const storage = (folderName) => {
   return multer.diskStorage({
     /** どのフォルダにどんな名前で保存するか */
     destination: (req, file, cb) => {
-      debug(req.params);
-      const dir = path.join(__dirname, `../../uploads/${folderName}/${req.params.userId}/`);
-      debug(dir);
+      debug(typeof req.params.userId === 'string');
+      const setParam = (req) => {
+        if (typeof req.params.userId === 'string') {
+          return req.params.userId;
+        }
+        if (typeof req.params.productId === 'string') {
+          return req.params.productId;
+        }
+      };
+      const dir = path.join(__dirname, `../../uploads/${folderName}/${setParam(req)}/`);
       if (!fs.existsSync(dir)) fs.mkdirSync(dir);
       cb(null, dir);
     },
@@ -52,7 +59,7 @@ const storage = (folderName) => {
  */
 /** imgフィルタ */
 const fileFilterImg = (req, file, cb) => {
-  debug(file);
+  // debug(file);
   if (['image/png', 'image/jpeg', 'image/jpg'].includes(file.mimetype)) {
     cb(null, true);
     return;
@@ -62,7 +69,7 @@ const fileFilterImg = (req, file, cb) => {
 
 /** pdf,csvフィルタ */
 const fileFilterPdf = (req, file, cb) => {
-  debug(file.mimetype);
+  // debug(file.mimetype);
   if (['application/pdf'].includes(file.mimetype)) {
     cb(null, true);
     return;

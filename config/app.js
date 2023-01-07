@@ -15,6 +15,8 @@ app.set('views', path.join(__dirname, '../app/views'));
 app.set('view engine', 'ejs');
 /** middleware */
 app.use(express.static(`${__dirname}/../public`, { index: false }));
+app.use(express.static(`${__dirname}/../uploads`, { index: false }));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -55,7 +57,7 @@ adminRouter.use('/sales', require('../app/controller/admin/salesManagementRouter
 /** ログイン */
 app.use('/', require('../routes/auth'));
 /** オークション一覧 */
-app.use('/', require('../routes/auction'));
+app.use('/auction', require('../routes/auction'));
 /** 入札ページ */
 app.use('/bidding', require('../routes/bidding'));
 /** 商品詳細 */

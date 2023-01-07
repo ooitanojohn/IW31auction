@@ -60,7 +60,7 @@ module.exports = (app) => {
       {
         consumerKey: process.env.TWITTER_CONSUMER_KEY,
         consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
-        callbackURL: 'http://127.0.0.1:3000/auth/twitter/callback',
+        callbackURL: 'http://localhost:3000/auth/twitter/callback',
       },
       (token, tokenSecret, profile, cb) => {
         twitterAuth(token, tokenSecret, profile, cb);

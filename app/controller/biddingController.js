@@ -22,8 +22,6 @@ const biddingSelect = async (req, res, next) => {
     ).catch((err) => {
       throw new Error(err);
     });
-    debug(resInfo.sql);
-    debug(resInfo.sql2);
     /** 日付フォーマット処理 */
     for (let i = 1; i < resInfo.sql.length; i += 1) {
       const time = new Date(resInfo.sql[i].bidding_time).toISOString();
@@ -55,10 +53,17 @@ const biddingSelect = async (req, res, next) => {
         seconds: 35,
       };
     }
+    /** user情報一覧 */
+    resInfo.sql4 = await executeQuery('SELECT * FROM users WHERE user_id = ?;', [
+      req.user.user_id,
+    ]).catch((err) => {
+      throw new Error(err);
+    });
   } catch (err) {
     // debug(err);
     next(err);
   }
+  res.render('bidding.ejs', { ejsRender: resInfo });
 };
 
 module.exports = { biddingSelect };

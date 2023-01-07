@@ -1,38 +1,38 @@
 <%- include('partials/loginheader.ejs'); %>
 <main>
   <%- include('partials/breadcrumb.ejs'); %>
+  <link rel="stylesheet" href="/css/mypage.css" />
   <h1>オークションスケジュール確認(商品一覧確認)</h1>
-  <table>
+  <table class="uk-table uk-table-justify uk-table-divider">
     <tr>
       <td></td>
       <td>車名</td>
       <td>メーカー名</td>
       <td>値段</td>
-      <td>開催期間</td>
+      <td>オークション開始時間</td>
+      <td>オークション終了時間</td>
+      <td>オークション終了まで</td>
     </tr>
-    <% ejsRender.sql.forEach((value, key) => { %>
+    <% for(let i = 0; i < ejsRender.sql.length; i++) { %>
     <tr>
-      <td><a href="/bidding/<%= value[key].product_id %>">入札ページへ</a></td>
-      <td><%= value[key].car_name %></td>
-      <td><%= value[key].maker_name %></td>
-      <div uk-countdown="<%= value[key].end_time - new Date() %>">
-        <td>
-          <span class="uk-countdown-number uk-countdown-days"></span>
-          <span class="uk-countdown-number uk-countdown-hours"></span>
-          <span class="uk-countdown-number uk-countdown-minutes"></span>
-          <span class="uk-countdown-number uk-countdown-seconds"></span>
-        </td>
-      </div>
-      <td><%= value[key].start_price %></td>
-      <td></td>
+      <td>
+        <a href="/bidding/<%= ejsRender.sql[i].product_id %>"
+          ><button class="uk-button uk-button-default" type="button">入札ページへ</button></a
+        >
+      </td>
+      <td><%= ejsRender.sql[i].car_name %></td>
+      <td><%= ejsRender.sql[i].maker_name %></td>
+      <td><%= ejsRender.sql[i].start_price %></td>
+      <td><%= ejsRender.sql[i].start_time %></td>
+      <td><%= ejsRender.sql[i].end_time %></td>
+      <td class="timeLeft"></td>
     </tr>
-    <% )} %>
+    <% } %>
   </table>
-  <script>
-    const info = JSON.parse('<%- JSON.stringify(ejsRender) %>');
-    console.log(info);
-  </script>
-  <script src="/js/auction.js"></script>
-  <script src="/socket.io/socket.io.js"></script>
 </main>
+<script>
+  const info = JSON.parse('<%- JSON.stringify(ejsRender) %>');
+  console.log(info);
+</script>
+<script type="text/javascript" src="/js/mypage.js"></script>
 <%- include('partials/footer.ejs'); %>

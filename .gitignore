@@ -5,3 +5,4 @@ temp/
 .env
 package-lock.json
 *.swp
+uploads/

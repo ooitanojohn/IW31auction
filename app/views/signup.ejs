@@ -1,4 +1,19 @@
 <%- include('partials/header.ejs'); %>
+<style>
+  input:invalid+span:after {
+    position: relative;
+    content: '✖';
+    right: -450px;
+    top: -50px;
+  }
+
+  input:valid+span:after {
+    position: relative;
+    content: '✓';
+    right: -450px;
+    top: -50px;
+  }
+</style>
 <link rel="stylesheet" href="./css/login.css" />
 <div class="uk-container uk-container-expand login-component">
   <h1 class="visually-hidden">新規登録</h1>
@@ -22,14 +37,16 @@
       />
     </div>
     <div>
-      <label for="new-password">パスワード</label>
+      <label for="new-password">パスワード 1~72文字まで</label>
       <input
         id="new-password"
         name="password"
         type="password"
         autocomplete="current-password"
         required
+        pattern="[a-z]{1,72}"
       />
+      <span class="validity"></span>
     </div>
     <button type="submit" style="width: 100%;">新規登録</button>
   </form>
@@ -42,5 +59,4 @@
   const info = JSON.parse('<%- JSON.stringify(ejsRender) %>');
   console.log(info);
 </script>
-
 <%- include('partials/footer.ejs'); %>
