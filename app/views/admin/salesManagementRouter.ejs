@@ -1,24 +1,46 @@
-<%- include('../partials/header.ejs'); %> <main>
+<%- include('../partials/header.ejs'); %>
+<style>
+  a.before {
+    pointer-events: none;
+    color: black;
+  }
+
+  a.next {
+    pointer-events: none;
+    color: black;
+  }
+</style>
+<main>
   <h1>管理者ページ</h1> 
   <%- include('../partials/breadcrumb.ejs'); %> 
-  <article>
-    <h2>管理者機能一覧</h2>
-    <div id="mypageList">
-      <section>
-        <h3><a href="/admin/carStocks">車両管理</a></h3>
-      </section>
-      <section>
-        <h3><a href="/admin/users">会員管理</a></h3>
-      </section>
-      <section>
-        <h3><a href="/admin/">売上管理</a></h3>
-      </section>
-      <section>
-        <h3><a href="/admin/products">出品管理</a></h3>
-      </section>
-    </div>
-  </article>
-  <!-- 機能一覧表示 -->
+
+  <!-- 売り上げ一覧表示 -->
+  <h2>売り上げ一覧表示</h2>
+  <form action="/admin/sales/" method="post">
+    <input type="hidden" name="now" value="<%- ejsRender.now %>">
+    <table class="uk-table uk-table-divider">
+      <thead>
+        <tr>
+          <th>user_id</th>
+          <th>sales_money</th>
+          <th>sales_time</th>
+          <th>product_id</th>
+          <th>flg</th>
+        </tr>
+      </thead> <% for (let i = 0; i < ejsRender.sql.length; i++){ %> <tr>
+        <td><%- ejsRender.sql[i]['user_id'] %></td>
+        <td><%- ejsRender.sql[i]['sales_money'] %></td>
+        <td><%- ejsRender.sql[i]['sales_time'] %></td>
+        <td><%- ejsRender.sql[i]['product_id'] %></td>
+        <td><%- ejsRender.sql[i]['flg'] %></td>
+      </tr> <% } %>
+    </table>
+    <a class="<%- ejsRender.now > 1?'':'before' %>" href="/admin/users/<%-ejsRender.now-1 %>" name="return">前へ</a>
+    <% for(let i = 1; i <= ejsRender.maxpage; i++){ %> <% if(i != ejsRender.now){ %> <a
+      href="/admin/users/<%=i %>"><%=i %></a> <% }else{ %> <%=i %> <% } %> <% } %> <a
+      class="<%- ejsRender.maxpage > ejsRender.now?'':'next' %>" href="/admin/users/<%=ejsRender.now+1 %>"
+      name="next">次へ</a><br>
+  </form>
 </main>
 <script>
   const info = JSON.parse('<%- JSON.stringify(ejsRender) %>');
