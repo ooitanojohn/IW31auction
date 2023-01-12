@@ -139,8 +139,16 @@ const postCsv = async (request, response) => {
       }
       //最終的にINSERTするcar_idを取得
       await executeQuery('SELECT car_id FROM cars WHERE car_name = ?', [records[i][0]]).then(
-        (sql) => {
+        async (sql) => {
           car_id = sql;
+          console.log('UPDATE cars SET stock = stock + 1 WHERE car_id = ' + car_id[0]['car_id']);
+          const tran = await beginTran();
+          await executeQuery(
+            'UPDATE cars SET stock = stock + 1 WHERE car_id = ?',
+            car_id[0]['car_id'],
+          ).then(async (date) => {
+            await tran.commit();
+          });
         },
       );
       //最終的に実行するINSERT文
