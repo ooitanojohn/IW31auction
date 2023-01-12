@@ -4,8 +4,76 @@
 <div class="uk-child-width-expand@s" uk-grid>
   <div class="uk-grid-item-match">
     <div class="uk-card uk-card-default uk-card-body">
-      <h3>Heading</h3>
-      <p>Lorem ipsum dolor sit amet.</p>
+      <h3>詳細画像</h3>
+      <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slideshow>
+        <% if(ejsRender.sql[0].car_name == "イグニス"){ %>
+        <ul class="uk-slideshow-items">
+          <li>
+            <img src="/product/ignis/ignis.jpg" alt="" uk-cover />
+          </li>
+          <li>
+            <img src="/product/ignis/ignis2.jpg" alt="" uk-cover />
+          </li>
+          <li>
+            <img src="/product/ignis/ignis3.jpg" alt="" uk-cover />
+          </li>
+          <li>
+            <img src="/product/ignis/ignis4.jpg" alt="" uk-cover />
+          </li>
+          <li>
+            <img src="/product/ignis/ignis5.jpg" alt="" uk-cover />
+          </li>
+        </ul>
+        <% } %> <% if(ejsRender.sql[0].car_name == "シビック"){ %>
+        <ul class="uk-slideshow-items">
+          <li>
+            <img src="/product/civic/civic.jpg" alt="" uk-cover />
+          </li>
+          <li>
+            <img src="/product/civic/civic2.jpg" alt="" uk-cover />
+          </li>
+          <li>
+            <img src="/product/civic/civic3.jpg" alt="" uk-cover />
+          </li>
+          <li>
+            <img src="/product/civic/civic4.jpg" alt="" uk-cover />
+          </li>
+          <li>
+            <img src="/product/civic/civic5.jpg" alt="" uk-cover />
+          </li>
+        </ul>
+        <% } %> <% if(ejsRender.sql[0].car_name == "プリウス"){ %>
+        <ul class="uk-slideshow-items">
+          <li>
+            <img src="/product/prius/prius.jpg" alt="" uk-cover />
+          </li>
+          <li>
+            <img src="/product/prius/prius2.jpg" alt="" uk-cover />
+          </li>
+          <li>
+            <img src="/product/prius/prius3.jpg" alt="" uk-cover />
+          </li>
+          <li>
+            <img src="/product/prius/prius4.jpg" alt="" uk-cover />
+          </li>
+          <li>
+            <img src="/product/prius/prius5.jpg" alt="" uk-cover />
+          </li>
+        </ul>
+        <% } %>
+        <a
+          class="uk-position-center-left uk-position-small uk-hidden-hover"
+          href="#"
+          uk-slidenav-previous
+          uk-slideshow-item="previous"
+        ></a>
+        <a
+          class="uk-position-center-right uk-position-small uk-hidden-hover"
+          href="#"
+          uk-slidenav-next
+          uk-slideshow-item="next"
+        ></a>
+      </div>
     </div>
   </div>
   <div>
@@ -16,7 +84,6 @@
       </div>
       <div class="uk-card uk-card-default uk-card-body uk-margin-top">
         <a class="uk-button uk-button-default" href="#modal-center" uk-toggle>詳細を確認</a>
-        <<<<<<< HEAD ======= >>>>>>> main
         <div id="modal-center" class="uk-flex-top" uk-modal>
           <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
             <button class="uk-modal-close-default" type="button" uk-close></button>
