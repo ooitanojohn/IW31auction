@@ -5,9 +5,12 @@ const parse = require('csv-parse/sync');
 const debugF = require('debug')('http:files');
 const debug = require('debug')('http:body');
 const express = require('express');
-const router = express.Router();
+
 const path = require('path');
 const bodyParser = require('body-parser');
+const ERROR = require('http-errors');
+const multer = require('multer');
+const router = express.Router();
 let exist_maker;
 let exist_car;
 let list = [];
@@ -19,6 +22,7 @@ router.use(bodyParser.urlencoded({ extended: true }));
 router.use(
   formData.parse({ uploadDir: path.join(__dirname, '../../../src/upload'), autoClean: true }),
 );
+console.log(path.join(__dirname, '../../../src/upload'));
 // これを指定すると、サイズが0のファイルはfilesから削除してくれる
 router.use(formData.format());
 /**
@@ -30,29 +34,37 @@ const { executeQuery, beginTran } = require('../../module/mysqlPool');
 const { httpRapper } = require('../../common/httpRapper');
 const { error } = require('console');
 
+//const upload = multer({dest:updir});
+
 /** 車両一覧表示 */
-router.get('/', async (req, res, next) => {
+const getCarmane = async (req, res, next) => {
   /** resに渡す情報とSQLモジュールの読み込み */
   const resInfo = httpRapper(req);
-  //console.log("OK");
+
   try {
     /** ここに処理を記述 */
     resInfo.sql = await executeQuery(
       'SELECT cars.car_name, mk.maker_name, carst.stock_id, carst.car_state, carst.arrival_time, carst.arrival_price, op.aircon, op.powerstee, op.powerwidou, op.centraldoor, op.abs, op.airback, op.ETC, op.keyless, op.smartkey, op.cd, op.md, op.dvd, op.tv, op.navi, op.backcamera, op.autodoor, op.sunroof, op.leather, op.aero, op.alumi, op.esc, op.tractioncon, op.coldareas, op.welfare, op.lowdown, op.nosmoking, op.pet, op.exclusive, op.confirmation, op.instruction, op.newguarantee, op.spare FROM `carstocks` AS carst INNER JOIN cars ON cars.car_id = carst.car_id INNER JOIN makers AS mk ON cars.maker_id = mk.maker_id INNER JOIN options AS op ON op.stock_id = carst.stock_id ORDER BY stock_id ASC',
-    );
+    ).catch((err) => {
+      throw new Error(err);
+    });
+    console.log('OK');
+    //res.end('ok');
     //debug(resInfo.sql);
-    res.render('carStocksManagement.ejs', { ejsRender: resInfo });
+    res.render('admin/carStocksManagement', { ejsRender: resInfo });
   } catch (err) {
+    debug(err);
     next(err);
   }
-});
+};
 
 /** 新規登録 (csv) */
-router.post('/', async (request, response) => {
-  console.log(request.files);
+const postCsv = async (request, response) => {
+  //console.log(request.files);
   const resInfo = httpRapper(request);
+  //console.log(resInfo);
   // アップロードファイルは request.files に設定されます.
-  //debugF(request.files);
+  //debugF(request.files.input);
   let records = [];
   //一時保存場所からcsv読み込み
   try {
@@ -149,7 +161,19 @@ router.post('/', async (request, response) => {
         .then(async (result) => {
           console.log(result.insertId);
           await tran.commit().then(async () => {
-            console.log('this');
+            await executeQuery('SELECT MAX(stock_id) AS stock_id FROM carstocks')
+              .then((sql) => {
+                stock_id = sql;
+                debug(sql);
+              })
+              .then(async () => {
+                executeQuery('INSERT INTO options(stock_id) VALUES(?)', [
+                  stock_id[0]['stock_id'],
+                ]).catch((error) => {
+                  console.log(error);
+                });
+                console.log('this');
+              });
           });
         })
         .catch((error) => {
@@ -159,11 +183,11 @@ router.post('/', async (request, response) => {
   } catch (error) {
     console.log(error);
   }
-  response.redirect(301, '/admin/carStocks');
-});
+  response.redirect(301, '/admin/carStocks?');
+};
 
 /** 更新処理 (form) */
-router.post('/update', async (req, res, next) => {
+const updateForm = async (req, res, next) => {
   /** resに渡す情報とSQLモジュールの読み込み **/
   let records = '';
   records = req.body;
@@ -452,7 +476,7 @@ router.post('/update', async (req, res, next) => {
     await tran.rollback();
     next(err);
   }
-});
+};
 
 /** 更新処理 (form) */
 router.post('/:car', async (req, res, next) => {
@@ -474,7 +498,11 @@ router.post('/:car', async (req, res, next) => {
   }
 });
 
-module.exports = router;
+module.exports = {
+  getCarmane,
+  postCsv,
+  updateForm,
+};
 
 //curl -X POST -F file1=@/c/xampp/htdocs/carオークション/IW31auction/client/csv/test.csv http://localhost:9000/send-form-data
 //curl -X POST -F file1=@/c/xampp/htdocs/carオークション/IW31auction/public/img/top.jpg http://localhost:9000/send-form-data
