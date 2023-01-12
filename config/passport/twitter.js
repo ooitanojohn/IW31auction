@@ -16,6 +16,7 @@ const twitterAuth = async (token, tokenSecret, profile, cb) => {
    * 必要なの provider,subject = tokenにする
    * あとuser名 + img画像もここで取ってくるか
    */
+  debug(profile);
   /** 初ログイン */
   const tran = await beginTran();
   try {
