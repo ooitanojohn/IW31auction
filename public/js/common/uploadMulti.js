@@ -5,7 +5,7 @@ const uploadComplete = document.querySelector('.uk-text-middle');
 const uploadComplete2 = document.querySelector('.uk-link');
 
 UIkit.upload('.js-upload', {
-  url: `http://127.0.0.1:3000${uploadForm.getAttribute('action')}`,
+  url: `http://localhost:3000${uploadForm.getAttribute('action')}`,
   multiple: true,
   name: uploadFile.getAttribute('name'),
 

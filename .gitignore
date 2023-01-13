@@ -1,8 +1,8 @@
 node_modules/
 .husky/
-# src/
+src/
 temp/
 .env
 package-lock.json
 *.swp
-# uploads/
+uploads/

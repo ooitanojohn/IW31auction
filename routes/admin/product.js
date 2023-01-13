@@ -51,37 +51,30 @@ const uploadImgAdmin = multer({
 const uploadImgAdminArray = uploadImgAdmin.array('product', 10);
 /** 出品予定画像登録 */
 router.post('/upload/:productId', async (req, res, next) => {
-  const imgList = [];
-  try {
-    uploadImgAdminArray(req, res, async (err) => {
-      imgList.push(req.files[0].filename);
-      debug(req.files);
-      if (err instanceof multer.MulterError) {
-        throw new Error(err);
-      } else if (err) {
-        throw new Error(err);
-      }
-      const tran = await beginTran();
-      try {
-        await tran
-          .query(`UPDATE products SET car_img = ? WHERE product_id = ?;`, [
-            JSON.stringify(req.files[0].filename),
-            req.params.productId,
-          ])
-          .catch((err) => {
-            throw new Error(err);
-          });
-        await tran.commit();
-      } catch (err) {
-        await tran.rollback();
-        debug(err);
-        next(err);
-      }
-    });
-  } catch (err) {
-    debug(err);
-  }
-  debug(imgList);
+  uploadImgAdminArray(req, res, async (err) => {
+    debug(req.files);
+    if (err instanceof multer.MulterError) {
+      throw new Error(err);
+    } else if (err) {
+      throw new Error(err);
+    }
+    const tran = await beginTran();
+    try {
+      await tran
+        .query(`UPDATE products SET car_img = ? WHERE product_id = ?;`, [
+          JSON.stringify(req.files[0].filename),
+          req.params.productId,
+        ])
+        .catch((err) => {
+          throw new Error(err);
+        });
+      await tran.commit();
+    } catch (err) {
+      await tran.rollback();
+      debug(err);
+      next(err);
+    }
+  });
   res.redirect(301, '/admin/product/exhibit/1?state=schedule');
 });
 

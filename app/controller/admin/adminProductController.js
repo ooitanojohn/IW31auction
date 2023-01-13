@@ -281,6 +281,7 @@ const adminExhibitDelete = async (req, res) => {
   res.redirect(301, '/admin/product/prepare/1');
 };
 
+const { sendMail } = require('../../common/mail');
 /**
  * 落札登録 & メール送信
  * @param {*} req
@@ -300,6 +301,17 @@ const adminBidRegist = async (req, res) => {
         throw new Error(error);
       });
     await tran.commit();
+    // const usermail = await executeQuery("SELECT user_mail FROM users WHERE user_id = " + req.body.user_id);
+    // endTime = req.body.end_time.toString;
+    const userMail = 'qmkh733310@gmail.com';
+    const mails = {
+      from: process.env.SMTP_USER, // 送信元メールアドレス
+      to: userMail, // 送信先メールアドレス
+      subject: '落札完了のお知らせ',
+      text: '',
+      html: `<p>${req.body.user_id}様購入ありがとうございます。</p>`,
+    };
+    sendMail(mails);
   } catch (err) {
     debug(err);
     await tran.rollback();
