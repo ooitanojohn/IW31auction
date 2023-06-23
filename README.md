@@ -6,10 +6,14 @@
 
 ### インストール
 MySQL 8.0
+```
 create database auction;
 mysql -u root -p auction < auction.sql
+```
+node
+```
 npm i
-
+```
 ### 鯖起動
 npm run dev
 
@@ -24,11 +28,11 @@ debug(メール送信の結果)
 ```
 consoleに出力するものをnpm run *で切り替えられる
 
-### 構文チェック (git cm とかで怒られてどれ怒られたかわからなかったらやって)
+### 構文チェック 
 npm run lint
 
-### 構文をよしなに修正 (怒られたけど直し方分からんかったらやって やった後動作確認してね)
+### 構文修正
 npm run fix
 
-### フォーマット (ejsはvscodeの拡張いいの知らないので逆に教えてください... これでformatするとejsもよしなになるよ)
+### フォーマット
 npm run format
